@@ -8,14 +8,14 @@
     "non_sensitive_words": 682,
     "over_masked_words": 50,
     "over_mask_rate": 0.0733,
-    "latency_p50_s": 17.015,
-    "latency_max_s": 19.957,
+    "latency_p50_s": 9.771,
+    "latency_max_s": 16.531,
     "sam": false,
     "guard": "muse-glimmer (private)",
     "guard_usage": {
       "calls": 12,
       "input": 11304,
-      "output": 8688,
+      "output": 9528,
       "lines_sent": 424,
       "lines_cached": 167
     },
@@ -34,13 +34,13 @@
         "PROVIDER"
       ],
       "timings": {
-        "ocr": 0.749,
-        "guard": 18.691,
-        "text_detect": 18.696,
-        "visual_detect": 18.696,
-        "render": 0.049,
-        "egress": 0.464,
-        "total": 19.957
+        "ocr": 0.919,
+        "guard": 15.088,
+        "text_detect": 15.093,
+        "visual_detect": 15.093,
+        "render": 0.048,
+        "egress": 0.471,
+        "total": 16.531
       }
     },
     {
@@ -54,13 +54,13 @@
         "PLAN"
       ],
       "timings": {
-        "ocr": 0.222,
-        "guard": 16.212,
-        "text_detect": 16.216,
-        "visual_detect": 16.216,
-        "render": 0.032,
-        "egress": 0.468,
-        "total": 16.938
+        "ocr": 0.201,
+        "guard": 9.619,
+        "text_detect": 9.624,
+        "visual_detect": 9.624,
+        "render": 0.03,
+        "egress": 0.198,
+        "total": 10.053
       }
     },
     {
@@ -75,13 +75,13 @@
         "CLM79355878."
       ],
       "timings": {
-        "ocr": 0.177,
-        "guard": 18.655,
-        "text_detect": 18.656,
-        "visual_detect": 18.656,
-        "render": 0.02,
-        "egress": 0.445,
-        "total": 19.298
+        "ocr": 0.169,
+        "guard": 13.603,
+        "text_detect": 13.605,
+        "visual_detect": 13.605,
+        "render": 0.029,
+        "egress": 0.408,
+        "total": 14.212
       }
     },
     {
@@ -96,13 +96,13 @@
         "CLM51549699."
       ],
       "timings": {
-        "ocr": 0.171,
-        "guard": 18.408,
-        "text_detect": 18.411,
-        "visual_detect": 18.411,
-        "render": 0.025,
-        "egress": 0.432,
-        "total": 19.039
+        "ocr": 0.167,
+        "guard": 8.428,
+        "text_detect": 8.43,
+        "visual_detect": 8.43,
+        "render": 0.03,
+        "egress": 0.188,
+        "total": 8.815
       }
     },
     {
@@ -117,13 +117,13 @@
         "CLM59634390."
       ],
       "timings": {
-        "ocr": 0.176,
-        "guard": 15.246,
-        "text_detect": 15.249,
-        "visual_detect": 15.249,
-        "render": 0.021,
-        "egress": 0.361,
-        "total": 15.807
+        "ocr": 0.174,
+        "guard": 14.942,
+        "text_detect": 14.944,
+        "visual_detect": 14.944,
+        "render": 0.03,
+        "egress": 0.456,
+        "total": 15.603
       }
     },
     {
@@ -138,13 +138,13 @@
         "CLM76823263."
       ],
       "timings": {
-        "ocr": 0.17,
-        "guard": 16.488,
-        "text_detect": 16.49,
-        "visual_detect": 16.49,
-        "render": 0.03,
-        "egress": 0.401,
-        "total": 17.091
+        "ocr": 0.167,
+        "guard": 9.094,
+        "text_detect": 9.096,
+        "visual_detect": 9.096,
+        "render": 0.028,
+        "egress": 0.184,
+        "total": 9.475
       }
     },
     {
@@ -159,13 +159,13 @@
         "CLM71679645."
       ],
       "timings": {
-        "ocr": 0.164,
-        "guard": 16.495,
-        "text_detect": 16.496,
-        "visual_detect": 16.496,
-        "render": 0.022,
-        "egress": 0.454,
-        "total": 17.136
+        "ocr": 0.166,
+        "guard": 9.107,
+        "text_detect": 9.11,
+        "visual_detect": 9.11,
+        "render": 0.031,
+        "egress": 0.181,
+        "total": 9.488
       }
     },
     {
@@ -180,13 +180,13 @@
         "CLM60684393."
       ],
       "timings": {
-        "ocr": 0.18,
-        "guard": 14.732,
-        "text_detect": 14.733,
-        "visual_detect": 14.733,
-        "render": 0.036,
-        "egress": 0.437,
-        "total": 15.387
+        "ocr": 0.171,
+        "guard": 13.183,
+        "text_detect": 13.183,
+        "visual_detect": 13.183,
+        "render": 0.019,
+        "egress": 0.396,
+        "total": 13.77
       }
     },
     {
@@ -201,13 +201,13 @@
         "CLM69332453."
       ],
       "timings": {
-        "ocr": 0.17,
-        "guard": 15.036,
-        "text_detect": 15.038,
-        "visual_detect": 15.038,
-        "render": 0.029,
-        "egress": 0.433,
-        "total": 15.671
+        "ocr": 0.165,
+        "guard": 8.54,
+        "text_detect": 8.542,
+        "visual_detect": 8.542,
+        "render": 0.025,
+        "egress": 0.179,
+        "total": 8.911
       }
     },
     {
@@ -222,13 +222,13 @@
         "CLM88886142."
       ],
       "timings": {
-        "ocr": 0.18,
-        "guard": 16.742,
-        "text_detect": 16.744,
-        "visual_detect": 16.744,
+        "ocr": 0.172,
+        "guard": 11.462,
+        "text_detect": 11.463,
+        "visual_detect": 11.463,
         "render": 0.029,
-        "egress": 0.397,
-        "total": 17.351
+        "egress": 0.395,
+        "total": 12.058
       }
     },
     {
@@ -248,13 +248,13 @@
         "CLM65124265."
       ],
       "timings": {
-        "ocr": 0.172,
-        "guard": 14.327,
-        "text_detect": 14.329,
-        "visual_detect": 14.329,
-        "render": 0.028,
-        "egress": 0.429,
-        "total": 14.957
+        "ocr": 0.17,
+        "guard": 8.051,
+        "text_detect": 8.053,
+        "visual_detect": 8.053,
+        "render": 0.032,
+        "egress": 0.18,
+        "total": 8.435
       }
     },
     {
@@ -269,13 +269,13 @@
         "CLM64008855."
       ],
       "timings": {
-        "ocr": 0.181,
-        "guard": 14.485,
-        "text_detect": 14.487,
-        "visual_detect": 14.487,
-        "render": 0.027,
-        "egress": 0.459,
-        "total": 15.154
+        "ocr": 0.171,
+        "guard": 8.288,
+        "text_detect": 8.29,
+        "visual_detect": 8.29,
+        "render": 0.029,
+        "egress": 0.189,
+        "total": 8.68
       }
     }
   ]

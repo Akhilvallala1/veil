@@ -130,3 +130,24 @@ public and timestamped after kickoff.
 
 ### Pending
 - Glimmer on Modal: app written (`infra/modal_glimmer.py`), waiting on `modal setup`.
+
+## Oct 26: L2 guard moved to open-weight Glimmer on Modal
+
+All numbers on synthetic worlds; held-out = EHR (built after rules were frozen).
+
+| Guard | EHR leaks | Portal leaks | EHR over-mask | Frame p50 (cold cache) | Decode |
+|---|---|---|---|---|---|
+| Muse Spark 1.3 (Meta API, stand-in) | 0/170 | 0/246 | 7.3% | 3.3 s | n/a |
+| Glimmer BF16, default (high) reasoning | 0/170 | 0/246 | 7.3% | 51 s | 44 tok/s |
+| Glimmer BF16, reasoning low | 0/170 | 0/246 | 7.3% | 17 s | 44 tok/s |
+| Glimmer BF16, reasoning skipped (forced answer) | **16/170** | 0/246 | 6.7% | 5.8 s | 44 tok/s |
+| **Glimmer FP8, reasoning low (shipped)** | **0/170** | **0/246** | 7.3% | 9.8 s | 73 tok/s |
+
+- Skipping reasoning is fast but missed 12 DOBs in a patient list plus claim numbers.
+  Kept as opt-in `VEIL_GLIMMER_REASONING=off`; default is `low`. Raw files kept.
+- Cold-cache frame latency is not what an agent feels. Replaying the same 15-step
+  session as before: **p50 0.36 s**, max 10 s on the one new page (line cache).
+- Security: endpoint requires a bearer key (401 without). vLLM printed `--api-key`
+  in its startup log, so the key was rotated and is now passed via env only.
+- Not yet private: SAM (visual masks) still only has the Meta API backend and is
+  off by default.

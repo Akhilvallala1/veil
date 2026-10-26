@@ -1,0 +1,426 @@
+{
+  "summary": {
+    "frames": 24,
+    "blocked": 0,
+    "sensitive_values": 246,
+    "leaked": 0,
+    "leak_rate": 0.0,
+    "non_sensitive_words": 1217,
+    "over_masked_words": 8,
+    "over_mask_rate": 0.0066,
+    "latency_p50_s": 14.03,
+    "latency_max_s": 33.46,
+    "sam": false,
+    "guard": "muse-glimmer (private)",
+    "guard_usage": {
+      "calls": 24,
+      "input": 21298,
+      "output": 16575,
+      "lines_sent": 815,
+      "lines_cached": 367
+    },
+    "world": "portal",
+    "guard_model": "muse-glimmer"
+  },
+  "leaks": [],
+  "frames": [
+    {
+      "path": "/?q=a",
+      "truth": 36,
+      "leaked": [],
+      "dets": 36,
+      "over_masked": [
+        "Lindgvist",
+        "Chaudhry."
+      ],
+      "timings": {
+        "ocr": 0.93,
+        "guard": 30.639,
+        "text_detect": 30.644,
+        "visual_detect": 30.644,
+        "render": 0.036,
+        "egress": 0.421,
+        "total": 32.031
+      }
+    },
+    {
+      "path": "/?q=e",
+      "truth": 18,
+      "leaked": [],
+      "dets": 18,
+      "over_masked": [
+        "Chaudhry."
+      ],
+      "timings": {
+        "ocr": 0.161,
+        "guard": 14.068,
+        "text_detect": 14.072,
+        "visual_detect": 14.072,
+        "render": 0.027,
+        "egress": 0.368,
+        "total": 14.628
+      }
+    },
+    {
+      "path": "/?q=Nakamura",
+      "truth": 6,
+      "leaked": [],
+      "dets": 7,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.107,
+        "guard": 12.858,
+        "text_detect": 12.861,
+        "visual_detect": 12.861,
+        "render": 0.022,
+        "egress": 0.282,
+        "total": 13.271
+      }
+    },
+    {
+      "path": "/claims?q=a",
+      "truth": 28,
+      "leaked": [],
+      "dets": 28,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.251,
+        "guard": 21.155,
+        "text_detect": 21.161,
+        "visual_detect": 21.161,
+        "render": 0.032,
+        "egress": 0.272,
+        "total": 21.716
+      }
+    },
+    {
+      "path": "/messages",
+      "truth": 0,
+      "leaked": [],
+      "dets": 0,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.085,
+        "guard": 3.858,
+        "text_detect": 3.858,
+        "visual_detect": 3.858,
+        "render": 0.019,
+        "egress": 0.123,
+        "total": 4.085
+      }
+    },
+    {
+      "path": "/member/p00",
+      "truth": 12,
+      "leaked": [],
+      "dets": 14,
+      "over_masked": [
+        "Maria",
+        "Delgado"
+      ],
+      "timings": {
+        "ocr": 0.224,
+        "guard": 32.676,
+        "text_detect": 32.68,
+        "visual_detect": 32.68,
+        "render": 0.037,
+        "egress": 0.519,
+        "total": 33.46
+      }
+    },
+    {
+      "path": "/member/p01",
+      "truth": 10,
+      "leaked": [],
+      "dets": 10,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.166,
+        "guard": 13.013,
+        "text_detect": 13.016,
+        "visual_detect": 13.016,
+        "render": 0.026,
+        "egress": 0.414,
+        "total": 13.622
+      }
+    },
+    {
+      "path": "/member/p02",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [
+        "Bivd,"
+      ],
+      "timings": {
+        "ocr": 0.196,
+        "guard": 13.363,
+        "text_detect": 13.367,
+        "visual_detect": 13.367,
+        "render": 0.027,
+        "egress": 0.397,
+        "total": 13.988
+      }
+    },
+    {
+      "path": "/member/p03",
+      "truth": 11,
+      "leaked": [],
+      "dets": 11,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.186,
+        "guard": 13.461,
+        "text_detect": 13.464,
+        "visual_detect": 13.464,
+        "render": 0.027,
+        "egress": 0.422,
+        "total": 14.098
+      }
+    },
+    {
+      "path": "/member/p04",
+      "truth": 11,
+      "leaked": [],
+      "dets": 11,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.184,
+        "guard": 12.076,
+        "text_detect": 12.079,
+        "visual_detect": 12.079,
+        "render": 0.027,
+        "egress": 0.465,
+        "total": 12.755
+      }
+    },
+    {
+      "path": "/member/p05",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.197,
+        "guard": 26.715,
+        "text_detect": 26.719,
+        "visual_detect": 26.719,
+        "render": 0.027,
+        "egress": 0.384,
+        "total": 27.328
+      }
+    },
+    {
+      "path": "/member/p06",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [
+        "Bivd,"
+      ],
+      "timings": {
+        "ocr": 0.196,
+        "guard": 25.236,
+        "text_detect": 25.237,
+        "visual_detect": 25.237,
+        "render": 0.018,
+        "egress": 0.491,
+        "total": 25.942
+      }
+    },
+    {
+      "path": "/member/p07",
+      "truth": 11,
+      "leaked": [],
+      "dets": 11,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.177,
+        "guard": 14.634,
+        "text_detect": 14.636,
+        "visual_detect": 14.636,
+        "render": 0.022,
+        "egress": 0.438,
+        "total": 15.273
+      }
+    },
+    {
+      "path": "/member/p08",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.192,
+        "guard": 14.368,
+        "text_detect": 14.372,
+        "visual_detect": 14.372,
+        "render": 0.027,
+        "egress": 0.414,
+        "total": 15.005
+      }
+    },
+    {
+      "path": "/member/p09",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.197,
+        "guard": 13.386,
+        "text_detect": 13.39,
+        "visual_detect": 13.39,
+        "render": 0.024,
+        "egress": 0.463,
+        "total": 14.073
+      }
+    },
+    {
+      "path": "/member/p10",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.192,
+        "guard": 26.942,
+        "text_detect": 26.945,
+        "visual_detect": 26.945,
+        "render": 0.027,
+        "egress": 0.475,
+        "total": 27.639
+      }
+    },
+    {
+      "path": "/member/p11",
+      "truth": 11,
+      "leaked": [],
+      "dets": 11,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.181,
+        "guard": 12.255,
+        "text_detect": 12.257,
+        "visual_detect": 12.257,
+        "render": 0.025,
+        "egress": 0.454,
+        "total": 12.917
+      }
+    },
+    {
+      "path": "/claim/p00/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 4,
+      "over_masked": [
+        "reprocessing@clearpath-claims.net."
+      ],
+      "timings": {
+        "ocr": 0.187,
+        "guard": 16.202,
+        "text_detect": 16.203,
+        "visual_detect": 16.203,
+        "render": 0.017,
+        "egress": 0.449,
+        "total": 16.855
+      }
+    },
+    {
+      "path": "/claim/p01/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 3,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.122,
+        "guard": 8.767,
+        "text_detect": 8.768,
+        "visual_detect": 8.768,
+        "render": 0.021,
+        "egress": 0.147,
+        "total": 9.058
+      }
+    },
+    {
+      "path": "/claim/p02/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 3,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.117,
+        "guard": 10.643,
+        "text_detect": 10.643,
+        "visual_detect": 10.643,
+        "render": 0.013,
+        "egress": 0.418,
+        "total": 11.191
+      }
+    },
+    {
+      "path": "/claim/p03/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 3,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.119,
+        "guard": 9.826,
+        "text_detect": 9.827,
+        "visual_detect": 9.827,
+        "render": 0.021,
+        "egress": 0.153,
+        "total": 10.119
+      }
+    },
+    {
+      "path": "/claim/p04/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 3,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.122,
+        "guard": 9.701,
+        "text_detect": 9.701,
+        "visual_detect": 9.701,
+        "render": 0.012,
+        "egress": 0.135,
+        "total": 9.97
+      }
+    },
+    {
+      "path": "/claim/p05/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 3,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.117,
+        "guard": 10.803,
+        "text_detect": 10.804,
+        "visual_detect": 10.804,
+        "render": 0.021,
+        "egress": 0.356,
+        "total": 11.297
+      }
+    },
+    {
+      "path": "/member/p00/address",
+      "truth": 2,
+      "leaked": [],
+      "dets": 1,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.109,
+        "guard": 7.026,
+        "text_detect": 7.026,
+        "visual_detect": 7.026,
+        "render": 0.016,
+        "egress": 0.128,
+        "total": 7.279
+      }
+    }
+  ]
+}

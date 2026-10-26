@@ -60,10 +60,12 @@ def serve() -> None:
         "--tool-call-parser", "muse_glimmer",
         "--reasoning-parser", "muse_glimmer",
         "--generation-config", "auto",
-        "--api-key", "$VEIL_GUARD_KEY",
         *QUANT,
     ]
-    subprocess.Popen(" ".join(cmd), shell=True)
+    # Key via env (VLLM_API_KEY), not argv: vLLM logs its CLI args at startup.
+    import os
+    env = {**os.environ, "VLLM_API_KEY": os.environ["VEIL_GUARD_KEY"]}
+    subprocess.Popen(" ".join(cmd), shell=True, env=env)
 
 
 @app.local_entrypoint()
