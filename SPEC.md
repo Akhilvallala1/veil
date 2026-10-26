@@ -251,8 +251,8 @@ Bonus prizes in reach: Best Build on Meta Open Weight Models (Glimmer on Modal i
 
 The building period starts Oct 27, so tonight is accounts and access only:
 
-- [ ] Meta credits claimed ($150 showing). Still to do: add a card, set a $150 spend alert, create `MODEL_API_KEY`.
-- [ ] Modal: workspace `akhilvallala1` created ($30 starter credit, $100 hackathon credit pending). Still to do: run `modal setup`.
+- [x] Meta: card added, $150 credits active. `MODEL_API_KEY` in `.env` (gitignored, mode 600), verified with a live call on Oct 26. Still to do: set a $120 email alert (alert only, not a cap; Veil enforces its own budget).
+- [ ] Modal: workspace `akhilvallala1` ($30 starter credit, $100 hackathon credit pending). CLI installed. Still to do: `modal setup` (browser login).
 - [x] Baseten form submitted (Heavy volume). Credits go to selected teams only, so the Muse Spark Open ablation is optional. Fireworks skipped.
 - [x] Request access to `facebook/sam3.1` (accepted Oct 26). Muse Glimmer is not gated. HF token created and logged in (`akhilfau`).
 - [x] Public GitHub repo created: https://github.com/Akhilvallala1/veil
