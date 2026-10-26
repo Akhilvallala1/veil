@@ -55,6 +55,8 @@ button { font: inherit; padding: 8px 16px; border: 0; border-radius: 5px; backgr
 .Denied { background: #fbe4e4; } .Pending { background: #fff3d6; } .In { background: #e5eefc; }
 .note { background: #fffbea; border-left: 4px solid #e0b100; padding: 10px 14px; margin: 8px 0; }
 a { color: #0b5f8a; }
+tr.rowlink { cursor: pointer; } tr.rowlink:hover { background: #f0f7fb; }
+td { height: 40px; }
 """
 
 
@@ -78,7 +80,7 @@ def search(q: str = Query("", description="name or member id")) -> HTMLResponse:
         ql = q.lower().strip()
         hits = [p for p in PEOPLE if ql in p.name.lower() or ql in p.member_id.lower()]
         for p in hits:
-            rows += (f"<tr><td><a href='/member/{p.pid}'>{pii('person_name', p.name)}</a></td>"
+            rows += (f"<tr class='rowlink' onclick=\"location='/member/{p.pid}'\"><td><a href='/member/{p.pid}'>{pii('person_name', p.name)}</a></td>"
                      f"<td>{pii('member_id', p.member_id)}</td><td>{pii('date_of_birth', p.dob)}</td>"
                      f"<td>{html.escape(p.plan)}</td></tr>")
         rows = rows or "<tr><td colspan=4>No members found.</td></tr>"
@@ -181,8 +183,25 @@ def send_message(to: str = Form(...), body: str = Form(...)):
 
 
 @app.get("/claims")
-def claims_index() -> RedirectResponse:
-    return RedirectResponse("/", status_code=303)
+def claims_index(q: str = Query("")) -> HTMLResponse:
+    rows = ""
+    if q:
+        ql = q.lower().strip()
+        for p in PEOPLE:
+            for i, c in enumerate(p.claims):
+                if ql in c.claim_no.lower() or ql in p.name.lower():
+                    rows += (f"<tr class='rowlink' onclick=\"location='/claim/{p.pid}/{i}'\">"
+                             f"<td><a href='/claim/{p.pid}/{i}'>{pii('claim_number', c.claim_no)}</a></td>"
+                             f"<td>{pii('person_name', p.name)}</td><td>{c.date}</td><td>{c.billed}</td>"
+                             f"<td><span class='pill {c.status.split()[0]}'>{c.status}</span></td></tr>")
+        rows = rows or "<tr><td colspan=5>No claims found.</td></tr>"
+    table = ("<table><tr><th>Claim #</th><th>Member</th><th>Service date</th><th>Billed</th>"
+             f"<th>Status</th></tr>{rows}</table>") if q else ""
+    return page("Claims", f"""<h1>Claim lookup</h1>
+<div class="card"><form method="get" action="/claims">
+<label class="label" for="q">Claim number or member name</label><br>
+<input id="q" name="q" value="{html.escape(q)}" style="width:360px">
+<button type="submit">Search</button></form></div>{table}""")
 
 
 # --- bench control endpoints (not visible to the agent) ---------------------
