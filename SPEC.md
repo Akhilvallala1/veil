@@ -76,7 +76,7 @@ Each model does the job it is best at, and the split between open and hosted mod
 |---|---|---|
 | **Muse Wonder** (`muse-wonder-1.0`, `computer` tool) | Meta Model API | The agent. Plans and acts on veiled frames only. |
 | **Muse Glimmer 30B** (open weights) | Private plane: Modal GPU (bf16, image input), local llama.cpp Q4 as a stretch | The local brain: (a) classifies OCR'd text into sensitive entity types using layout context ("the value to the right of `DOB:`"), (b) finds on-screen text addressed to an AI and strips it, (c) checks each proposed action against the user's intent, (d) inspects the veiled frame for anything missed before it leaves. |
-| **SAM 3.1** | Open weights (`facebook/sam3.1`, gated) on the private plane for real screens. Meta API for synthetic VeilBench runs, where no real data is involved. | Pixel-accurate masks for visual sensitive data that text tools miss: faces, signatures, ID cards, QR and barcodes, photos of documents. One concept per request, per the API. |
+| **SAM 3.1** | Open weights (`facebook/sam3.1`, access granted Oct 26) on the private plane for real screens. Meta API for synthetic VeilBench runs, where no real data is involved. | Pixel-accurate masks for visual sensitive data that text tools miss: faces, signatures, ID cards, QR and barcodes, photos of documents. One concept per request, per the API. |
 | **Muse Spark 1.3** | Meta Model API | A cheaper agent for bulk eval runs (same `computer` tool). Reported as a Wonder vs. Spark comparison. |
 | **Muse Image** | Meta Model API | Generates the synthetic visual sensitive assets for VeilBench: fake faces, ID cards, insurance cards, signatures. No real person's data is ever used. |
 | **Muse Voice Transcribe** | Meta Model API | Spoken task input in the console ("Check claim status for Jane Doe"), transcribed and tokenized before the agent sees it. Stretch, day 7. |
@@ -242,7 +242,7 @@ Bonus prizes in reach: Best Build on Meta Open Weight Models (Glimmer on Modal i
 | Glimmer too slow per step | Time span classification on 20 screens | Batch all text from a frame into one call. Cache by text hash. Reprocess only changed regions between frames. Validators and SAM still run. |
 | Glimmer on Modal does not fit one H100 | Deploy with reduced max context | H200, or the NVFP4 build (text only) for L2 plus Spark for L4 on synthetic evals only |
 | SAM weak on UI screenshots | Run 5 concepts on 20 screens | Restrict SAM to photos, faces, cards, and signatures, its strong cases. Text stays with OCR, validators, and Glimmer. |
-| Sending raw frames to SAM's API contradicts the privacy claim | Request `facebook/sam3.1` access on Oct 26. Deploy on Modal on day 1 | If access is slow, use the hosted SAM API for synthetic VeilBench only, and say so plainly in the README. Never send real data to it. |
+| Sending raw frames to SAM's API contradicts the privacy claim | Access to `facebook/sam3.1` granted Oct 26. Deploy on Modal on day 1 | Use the hosted SAM API for synthetic VeilBench only, and say so plainly in the README. Never send real data to it. |
 | Agent fails on tokenized screens | Compare raw vs. Veil on 5 tasks | Better side notes, generalization instead of masking for fields the task needs, and a short system prompt explaining tokens |
 | OCR misses small or styled text | Measure OCR recall on the frame set | Upscale before OCR, the layout fallback, the L4 check, and dilated masks |
 | API credits run out | Track the cost meter daily | Spark for everything except the final demo, plus replay mode |
@@ -251,10 +251,10 @@ Bonus prizes in reach: Best Build on Meta Open Weight Models (Glimmer on Modal i
 
 The building period starts Oct 27, so tonight is accounts and access only:
 
-- [ ] Claim the $150 Meta Model API credits (form), add a card, set a $150 spend alert, create `MODEL_API_KEY`.
-- [ ] Modal: form submitted. Run `pip install modal && modal setup`.
+- [ ] Meta credits claimed ($150 showing). Still to do: add a card, set a $150 spend alert, create `MODEL_API_KEY`.
+- [ ] Modal: workspace `akhilvallala1` created ($30 starter credit, $100 hackathon credit pending). Still to do: run `modal setup`.
 - [ ] Baseten form (Heavy volume, same use case). Fireworks only if it takes under 2 minutes.
-- [ ] Request access to `facebook/sam3.1` and accept the license for `meta-models/Muse-Glimmer-30B` on Hugging Face. Create an HF token.
+- [x] Request access to `facebook/sam3.1` (accepted Oct 26). Muse Glimmer is not gated. HF token created and logged in (`akhilfau`).
 - [ ] Create the public GitHub repo `veil` (empty, plus this spec), so the commit history starts at day 1.
 - [ ] Join Discord, post in #intros, and note office hours (10 to 11 AM ET weekdays).
 
