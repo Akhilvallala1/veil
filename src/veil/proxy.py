@@ -141,7 +141,8 @@ async def outbound(body: dict, s: Session, step: dict) -> dict:
                         if str(a.get("id", "")).startswith("veil_")]
             if approved:
                 step["human_approvals"] = [a.get("message") for a in approved]
-            acks += s.__dict__.setdefault("auto_ack", {}).pop(item.get("call_id"), [])
+            # get, not pop: the OpenAI client retries on 5xx with the same body.
+            acks += s.__dict__.setdefault("auto_ack", {}).get(item.get("call_id"), [])
             item["acknowledged_safety_checks"] = acks
         elif t == "computer_call":  # stateless replay: re-veil any rehydrated text
             for a in item.get("actions") or []:

@@ -23,7 +23,22 @@ from veil.vault import Vault, norm
 
 MASK_FILL = (31, 41, 51)
 MASK_TEXT = (255, 214, 102)
+LINK_TEXT = (125, 200, 255)
 PAD = 3
+
+
+def _is_link(img: Image.Image, box) -> bool:
+    """Was the original text link-colored? Keeps the affordance after masking, so the agent
+    still sees what is clickable."""
+    a = np.asarray(img.crop(box).convert("RGB")).reshape(-1, 3).astype(int)
+    if a.size == 0:
+        return False
+    lum = a.sum(axis=1)
+    ink = a[lum < np.percentile(lum, 30)]
+    if len(ink) == 0:
+        return False
+    r, g, b = ink.mean(axis=0)
+    return b > r + 40 and b > 90
 
 # Validator entities that are low-risk alone and kept visible unless a label says otherwise.
 PASS_ENTITIES = {"date"}
@@ -71,14 +86,20 @@ def _merge(spans: list[Span]) -> list[Span]:
 
 
 def _vault_spans(line: Line, vault: Vault) -> list[Span]:
-    """Values already in the vault (seen on earlier frames or in the task) wherever they reappear."""
+    """Values already in the vault (seen on earlier frames, typed by the agent, or in the task)
+    wherever they reappear, including inside input fields with no label."""
     spans = []
     low = line.text.lower()
+    squashed = norm(line.text)
     for e in vault.entries():
         v = e.value.lower()
-        if len(v) < 4:
+        if len(norm(v)) < 4:
             continue
         i = low.find(v)
+        if i == -1 and norm(v) in squashed:
+            # Same value, different spacing or punctuation: mask the whole line.
+            spans.append(Span(0, len(line.text), e.entity, "vault", line.text))
+            continue
         while i != -1:
             spans.append(Span(i, i + len(v), e.entity, "vault", line.text[i:i + len(v)]))
             i = low.find(v, i + 1)
@@ -96,7 +117,13 @@ def detect_text(lines: list[Line], vault: Vault, origin: str) -> list[Detection]
             value = line.text[s.start:s.end].strip()
             if len(norm(value)) < 2:
                 continue
-            token = vault.tokenize(value, s.entity, origin)
+            # Label/validator spans can be a whole cell that contains a known value plus OCR
+            # noise; reuse the existing token when a vault value is inside.
+            known = [e for e in vault.entries() if len(norm(e.value)) >= 4
+                     and norm(e.value) in norm(value)]
+            token = known[0].token if known and s.source != "vault" and \
+                len(norm(known[0].value)) >= len(norm(value)) - 2 else \
+                vault.tokenize(value, s.entity, origin)
             dets.append(Detection(s.entity, line.sub_box(s.start, s.end), s.source, token))
     return dets
 
@@ -120,6 +147,7 @@ def _inside(inner, outer) -> bool:
 
 def render(png: bytes, dets: list[Detection]) -> bytes:
     img = Image.open(io.BytesIO(png)).convert("RGB")
+    src = img.copy()
     W, H = img.size
     draw = ImageDraw.Draw(img)
     regions = [d.box for d in dets if d.source == "sam"]
@@ -140,13 +168,18 @@ def render(png: bytes, dets: list[Detection]) -> bytes:
                       fill=MASK_TEXT, font=font)
             continue
         size = max(9, min(int(h * 0.7), 18))
+        link = _is_link(src, d.box)
         font = _font(size)
         tw = draw.textlength(label, font=font)
         while tw > (x2 - x1) - 4 and size > 8:
             size -= 1
             font = _font(size)
             tw = draw.textlength(label, font=font)
-        draw.text((x1 + 3, y1 + max(0, (h - size) // 2 - 1)), label, fill=MASK_TEXT, font=font)
+        ty = y1 + max(0, (h - size) // 2 - 1)
+        color = LINK_TEXT if link else MASK_TEXT
+        draw.text((x1 + 3, ty), label, fill=color, font=font)
+        if link:
+            draw.line((x1 + 3, ty + size + 1, x1 + 3 + tw, ty + size + 1), fill=color, width=1)
     buf = io.BytesIO()
     img.save(buf, format="PNG")
     return buf.getvalue()

@@ -29,7 +29,8 @@ apps:
 flows:
   - from: [payer-portal, ehr, user]
     to: [payer-portal, ehr]
-    entities: [person_name, member_id, date_of_birth, group_number, claim_number, address]
+    entities: [person_name, member_id, date_of_birth, group_number, claim_number, address,
+               id_number]
 
 # Actions that always need a human, matched against the on-screen target or typed text.
 approval_required:

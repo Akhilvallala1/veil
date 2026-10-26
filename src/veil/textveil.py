@@ -17,6 +17,9 @@ from veil.vault import Vault
 NAME_CUE = re.compile(
     r"\b(?:member|patient|subscriber|customer|client|insured|for|named)\s+"
     r"((?:[A-Z][a-z'\-]+)(?:\s+[A-Z][a-z'\-]+){1,2})")
+# Generic identifiers in free text: 6+ chars mixing letters and digits, or 6+ digit runs.
+# Not tied to any payer's format.
+GENERIC_ID = re.compile(r"\b(?=[A-Za-z0-9-]*\d)(?=[A-Za-z0-9-]*[A-Za-z])[A-Za-z0-9-]{6,}\b|\b\d{6,}\b")
 
 TOKEN_GUIDE = (
     "PRIVACY LAYER: Sensitive values on screen and in the task are replaced by tokens such as "
@@ -33,6 +36,8 @@ def tokenize_text(text: str, vault: Vault, origin: str = "user") -> str:
     for s in find_spans(text):
         if s.entity != "date":
             spans.append((s.start, s.end, s.entity))
+    for m in GENERIC_ID.finditer(text):
+        spans.append((m.start(), m.end(), "id_number"))
     out, last = [], 0
     for start, end, ent in sorted(spans):
         if start < last:
