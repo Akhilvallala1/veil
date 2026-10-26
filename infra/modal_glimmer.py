@@ -4,7 +4,9 @@ run ourselves; Modal stands in for a customer's own VPC or on-prem GPUs.
 
 Deploy:   modal deploy infra/modal_glimmer.py
 Smoke:    modal run infra/modal_glimmer.py
-Requires a Modal secret named `huggingface` with HF_TOKEN.
+Requires Modal secrets `huggingface` (HF_TOKEN) and `veil-glimmer-key`
+(VEIL_GUARD_KEY). The endpoint rejects requests without that bearer key, so a
+leaked URL cannot spend GPU credits or read anything.
 
 Cost control: scales to zero after 5 idle minutes; one H100 at a time.
 """
@@ -19,6 +21,9 @@ MODEL = "meta-models/Muse-Glimmer-30B"
 SERVED = "muse-glimmer"
 PORT = 8000
 MINUTES = 60
+# Online FP8 weight quantization: halves bytes read per decoded token, which is
+# what bounds single-request speed on an H100 for a 30B model.
+QUANT = ["--quantization", "fp8"]
 
 image = (
     modal.Image.from_registry("vllm/vllm-openai:muse-glimmer", add_python="3.12")
@@ -35,7 +40,7 @@ app = modal.App("veil-glimmer")
 @app.function(
     image=image,
     gpu="H100",
-    secrets=[modal.Secret.from_name("huggingface")],
+    secrets=[modal.Secret.from_name("huggingface"), modal.Secret.from_name("veil-glimmer-key")],
     volumes={"/root/.cache/huggingface": hf_cache, "/root/.cache/vllm": vllm_cache},
     timeout=30 * MINUTES,
     scaledown_window=5 * MINUTES,
@@ -55,15 +60,20 @@ def serve() -> None:
         "--tool-call-parser", "muse_glimmer",
         "--reasoning-parser", "muse_glimmer",
         "--generation-config", "auto",
+        "--api-key", "$VEIL_GUARD_KEY",
+        *QUANT,
     ]
     subprocess.Popen(" ".join(cmd), shell=True)
 
 
 @app.local_entrypoint()
 def smoke() -> None:
+    import json
+    import os
     import time
     import urllib.request
-    import json
+
+    key = os.environ["VEIL_GLIMMER_KEY"]
 
     url = serve.get_web_url()
     print("endpoint:", url)
@@ -73,7 +83,8 @@ def smoke() -> None:
     for _ in range(60):
         try:
             req = urllib.request.Request(f"{url}/v1/chat/completions", data=body.encode(),
-                                         headers={"Content-Type": "application/json"})
+                                         headers={"Content-Type": "application/json",
+                                                  "Authorization": f"Bearer {key}"})
             with urllib.request.urlopen(req, timeout=600) as r:
                 out = json.loads(r.read())
             print(f"{time.time() - t0:.0f}s:", out["choices"][0]["message"]["content"])

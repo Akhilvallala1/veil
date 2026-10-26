@@ -1,0 +1,427 @@
+{
+  "summary": {
+    "frames": 12,
+    "blocked": 0,
+    "sensitive_values": 170,
+    "leaked": 16,
+    "leak_rate": 0.0941,
+    "non_sensitive_words": 682,
+    "over_masked_words": 46,
+    "over_mask_rate": 0.0674,
+    "latency_p50_s": 5.791,
+    "latency_max_s": 14.206,
+    "sam": false,
+    "guard": "muse-glimmer (private)",
+    "guard_usage": {
+      "calls": 12,
+      "input": 11400,
+      "output": 2388,
+      "lines_sent": 424,
+      "lines_cached": 167
+    },
+    "world": "ehr",
+    "guard_model": "muse-glimmer"
+  },
+  "leaks": [
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1968-07-13"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1958-08-09"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1970-04-14"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1954-06-27"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1968-03-23"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1996-08-22"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "2004-02-27"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1970-06-14"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1965-07-25"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1981-06-06"
+    },
+    {
+      "path": "/chart/p01",
+      "entity": "date_of_birth",
+      "value": "1958-08-09"
+    },
+    {
+      "path": "/chart/p01",
+      "entity": "address",
+      "value": "7741 Sunset Blvd, Tampa, FL 33639"
+    },
+    {
+      "path": "/chart/p01",
+      "entity": "claim_number",
+      "value": "CLM51549699"
+    },
+    {
+      "path": "/chart/p07",
+      "entity": "date_of_birth",
+      "value": "1970-06-14"
+    },
+    {
+      "path": "/chart/p07",
+      "entity": "claim_number",
+      "value": "CLM88886142"
+    },
+    {
+      "path": "/chart/p09",
+      "entity": "claim_number",
+      "value": "CLM64008855"
+    }
+  ],
+  "frames": [
+    {
+      "path": "/",
+      "truth": 30,
+      "leaked": [
+        [
+          "date_of_birth",
+          "1968-07-13"
+        ],
+        [
+          "date_of_birth",
+          "1958-08-09"
+        ],
+        [
+          "date_of_birth",
+          "1970-04-14"
+        ],
+        [
+          "date_of_birth",
+          "1954-06-27"
+        ],
+        [
+          "date_of_birth",
+          "1968-03-23"
+        ],
+        [
+          "date_of_birth",
+          "1996-08-22"
+        ],
+        [
+          "date_of_birth",
+          "2004-02-27"
+        ],
+        [
+          "date_of_birth",
+          "1970-06-14"
+        ],
+        [
+          "date_of_birth",
+          "1965-07-25"
+        ],
+        [
+          "date_of_birth",
+          "1981-06-06"
+        ]
+      ],
+      "dets": 21,
+      "over_masked": [
+        "PROVIDER"
+      ],
+      "timings": {
+        "ocr": 0.944,
+        "guard": 0.683,
+        "text_detect": 0.687,
+        "visual_detect": 0.687,
+        "render": 0.042,
+        "egress": 0.221,
+        "total": 1.894
+      }
+    },
+    {
+      "path": "/patients",
+      "truth": 30,
+      "leaked": [],
+      "dets": 31,
+      "over_masked": [
+        "Chaudhry.",
+        "INSURANCE",
+        "PLAN"
+      ],
+      "timings": {
+        "ocr": 0.207,
+        "guard": 13.548,
+        "text_detect": 13.554,
+        "visual_detect": 13.554,
+        "render": 0.031,
+        "egress": 0.414,
+        "total": 14.206
+      }
+    },
+    {
+      "path": "/chart/p00",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP|",
+        "INSURANCE",
+        "PLAN",
+        "CLM79355878."
+      ],
+      "timings": {
+        "ocr": 0.173,
+        "guard": 5.418,
+        "text_detect": 5.42,
+        "visual_detect": 5.42,
+        "render": 0.026,
+        "egress": 0.194,
+        "total": 5.814
+      }
+    },
+    {
+      "path": "/chart/p01",
+      "truth": 11,
+      "leaked": [
+        [
+          "date_of_birth",
+          "1958-08-09"
+        ],
+        [
+          "address",
+          "7741 Sunset Blvd, Tampa, FL 33639"
+        ],
+        [
+          "claim_number",
+          "CLM51549699"
+        ]
+      ],
+      "dets": 10,
+      "over_masked": [
+        "PCP|",
+        "INSURANCE",
+        "PLAN"
+      ],
+      "timings": {
+        "ocr": 0.169,
+        "guard": 0.496,
+        "text_detect": 0.498,
+        "visual_detect": 0.498,
+        "render": 0.028,
+        "egress": 0.189,
+        "total": 0.884
+      }
+    },
+    {
+      "path": "/chart/p02",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP",
+        "INSURANCE",
+        "PLAN",
+        "CLM59634390."
+      ],
+      "timings": {
+        "ocr": 0.176,
+        "guard": 5.507,
+        "text_detect": 5.509,
+        "visual_detect": 5.509,
+        "render": 0.031,
+        "egress": 0.191,
+        "total": 5.906
+      }
+    },
+    {
+      "path": "/chart/p03",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP|",
+        "INSURANCE",
+        "PLAN",
+        "CLM76823263."
+      ],
+      "timings": {
+        "ocr": 0.17,
+        "guard": 5.398,
+        "text_detect": 5.4,
+        "visual_detect": 5.4,
+        "render": 0.028,
+        "egress": 0.193,
+        "total": 5.791
+      }
+    },
+    {
+      "path": "/chart/p04",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP|",
+        "INSURANCE",
+        "PLAN",
+        "CLM71679645."
+      ],
+      "timings": {
+        "ocr": 0.17,
+        "guard": 5.524,
+        "text_detect": 5.527,
+        "visual_detect": 5.527,
+        "render": 0.03,
+        "egress": 0.183,
+        "total": 5.909
+      }
+    },
+    {
+      "path": "/chart/p05",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP|",
+        "INSURANCE",
+        "PLAN",
+        "CLM60684393."
+      ],
+      "timings": {
+        "ocr": 0.175,
+        "guard": 5.367,
+        "text_detect": 5.369,
+        "visual_detect": 5.369,
+        "render": 0.032,
+        "egress": 0.192,
+        "total": 5.768
+      }
+    },
+    {
+      "path": "/chart/p06",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP",
+        "INSURANCE",
+        "PLAN",
+        "CLM69332453."
+      ],
+      "timings": {
+        "ocr": 0.168,
+        "guard": 5.468,
+        "text_detect": 5.47,
+        "visual_detect": 5.47,
+        "render": 0.027,
+        "egress": 0.196,
+        "total": 5.861
+      }
+    },
+    {
+      "path": "/chart/p07",
+      "truth": 11,
+      "leaked": [
+        [
+          "date_of_birth",
+          "1970-06-14"
+        ],
+        [
+          "claim_number",
+          "CLM88886142"
+        ]
+      ],
+      "dets": 11,
+      "over_masked": [
+        "PCP",
+        "INSURANCE",
+        "PLAN"
+      ],
+      "timings": {
+        "ocr": 0.178,
+        "guard": 0.484,
+        "text_detect": 0.486,
+        "visual_detect": 0.486,
+        "render": 0.028,
+        "egress": 0.193,
+        "total": 0.886
+      }
+    },
+    {
+      "path": "/chart/p08",
+      "truth": 11,
+      "leaked": [],
+      "dets": 15,
+      "over_masked": [
+        "PCP",
+        "INSURANCE",
+        "PLAN",
+        "Platinum",
+        "PPO",
+        "the",
+        "Platinum",
+        "PPO",
+        "CLM65124265."
+      ],
+      "timings": {
+        "ocr": 0.17,
+        "guard": 5.409,
+        "text_detect": 5.411,
+        "visual_detect": 5.411,
+        "render": 0.028,
+        "egress": 0.181,
+        "total": 5.791
+      }
+    },
+    {
+      "path": "/chart/p09",
+      "truth": 11,
+      "leaked": [
+        [
+          "claim_number",
+          "CLM64008855"
+        ]
+      ],
+      "dets": 12,
+      "over_masked": [
+        "PCP",
+        "INSURANCE",
+        "PLAN"
+      ],
+      "timings": {
+        "ocr": 0.174,
+        "guard": 4.166,
+        "text_detect": 4.168,
+        "visual_detect": 4.168,
+        "render": 0.028,
+        "egress": 0.184,
+        "total": 4.555
+      }
+    }
+  ]
+}

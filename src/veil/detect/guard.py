@@ -24,6 +24,8 @@ from openai import AsyncOpenAI
 
 from veil.perceive import Line
 
+GLIMMER_REASONING = os.environ.get("VEIL_GLIMMER_REASONING", "low")  # low|high|off
+
 ENTITIES = ["person_name", "date_of_birth", "ssn", "member_id", "mrn", "group_number",
             "claim_number", "account_number", "card_number", "phone", "email", "address",
             "id_number"]
@@ -68,6 +70,29 @@ class Guard:
     def private(self) -> bool:
         return "api.meta.ai" not in self.url
 
+    def _count(self, usage) -> None:
+        self.usage["calls"] += 1
+        if usage:
+            self.usage["input"] += usage.prompt_tokens or 0
+            self.usage["output"] += usage.completion_tokens or 0
+
+    # VEIL_GLIMMER_REASONING=off: skip Glimmer's reasoning channel by rendering the
+    # template ourselves and opening the answer channel directly. ~5x faster but it
+    # leaked 16/170 on the held-out EHR (mostly DOBs in a list), so it is opt-in.
+    # Default keeps reasoning (see bench/results/frame_eval_ehr_guard_glimmer*.json).
+    GLIMMER_PREFIX = '{"spans":['
+
+    async def _glimmer_direct(self, payload: str) -> str:
+        prompt = ("<|begin_of_text|><|start|>system<|message|>" + SYSTEM
+                  + "\n\nReasoning strength: low.\n\n# Valid recipients: \"self\", \"user\".<|eot|>"
+                  "<|start|>user<|message|>" + payload + "<|eot|>"
+                  "<|start|>assistant to=user<|message|>" + self.GLIMMER_PREFIX)
+        r = await self.client.completions.create(
+            model=self.model, prompt=prompt, max_tokens=4000, temperature=0,
+            stop=["<|eot|>", "<|eom|>"])
+        self._count(r.usage)
+        return self.GLIMMER_PREFIX + (r.choices[0].text or "")
+
     @staticmethod
     def _key(line: Line) -> tuple:
         return (line.text, line.box[0] // 8, line.box[1] // 8)
@@ -102,19 +127,22 @@ class Guard:
         key = hashlib.sha256(payload.encode()).hexdigest()
         if key in self._cache:
             return self._cache[key]
-        r = await self.client.chat.completions.create(
-            model=self.model,
-            messages=[{"role": "system", "content": SYSTEM},
-                      {"role": "user", "content": payload}],
-            max_tokens=4000, temperature=0,
-            response_format={"type": "json_object"},
-            extra_body={"reasoning_effort": "minimal"} if not self.private else {},
-        )
-        self.usage["calls"] += 1
-        if r.usage:
-            self.usage["input"] += r.usage.prompt_tokens or 0
-            self.usage["output"] += r.usage.completion_tokens or 0
-        content = r.choices[0].message.content or "{}"
+        glimmer = self.private and self.model == "muse-glimmer"
+        if glimmer and GLIMMER_REASONING == "off":
+            content = await self._glimmer_direct(payload)
+        else:
+            r = await self.client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "system", "content": SYSTEM},
+                          {"role": "user", "content": payload}],
+                max_tokens=4000, temperature=0,
+                response_format={"type": "json_object"},
+                extra_body=({"chat_template_kwargs": {"reasoning_strength": GLIMMER_REASONING}}
+                            if glimmer else
+                            {"reasoning_effort": "minimal"} if not self.private else {}),
+            )
+            self._count(r.usage)
+            content = r.choices[0].message.content or "{}"
         m = re.search(r"\{.*\}", content, re.S)
         data = json.loads(m.group(0)) if m else {}
         spans = []

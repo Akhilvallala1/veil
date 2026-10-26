@@ -1,0 +1,282 @@
+{
+  "summary": {
+    "frames": 12,
+    "blocked": 0,
+    "sensitive_values": 170,
+    "leaked": 0,
+    "leak_rate": 0.0,
+    "non_sensitive_words": 682,
+    "over_masked_words": 50,
+    "over_mask_rate": 0.0733,
+    "latency_p50_s": 50.901,
+    "latency_max_s": 56.732,
+    "sam": false,
+    "guard": "muse-glimmer (private)",
+    "guard_usage": {
+      "calls": 12,
+      "input": 11304,
+      "output": 27158,
+      "lines_sent": 424,
+      "lines_cached": 167
+    },
+    "world": "ehr",
+    "guard_model": "muse-glimmer"
+  },
+  "leaks": [],
+  "frames": [
+    {
+      "path": "/",
+      "truth": 30,
+      "leaked": [],
+      "dets": 31,
+      "over_masked": [
+        "MRN",
+        "PROVIDER"
+      ],
+      "timings": {
+        "ocr": 0.775,
+        "guard": 37.295,
+        "text_detect": 37.301,
+        "visual_detect": 37.301,
+        "render": 0.048,
+        "egress": 0.424,
+        "total": 38.548
+      }
+    },
+    {
+      "path": "/patients",
+      "truth": 30,
+      "leaked": [],
+      "dets": 31,
+      "over_masked": [
+        "Chaudhry.",
+        "INSURANCE",
+        "PLAN"
+      ],
+      "timings": {
+        "ocr": 0.207,
+        "guard": 50.421,
+        "text_detect": 50.424,
+        "visual_detect": 50.424,
+        "render": 0.024,
+        "egress": 0.465,
+        "total": 51.121
+      }
+    },
+    {
+      "path": "/chart/p00",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP|",
+        "INSURANCE",
+        "PLAN",
+        "CLM79355878."
+      ],
+      "timings": {
+        "ocr": 0.174,
+        "guard": 48.814,
+        "text_detect": 48.816,
+        "visual_detect": 48.816,
+        "render": 0.029,
+        "egress": 0.441,
+        "total": 49.459
+      }
+    },
+    {
+      "path": "/chart/p01",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP|",
+        "INSURANCE",
+        "PLAN",
+        "CLM51549699."
+      ],
+      "timings": {
+        "ocr": 0.176,
+        "guard": 53.636,
+        "text_detect": 53.638,
+        "visual_detect": 53.638,
+        "render": 0.027,
+        "egress": 0.453,
+        "total": 54.294
+      }
+    },
+    {
+      "path": "/chart/p02",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP",
+        "INSURANCE",
+        "PLAN",
+        "CLM59634390."
+      ],
+      "timings": {
+        "ocr": 0.183,
+        "guard": 55.057,
+        "text_detect": 55.059,
+        "visual_detect": 55.059,
+        "render": 0.029,
+        "egress": 0.447,
+        "total": 55.718
+      }
+    },
+    {
+      "path": "/chart/p03",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP|",
+        "INSURANCE",
+        "PLAN",
+        "CLM76823263."
+      ],
+      "timings": {
+        "ocr": 0.173,
+        "guard": 46.941,
+        "text_detect": 46.943,
+        "visual_detect": 46.943,
+        "render": 0.031,
+        "egress": 0.457,
+        "total": 47.605
+      }
+    },
+    {
+      "path": "/chart/p04",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP|",
+        "INSURANCE",
+        "PLAN",
+        "CLM71679645."
+      ],
+      "timings": {
+        "ocr": 0.182,
+        "guard": 56.08,
+        "text_detect": 56.082,
+        "visual_detect": 56.082,
+        "render": 0.025,
+        "egress": 0.444,
+        "total": 56.732
+      }
+    },
+    {
+      "path": "/chart/p05",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP|",
+        "INSURANCE",
+        "PLAN",
+        "CLM60684393."
+      ],
+      "timings": {
+        "ocr": 0.172,
+        "guard": 50.942,
+        "text_detect": 50.943,
+        "visual_detect": 50.943,
+        "render": 0.027,
+        "egress": 0.423,
+        "total": 51.565
+      }
+    },
+    {
+      "path": "/chart/p06",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP",
+        "INSURANCE",
+        "PLAN",
+        "CLM69332453."
+      ],
+      "timings": {
+        "ocr": 0.174,
+        "guard": 48.08,
+        "text_detect": 48.081,
+        "visual_detect": 48.081,
+        "render": 0.031,
+        "egress": 0.365,
+        "total": 48.651
+      }
+    },
+    {
+      "path": "/chart/p07",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP",
+        "INSURANCE",
+        "PLAN",
+        "CLM88886142."
+      ],
+      "timings": {
+        "ocr": 0.187,
+        "guard": 49.943,
+        "text_detect": 49.945,
+        "visual_detect": 49.945,
+        "render": 0.03,
+        "egress": 0.44,
+        "total": 50.603
+      }
+    },
+    {
+      "path": "/chart/p08",
+      "truth": 11,
+      "leaked": [],
+      "dets": 15,
+      "over_masked": [
+        "PCP",
+        "INSURANCE",
+        "PLAN",
+        "Platinum",
+        "PPO",
+        "the",
+        "Platinum",
+        "PPO",
+        "CLM65124265."
+      ],
+      "timings": {
+        "ocr": 0.175,
+        "guard": 54.11,
+        "text_detect": 54.112,
+        "visual_detect": 54.112,
+        "render": 0.03,
+        "egress": 0.4,
+        "total": 54.717
+      }
+    },
+    {
+      "path": "/chart/p09",
+      "truth": 11,
+      "leaked": [],
+      "dets": 13,
+      "over_masked": [
+        "PCP",
+        "INSURANCE",
+        "PLAN",
+        "CLM64008855."
+      ],
+      "timings": {
+        "ocr": 0.175,
+        "guard": 49.996,
+        "text_detect": 49.998,
+        "visual_detect": 49.998,
+        "render": 0.03,
+        "egress": 0.478,
+        "total": 50.681
+      }
+    }
+  ]
+}

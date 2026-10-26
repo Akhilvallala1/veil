@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import statistics
 from pathlib import Path
 
@@ -118,7 +119,11 @@ def main() -> None:
     res = asyncio.run(run(args.sam, capture(base, paths()), args.guard))
     res["summary"]["world"] = args.world
     OUT.mkdir(parents=True, exist_ok=True)
+    gm = os.environ.get("VEIL_GUARD_MODEL", "muse-spark-1.3")
+    res["summary"]["guard_model"] = gm if args.guard else None
     tag = ("_sam" if args.sam else "") + ("_guard" if args.guard else "")
+    if args.guard and gm == "muse-glimmer":
+        tag += "_glimmer"
     (OUT / f"frame_eval_{args.world}{tag}.json").write_text(
         json.dumps(res, indent=2))
     print(json.dumps(res["summary"], indent=2))
