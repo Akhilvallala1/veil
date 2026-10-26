@@ -14,7 +14,7 @@ Optional headers from the client:
   X-Veil-Session: stable session id (otherwise chained via previous_response_id)
   X-Veil-Context: the URL/app the agent is acting in (for flow policy)
 
-Run: uv run uvicorn veil.proxy:app --port 8787
+Run: uv run uvicorn veil.proxy:app --port 8799
 Env: VEIL_SAM=api to enable SAM 3.1 via Meta API (synthetic data only).
 """
 
@@ -35,7 +35,7 @@ from fastapi.responses import FileResponse, JSONResponse, Response
 
 from veil.audit import AuditLog, sha256, verify
 from veil.firewall import Policy, check_action, check_safety_checks
-from veil.frame import blank_frame, veil_frame
+from veil.frame import blank_frame, text_at, veil_frame
 from veil.session import Session, Sessions
 from veil.textveil import TOKEN_GUIDE, tokenize_text
 
@@ -110,6 +110,7 @@ async def _veil_image(part: dict, key: str, s: Session, step: dict) -> None:
     else:
         out = r.png
         s.last_frame_size = (r.width, r.height)
+        s.last_lines = r.lines  # type: ignore[attr-defined]
     part[key] = _encode(out)
     frame_dir = RUN_DIR / s.id / "frames"
     frame_dir.mkdir(parents=True, exist_ok=True)
@@ -185,7 +186,14 @@ def inbound(data: dict, s: Session, step: dict, dest_url: str) -> dict:
         if item.get("type") == "computer_call":
             kept, blocked = [], None
             for a in item.get("actions") or []:
-                v = check_action(a, s.vault, POLICY, dest_url)
+                hint = ""
+                if a.get("type") in ("click", "double_click") and a.get("x") is not None:
+                    hint = text_at(getattr(s, "last_lines", []), a["x"], a["y"])
+                elif a.get("type") == "keypress":
+                    hint = getattr(s, "last_click_text", "")
+                v = check_action(a, s.vault, POLICY, dest_url, focus_hint=hint)
+                if a.get("type") in ("click", "double_click"):
+                    s.last_click_text = hint  # type: ignore[attr-defined]
                 verdicts.append({"action": {k: a.get(k) for k in ("type", "x", "y", "keys")},
                                  "typed_tokens": v.tokens, "decision": v.decision,
                                  "rule": v.rule, "reason": v.reason})

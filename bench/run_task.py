@@ -1,6 +1,6 @@
 """Run one task through Veil (or raw) and print what happened.
 
-  uv run python bench/run_task.py --veil            # through the proxy on :8787
+  uv run python bench/run_task.py --veil            # through the proxy on :8799
   uv run python bench/run_task.py                   # raw, straight to Meta
 """
 
@@ -31,7 +31,7 @@ def main() -> None:
     ap.add_argument("--model", default="muse-spark-1.3")
     ap.add_argument("--max-steps", type=int, default=12)
     args = ap.parse_args()
-    base = "http://127.0.0.1:8787/v1" if args.veil else "https://api.meta.ai/v1"
+    base = "http://127.0.0.1:8799/v1" if args.veil else "https://api.meta.ai/v1"
     out = Path("runs/tasks") / f"{args.task}_{'veil' if args.veil else 'raw'}"
     r = run_agent(TASKS.get(args.task, args.task), "http://127.0.0.1:8100/", model=args.model,
                   base_url=base, max_steps=args.max_steps, out_dir=out)

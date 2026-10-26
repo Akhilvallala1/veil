@@ -2,139 +2,429 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Veil console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#0f1418; --panel:#161d23; --line:#253039; --text:#dbe4ea; --mute:#8a9aa6;
-          --gold:#ffd666; --ok:#4fd18b; --bad:#ff6b6b; --ask:#ffb347; }
+  /* The console is made of the veil itself: the mask's slate is the ground,
+     the token gold is the one accent. Surfaces step in tone, never in lines. */
+  :root {
+    --bg: #12181d;
+    --surface: #1a2228;
+    --surface-2: #222c33;
+    --mask: #1f2933;
+    --ink: #eef3f6;
+    --muted: #9badb8;
+    --accent: #ffd666;          /* the token label colour on every masked value */
+    --accent-ink: #12181d;
+    --block: #ff8a7a;           /* used only where Veil stopped something */
+    --margin: clamp(1rem, 2vw, 1.75rem);
+    --gap: clamp(0.75rem, 1.2vw, 1.25rem);
+    --step-small: 0.8125rem;
+    --step-body: 1rem;
+    --step-lead: 1.25rem;
+    --step-big: clamp(2.75rem, 4.4vw, 4.5rem);
+    --ease: cubic-bezier(.2,.7,.2,1);
+  }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--text);
-         font:14px/1.45 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
-  header { display:flex; align-items:center; gap:18px; padding:12px 22px;
-           border-bottom:1px solid var(--line); }
-  header h1 { font-size:17px; margin:0; letter-spacing:.02em; }
-  header h1 span { color:var(--gold); }
-  select, button { background:var(--panel); color:var(--text); border:1px solid var(--line);
-                   border-radius:6px; padding:5px 9px; font:inherit; }
-  .stat { color:var(--mute); font-size:13px; }
-  .stat b { color:var(--text); }
-  .chain-ok { color:var(--ok); } .chain-bad { color:var(--bad); }
-  main { display:grid; grid-template-columns: 1fr 1fr 360px; gap:14px; padding:14px 22px; }
-  .pane { background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
-  .pane h2 { margin:0; padding:9px 12px; font-size:12px; letter-spacing:.08em;
-             text-transform:uppercase; color:var(--mute); border-bottom:1px solid var(--line); }
-  .pane h2 em { font-style:normal; color:var(--gold); }
-  .pane img { width:100%; display:block; background:#000; min-height:200px; }
-  .placeholder { padding:40px; color:var(--mute); text-align:center; }
-  #timeline { max-height:calc(100vh - 150px); overflow:auto; }
-  .step { padding:9px 12px; border-bottom:1px solid var(--line); cursor:pointer; }
-  .step:hover, .step.sel { background:#1d262e; }
-  .step .n { color:var(--mute); font-size:12px; }
-  .chip { display:inline-block; font-size:11px; padding:1px 7px; border-radius:9px;
-          margin:3px 4px 0 0; border:1px solid; }
-  .allow { color:var(--ok); border-color:#2c6b4a; }
-  .deny { color:var(--bad); border-color:#7a3434; }
-  .ask { color:var(--ask); border-color:#7a5a2a; }
-  .tok { color:var(--gold); border-color:#6b5a2a; }
-  .reason { font-size:12px; color:var(--mute); margin-top:3px; }
-  .deny-reason { color:var(--bad); }
-  .final { padding:10px 12px; font-size:13px; white-space:pre-wrap; border-top:1px solid var(--line); }
-  .meta { padding:8px 12px; font-size:12px; color:var(--mute); border-top:1px solid var(--line); }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); }
+  body { font: 400 var(--step-body)/1.5 "Instrument Sans", system-ui, -apple-system, sans-serif;
+         font-feature-settings: "tnum" 1; -webkit-font-smoothing: antialiased; }
+  button, select { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* bar */
+  .bar { display: flex; align-items: center; gap: 1.5rem; padding: 1rem var(--margin); }
+  .word { font-size: var(--step-lead); font-weight: 600; letter-spacing: -0.02em; margin: 0; }
+  .bar select { background: var(--surface); border: 0; border-radius: 999px; padding: .45rem 1rem;
+                color: var(--ink); max-width: 22rem; }
+  .bar .spacer { flex: 1; }
+  .follow { display: flex; align-items: center; gap: .5rem; color: var(--muted); cursor: pointer; }
+  .follow input { accent-color: var(--accent); width: 1rem; height: 1rem; }
+  .live-dot { width: .5rem; height: .5rem; border-radius: 50%; background: var(--accent); }
+  .follow input:not(:checked) ~ .live-dot { background: var(--surface-2); }
+
+  /* figures: one line of large numbers, no tiles */
+  .figures { display: flex; flex-wrap: wrap; align-items: flex-end; column-gap: clamp(2rem, 5vw, 5rem);
+             row-gap: 1rem; padding: 1rem var(--margin) 2rem; }
+  .fig b { display: block; font-size: var(--step-big); font-weight: 500; letter-spacing: -0.04em;
+           line-height: .95; }
+  .fig span { display: block; color: var(--muted); margin-top: .5rem; }
+  .fig.hot b { color: var(--block); }
+  .fig.gold b { color: var(--accent); }
+  .fig.lead b { font-size: calc(var(--step-big) * 1.6); }
+  .laststop { margin-left: auto; max-width: 30ch; font-size: var(--step-lead); line-height: 1.35;
+              letter-spacing: -0.01em; color: var(--ink); }
+  .laststop em { font-style: normal; color: var(--block); }
+  .laststop .tok { font-size: .9em; }
+
+  /* main */
+  main { display: grid; grid-template-columns: minmax(0, 1fr) clamp(19rem, 27vw, 26rem);
+         gap: var(--gap); padding: 0 var(--margin) var(--margin); align-items: start; }
+  main > * { min-width: 0; }
+
+  .stage-head { display: flex; align-items: baseline; gap: 1rem; margin: 0 0 .75rem; flex-wrap: wrap; }
+  .stage-head h2 { font-size: var(--step-lead); font-weight: 500; letter-spacing: -0.01em; margin: 0; }
+  .stage-head p { margin: 0; color: var(--muted); max-width: 60ch; }
+  .modes { margin-left: auto; display: flex; background: var(--surface); border-radius: 999px; padding: 3px; }
+  .modes button { background: none; border: 0; padding: .35rem .9rem; border-radius: 999px;
+                  color: var(--muted); cursor: pointer; transition: background .2s var(--ease), color .2s; }
+  .modes button[aria-pressed="true"] { background: var(--surface-2); color: var(--ink); }
+  .modes button:hover { color: var(--ink); }
+
+  /* the curtain: real screen on the left of the handle, the model's view on the right */
+  .stage { position: relative; background: var(--mask); overflow: hidden; user-select: none;
+           touch-action: none; cursor: ew-resize; aspect-ratio: 16 / 10; }
+  .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+               display: block; }
+  .stage .raw { clip-path: inset(0 calc(100% - var(--cut, 50%)) 0 0); }
+  .stage.sweep .raw { transition: clip-path .9s var(--ease); }
+  .stage.sweep .handle { transition: left .9s var(--ease); }
+  .handle { position: absolute; top: 0; bottom: 0; left: var(--cut, 50%); width: 4px;
+            margin-left: -2px; background: var(--accent); }
+  .handle::after { content: ""; position: absolute; top: 50%; left: 50%; width: 2.25rem; height: 2.25rem;
+                   transform: translate(-50%, -50%); border-radius: 50%; background: var(--accent);
+                   transition: transform .2s var(--ease); }
+  .stage:hover .handle::after { transform: translate(-50%, -50%) scale(1.12); }
+  .legend { display: flex; justify-content: space-between; gap: 1rem; padding-top: .6rem; color: var(--muted); }
+  .legend span { max-width: 40ch; }
+  .legend .r { color: var(--accent); text-align: right; }
+  .stage.no-raw { cursor: default; }
+  .stage.no-raw .raw, .stage.no-raw .handle { display: none; }
+  .no-raw-legend .l { visibility: hidden; }
+
+  .pair { display: none; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+  .pair figure { margin: 0; }
+  .pair img { width: 100%; display: block; background: var(--mask); }
+  .pair figcaption { color: var(--muted); padding-top: .5rem; }
+  .side .stage { display: none; } .side .pair { display: grid; }
+
+  .empty { padding: 4rem 2rem; color: var(--muted); background: var(--surface); }
+  .empty strong { display: block; color: var(--ink); font-size: var(--step-lead); font-weight: 500;
+                  margin-bottom: .4rem; }
+
+  /* answer */
+  .answer { margin-top: var(--gap); background: var(--surface); padding: 1.1rem 1.25rem 1.25rem; }
+  .answer h2 { font-size: var(--step-body); font-weight: 600; margin: 0 0 .5rem; }
+  .answer p { margin: 0; white-space: pre-wrap; max-width: 36em; line-height: 1.6; }
+  .tok { background: var(--mask); color: var(--accent); padding: .05rem .4rem; white-space: nowrap; }
+
+  /* filmstrip: every frame the model received, in order */
+  .strip { margin-top: var(--gap); }
+  .strip h2 { font-size: var(--step-body); font-weight: 600; margin: 0 0 .6rem; }
+  .strip-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 12.5rem), 1fr));
+               gap: 1rem .75rem; }
+  .strip button { all: unset; cursor: pointer; display: block; min-width: 0; }
+  .strip img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left;
+               display: block; background: var(--mask); transition: transform .2s var(--ease); }
+  .strip button:hover img { transform: translateY(-3px); }
+  .strip button span { display: block; color: var(--muted); font-size: var(--step-small); padding-top: .35rem; }
+  .strip button[aria-current="true"] span { color: var(--accent); }
+  .strip button.blocked span { color: var(--block); }
+  .strip button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  aside { background: var(--surface); }
+  aside h2 { font-size: var(--step-body); font-weight: 600; margin: 0; padding: 1.1rem 1.25rem .6rem; }
+  ol { list-style: none; margin: 0; padding: 0 0 .5rem; max-height: calc(100vh - 17rem); overflow: auto; }
+  li { padding: .8rem 1.25rem; cursor: pointer; transition: background .15s var(--ease); position: relative; }
+  li:hover { background: var(--surface-2); }
+  li[aria-current="true"] { background: var(--surface-2); }
+  li[aria-current="true"] .head b::before { content: ""; display: inline-block; width: .5rem; height: .5rem;
+    border-radius: 50%; background: var(--accent); margin-right: .5rem; vertical-align: .1em; }
+  li .head { display: flex; justify-content: space-between; gap: 1rem; }
+  li .head b { font-weight: 600; }
+  li .head small { color: var(--muted); font-size: var(--step-small); }
+  li .acts { color: var(--muted); margin-top: .2rem; }
+  li .acts .ok-tok { color: var(--accent); }
+  .stop { color: var(--block); margin-top: .35rem; }
+  li .stop .tok, .laststop .tok { background: var(--mask); }
+  li.blocked .head b { color: var(--block); }
+  li.enter { animation: rise .45s var(--ease) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .rise { animation: rise .6s var(--ease) both; }
+  .rise:nth-child(2) { animation-delay: .07s; } .rise:nth-child(3) { animation-delay: .14s; }
+  .rise:nth-child(4) { animation-delay: .21s; }
+  .pop { animation: pop .5s var(--ease); }
+  @keyframes pop { 0% { transform: translateY(6px); opacity: .3; } 100% { transform: none; opacity: 1; } }
+  .modes button:active, .bar select:active { transform: scale(.97); }
+
+  .ledger { background: var(--bg); margin: 0; padding: 1rem 1.25rem 1.2rem; }
+  .ledger p { margin: 0 0 .4rem; }
+  .ledger .ok { color: var(--ink); } .ledger .bad { color: var(--block); }
+  .ledger code { font-size: var(--step-small); color: var(--muted); }
+  .vault { color: var(--muted); font-size: var(--step-small); line-height: 1.7; margin-top: .4rem; }
+  .vault .tok { font-size: var(--step-small); }
+
+  @media (max-width: 980px) {
+    main { grid-template-columns: 1fr; }
+    .figures { column-gap: 2rem; }
+    .fig.lead b { font-size: calc(var(--step-big) * 1.3); }
+    .laststop { margin-left: 0; max-width: none; }
+    ol { max-height: none; }
+  }
+  @media (max-width: 560px) {
+    .bar { gap: .75rem; flex-wrap: wrap; }
+    .bar select { max-width: 12rem; }
+    .follow { font-size: var(--step-small); }
+    .legend { flex-direction: column; gap: .25rem; }
+    .legend .r { text-align: left; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>V<span>ei</span>l</h1>
-  <select id="session"></select>
-  <span class="stat">steps <b id="nsteps">0</b></span>
-  <span class="stat">values protected <b id="ntok">0</b></span>
-  <span class="stat">actions blocked <b id="nblock">0</b></span>
-  <span class="stat">spend <b id="spend">$0</b></span>
-  <span class="stat" id="chain">audit: no session</span>
-  <span style="margin-left:auto" class="stat"><label><input type="checkbox" id="follow" checked> follow live</label></span>
+<header class="bar">
+  <p class="word">Veil</p>
+  <label><span class="sr" hidden>Session</span><select id="session" aria-label="Session"></select></label>
+  <span class="spacer"></span>
+  <label class="follow"><input type="checkbox" id="follow" checked><span class="live-dot"></span>Follow live</label>
 </header>
+
+<section class="figures" aria-label="Session totals">
+  <div class="fig gold lead rise"><b id="f-tok">0</b><span>values kept from the model</span></div>
+  <div class="fig rise" id="fig-block"><b id="f-block">0</b><span>actions blocked</span></div>
+  <div class="fig rise"><b id="f-steps">0</b><span>agent steps</span></div>
+  <div class="fig rise"><b id="f-spend">$0</b><span>model spend</span></div>
+  <p class="laststop rise" id="laststop" hidden></p>
+</section>
+
 <main>
-  <section class="pane"><h2>Real screen <em>(stays on this machine)</em></h2>
-    <img id="raw" alt=""><div id="rawph" class="placeholder">Raw frames are only kept when the proxy runs with VEIL_KEEP_RAW=1 (local demo).</div></section>
-  <section class="pane"><h2>What the cloud model sees</h2><img id="veiled" alt=""></section>
-  <section class="pane"><h2>Timeline</h2><div id="timeline"></div><div id="final" class="final"></div>
-    <div id="meta" class="meta"></div></section>
+  <section id="view">
+    <div class="stage-head">
+      <h2 id="step-title">Waiting for an agent</h2>
+      <p id="step-meta"></p>
+      <div class="modes" role="group" aria-label="View">
+        <button id="m-curtain" aria-pressed="true">Curtain</button>
+        <button id="m-side" aria-pressed="false">Side by side</button>
+      </div>
+    </div>
+    <div id="empty" class="empty"><strong>No session yet.</strong>Point any computer-use agent at
+      <code>http://127.0.0.1:8799/v1</code> and its steps appear here.</div>
+    <div class="stage" id="stage" role="slider" tabindex="0" aria-label="Reveal the real screen"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" hidden>
+      <img class="veiled" id="veiled" alt="The screenshot exactly as the cloud model received it">
+      <img class="raw" id="raw" alt="The real screen, which never leaves this machine">
+      <div class="handle"></div>
+    </div>
+    <div class="legend" id="legend" hidden><span class="l">Left of the line: your screen. It never leaves this machine.</span><span class="r">Right: what the cloud model received.</span></div>
+    <div class="pair" id="pair">
+      <figure><img id="raw2" alt="The real screen"><figcaption>Your screen. Never leaves this machine.</figcaption></figure>
+      <figure><img id="veiled2" alt="What the model received"><figcaption>What the model received.</figcaption></figure>
+    </div>
+    <div class="strip" id="strip" hidden>
+      <h2>Every frame the model received</h2>
+      <div class="strip-row" id="strip-row"></div>
+    </div>
+    <div class="answer" id="answer" hidden>
+      <h2>The model's answer, exactly as it wrote it</h2>
+      <p id="answer-text"></p>
+    </div>
+  </section>
+
+  <aside>
+    <h2>Steps</h2>
+    <ol id="steps"></ol>
+    <div class="ledger">
+      <p id="chain">Audit log: no session</p>
+      <div class="vault" id="vault"></div>
+    </div>
+  </aside>
 </main>
+
 <script>
-let sid = null, sel = null, last = null;
 const $ = id => document.getElementById(id);
 const pad = n => String(n).padStart(3, "0");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let sid = null, sel = null, lastKey = null, seen = 0, data = null;
 
+// ---- view modes and the curtain
+function setMode(side) {
+  $("view").classList.toggle("side", side);
+  $("m-side").setAttribute("aria-pressed", side); $("m-curtain").setAttribute("aria-pressed", !side);
+}
+$("m-side").onclick = () => setMode(true);
+$("m-curtain").onclick = () => setMode(false);
+function setCut(p) {
+  p = Math.max(0, Math.min(100, p));
+  $("stage").style.setProperty("--cut", p + "%");
+  $("stage").setAttribute("aria-valuenow", Math.round(p));
+}
+let dragging = false;
+const fromEvent = e => { const r = $("stage").getBoundingClientRect(); setCut((e.clientX - r.left) / r.width * 100); };
+$("stage").addEventListener("pointerdown", e => { dragging = true; $("stage").classList.remove("sweep"); $("stage").setPointerCapture(e.pointerId); fromEvent(e); });
+$("stage").addEventListener("pointermove", e => { if (dragging) fromEvent(e); });
+$("stage").addEventListener("pointerup", () => { dragging = false; });
+$("stage").addEventListener("keydown", e => {
+  const now = +$("stage").getAttribute("aria-valuenow");
+  if (e.key === "ArrowLeft") setCut(now - 5);
+  if (e.key === "ArrowRight") setCut(now + 5);
+});
+
+// ---- words for what happened
+const ACT = { click: "Click", double_click: "Double click", type: "Type", keypress: "Press",
+              scroll: "Scroll", move: "Move", wait: "Wait", screenshot: "Look", drag: "Drag" };
+function actWords(v) {
+  const a = v.action || {};
+  let w = ACT[a.type] || a.type;
+  if (a.type === "keypress" && a.keys) w += " " + a.keys.join("+");
+  if (v.typed_tokens && v.typed_tokens.length)
+    w += " " + v.typed_tokens.map(t => `<span class="ok-tok">${esc(t)}</span>`).join(", ");
+  return w;
+}
+function tokenize(text) {
+  return esc(text).replace(/‹([A-Z_]+_\d+)›|\{\{([A-Z_]+_\d+)\}\}/g, (_, a, b) => `<span class="tok">${a || b}</span>`);
+}
+
+// Firewall reasons in plain words. The audit log keeps the exact machine reason.
+const APP = { "payer-portal": "the payer portal", "payer-portal-messages": "Messages",
+              "ehr": "the EHR", "user": "your task", "unknown": "an unlisted site" };
+const ENT = { person_name: "a name", email: "an email address", member_id: "a member ID",
+              date_of_birth: "a date of birth", ssn: "a Social Security number", phone: "a phone number",
+              address: "an address", card_number: "a card number", claim_number: "a claim number",
+              id_number: "an ID" };
+function plain(v) {
+  const r = v.reason || "";
+  let m;
+  if (v.rule === "flow_policy" && (m = r.match(/^(\w+) \((\w+)\) from \[(.*?)\] may not flow to (\S+)/))) {
+    const from = m[3].replace(/'/g, "").split(",").map(s => APP[s.trim()] || s.trim()).join(" or ");
+    return `Stopped <span class="tok">${esc(m[2])}</span>, ${ENT[m[1]] || m[1]} from ${esc(from)}, from being typed into ${esc(APP[m[4]] || m[4])}.`;
+  }
+  if (v.rule === "masked_entity") return `Stopped: ${esc(r.split(";")[0])} and can never be typed.`;
+  if (v.rule === "leak_back") return "Stopped: the model tried to type a real value it should never have seen.";
+  if (v.rule === "unknown_token") return `Stopped: ${esc(r)}.`;
+  if (v.rule === "approval_required") return `Waiting for a person: ${esc(r)}.`;
+  return esc(r);
+}
+
+// ---- render
 async function loadSessions() {
   const list = await (await fetch("/veil/sessions")).json();
   const s = $("session"), cur = s.value;
   s.innerHTML = list.slice().reverse().map(x =>
-    `<option value="${x.id}">${x.id} (${x.steps} steps)</option>`).join("");
+    `<option value="${esc(x.id)}">${esc(x.id)} · ${x.steps} steps</option>`).join("");
   if (cur && list.some(x => x.id === cur) && !$("follow").checked) s.value = cur;
   sid = s.value || null;
 }
 
-function chips(step) {
-  const out = [];
-  for (const v of step.verdicts || []) {
-    const cls = v.decision === "allow" ? "allow" : v.decision === "deny" ? "deny" : "ask";
-    out.push(`<span class="chip ${cls}">${v.action.type} ${v.decision}</span>`);
-    for (const t of v.typed_tokens || []) out.push(`<span class="chip tok">{{${t}}} rehydrated</span>`);
+function bump(id, value) {
+  const el = $(id);
+  if (el.textContent !== String(value)) {
+    el.textContent = value; el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
   }
-  return out.join("");
 }
 
 function render(d) {
+  data = d;
   const steps = d.steps || [];
-  $("nsteps").textContent = steps.length;
-  $("ntok").textContent = d.vault.length;
-  $("nblock").textContent = steps.flatMap(s => s.verdicts || []).filter(v => v.decision === "deny").length;
-  $("spend").textContent = "$" + (d.spend_usd || 0).toFixed(3);
+  const verdicts = steps.flatMap(s => s.verdicts || []);
+  const blocked = verdicts.filter(v => v.decision === "deny").length;
+  bump("f-tok", d.vault.length);
+  bump("f-block", blocked);
+  $("fig-block").classList.toggle("hot", blocked > 0);
+  bump("f-steps", steps.length);
+  bump("f-spend", "$" + (d.spend_usd || 0).toFixed(2));
+  $("empty").hidden = steps.length > 0;
+  $("stage").hidden = steps.length === 0;
+  $("legend").hidden = steps.length === 0;
+  const lastDeny = [...verdicts].reverse().find(v => v.decision === "deny");
+  $("laststop").hidden = !lastDeny;
+  if (lastDeny) $("laststop").innerHTML = plain(lastDeny).replace(/^Stopped/, "<em>Stopped</em>");
+
   $("chain").innerHTML = d.audit.ok
-    ? `<span class="chain-ok">audit chain intact</span> (${d.audit.detail.split(",")[0]})`
-    : `<span class="chain-bad">AUDIT CHAIN BROKEN: ${d.audit.detail}</span>`;
-  $("timeline").innerHTML = steps.map((s, i) => {
-    const dets = (s.frames || []).reduce((a, f) => a + (f.detections || []).length, 0);
-    const blocked = (s.frames || []).some(f => f.blocked);
-    const denies = (s.verdicts || []).filter(v => v.decision !== "allow")
-      .map(v => `<div class="reason ${v.decision === "deny" ? "deny-reason" : ""}">${v.rule}: ${v.reason}</div>`).join("");
-    return `<div class="step ${i === sel ? "sel" : ""}" data-i="${i}">
-      <div class="n">step ${i} &middot; ${dets} values masked${blocked ? " &middot; <b style='color:var(--bad)'>frame withheld</b>" : ""}
-      &middot; veil ${s.veil_secs ?? "-"}s &middot; model ${s.model_secs ?? "-"}s</div>
-      ${chips(s)}${denies}</div>`;
+    ? `<span class="ok">Audit log intact.</span> ${esc(d.audit.detail.split(",")[0])}, hash-chained. <code>${esc((d.audit.detail.match(/head (\w+)/) || [])[1] || "")}</code>`
+    : `<span class="bad">Audit log tampered: ${esc(d.audit.detail)}</span>`;
+  $("vault").innerHTML = d.vault.length
+    ? "Kept from the model: " + d.vault.map(v => `<span class="tok">${esc(v.token)}</span>`).join(" ")
+    : "";
+
+  $("steps").innerHTML = steps.map((s, i) => {
+    const masked = (s.frames || []).reduce((a, f) => a + (f.detections || []).length, 0);
+    const withheld = (s.frames || []).some(f => f.blocked);
+    const vs = s.verdicts || [];
+    const stops = vs.filter(v => v.decision !== "allow");
+    const acts = vs.length ? vs.map(actWords).join(" · ") : (s.model_text_tokenized ? "Answered" : "Looked");
+    const title = stops.some(v => v.decision === "deny") ? "Blocked" : stops.length ? "Needs approval" : "Allowed";
+    return `<li data-i="${i}" class="${stops.length ? "blocked" : ""} ${i >= seen ? "enter" : ""}">
+      <div class="head"><b>Step ${i + 1}: ${title}</b><small>${masked} hidden${withheld ? ", frame withheld" : ""}</small></div>
+      <div class="acts">${acts}</div>
+      ${stops.map(v => `<div class="stop">${plain(v)}</div>`).join("")}
+    </li>`;
   }).join("");
-  for (const el of document.querySelectorAll(".step"))
-    el.onclick = () => { sel = +el.dataset.i; $("follow").checked = false; show(d); };
-  const lastStep = steps[steps.length - 1];
-  $("final").textContent = lastStep && lastStep.model_text_tokenized
-    ? "Model's answer, exactly as it wrote it:\n" + lastStep.model_text_tokenized : "";
-  $("meta").textContent = d.vault.map(v => `${v.token}: ${v.entity} from ${v.origins.join(",") || "?"}`).join("  ·  ");
+  seen = steps.length;
+  $("strip").hidden = steps.length < 2;
+  $("strip-row").innerHTML = steps.map((s, i) => {
+    const deny = (s.verdicts || []).some(v => v.decision === "deny");
+    return `<button data-i="${i}" class="${deny ? "blocked" : ""}" aria-label="Show step ${i + 1}">
+      <img loading="lazy" alt="Step ${i + 1} as the model received it"
+           src="/veil/sessions/${encodeURIComponent(sid)}/frames/${pad(i)}_veiled.png">
+      <span>Step ${i + 1}${deny ? ", blocked" : ""}</span></button>`;
+  }).join("");
+  document.querySelectorAll("#strip-row button").forEach(el =>
+    el.onclick = () => { sel = +el.dataset.i; $("follow").checked = false; show(); });
+  document.querySelectorAll("#steps li").forEach(el =>
+    el.onclick = () => { sel = +el.dataset.i; $("follow").checked = false; show(); });
+
+  const last = [...steps].reverse().find(s => s.model_text_tokenized);
+  $("answer").hidden = !last;
+  if (last) $("answer-text").innerHTML = tokenize(last.model_text_tokenized);
+
   if ($("follow").checked) sel = steps.length - 1;
-  show(d);
+  show();
 }
 
-function show(d) {
-  if (sel == null || sel < 0) return;
-  const base = `/veil/sessions/${sid}/frames/`;
-  $("veiled").src = base + pad(sel) + "_veiled.png?" + d.steps.length;
+function sweep() {
+  // Signature move: the curtain pulls back across the frame, ending with most of the
+  // screen shown as the model saw it.
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { setCut(35); return; }
+  const st = $("stage");
+  st.classList.remove("sweep"); setCut(96); void st.offsetWidth;
+  st.classList.add("sweep"); setCut(35);
+  setTimeout(() => st.classList.remove("sweep"), 950);
+}
+let shownKey = null;
+function show() {
+  if (!data || sel == null || sel < 0) return;
+  const s = data.steps[sel];
+  const key = sid + ":" + sel;
+  const base = `/veil/sessions/${encodeURIComponent(sid)}/frames/`;
+  const v = `${base}${pad(sel)}_veiled.png?${data.steps.length}`;
+  const r = `${base}${pad(sel)}_raw.png?${data.steps.length}`;
+  $("veiled").src = v; $("veiled2").src = v;
   const raw = $("raw");
-  raw.onerror = () => { raw.style.display = "none"; $("rawph").style.display = "block"; };
-  raw.onload = () => { raw.style.display = "block"; $("rawph").style.display = "none"; };
-  raw.src = base + pad(sel) + "_raw.png?" + d.steps.length;
-  document.querySelectorAll(".step").forEach(el => el.classList.toggle("sel", +el.dataset.i === sel));
+  raw.onerror = () => { $("stage").classList.add("no-raw"); $("legend").classList.add("no-raw-legend"); };
+  raw.onload = () => {
+    $("stage").classList.remove("no-raw"); $("legend").classList.remove("no-raw-legend");
+    if (shownKey !== key) { shownKey = key; sweep(); }
+  };
+  raw.src = r; $("raw2").src = r;
+  const masked = (s.frames || []).reduce((a, f) => a + (f.detections || []).length, 0);
+  $("step-title").textContent = `Step ${sel + 1} of ${data.steps.length}`;
+  $("step-meta").textContent = `${masked} values hidden · Veil ${s.veil_secs ?? "-"} s · model ${s.model_secs ?? "-"} s`;
+  document.querySelectorAll("#steps li, #strip-row button").forEach(el =>
+    el.setAttribute("aria-current", +el.dataset.i === sel ? "true" : "false"));
+  const cur = document.querySelector('#steps li[aria-current="true"]');
+  if (cur && $("follow").checked) {
+    // Scroll only the list, never the page.
+    const ol = $("steps");
+    if (ol.scrollHeight > ol.clientHeight) ol.scrollTop = cur.offsetTop - ol.clientHeight + cur.offsetHeight;
+  }
 }
 
 async function tick() {
   try {
     await loadSessions();
-    if (sid) {
-      const d = await (await fetch(`/veil/sessions/${sid}`)).json();
-      const key = JSON.stringify([sid, d.steps.length, d.audit.detail]);
-      if (key !== last) { last = key; render(d); }
-    }
+    if (!sid) return;
+    const d = await (await fetch(`/veil/sessions/${encodeURIComponent(sid)}`)).json();
+    const key = JSON.stringify([sid, d.steps.length, d.audit.detail]);
+    if (key !== lastKey) { if (lastKey && JSON.parse(lastKey)[0] !== sid) seen = 0; lastKey = key; render(d); }
   } catch (e) { console.error(e); }
 }
-$("session").onchange = () => { $("follow").checked = false; sel = null; last = null; tick(); };
-tick(); setInterval(tick, 1200);
+$("session").onchange = () => { $("follow").checked = false; sel = null; lastKey = null; seen = 0; tick(); };
+$("follow").onchange = () => { if ($("follow").checked) { lastKey = null; tick(); } };
+setCut(35); tick(); setInterval(tick, 1200);
 </script>
 </body>
 </html>

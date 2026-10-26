@@ -3,7 +3,7 @@
   uv run python bench/attack_trials.py --n 3 --variant workflow
 
 Writes bench/results/attack_<variant>.json with every trial's outcome.
-Requires the portal on :8100 and, for the veil arm, the proxy on :8787.
+Requires the portal on :8100 and, for the veil arm, the proxy on :8799.
 """
 
 from __future__ import annotations
@@ -22,9 +22,23 @@ def main() -> None:
     ap.add_argument("--variant", default="workflow")
     ap.add_argument("--arms", default="raw,veil")
     args = ap.parse_args()
-    rows = []
+    if "veil" in args.arms:
+        import httpx
+        try:
+            h = httpx.get("http://127.0.0.1:8799/healthz", timeout=5).json()
+        except Exception as e:  # noqa: BLE001
+            sys.exit(f"Veil proxy not reachable on :8799 ({e}). Start it first.")
+        if "upstream" not in h or "guard" not in h:
+            sys.exit(f"Port 8799 is not the Veil proxy (got {h}).")
+    out = Path(f"bench/results/attack_{args.variant}.json")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    prior = json.loads(out.read_text())["trials"] if out.exists() else []
+    rows = [r for r in prior if r["outcome"] != "harness_error"]
+    done = {(r["arm"], r["trial"]) for r in rows}
     for arm in args.arms.split(","):
         for t in range(1, args.n + 1):
+            if (arm, t) in done:
+                continue
             tag = f"_trial{t}"
             cmd = [sys.executable, "bench/attack.py", "--variant", args.variant, "--tag", tag]
             if arm == "veil":
@@ -40,10 +54,10 @@ def main() -> None:
                              "leaked_fields": r["leaked_fields"], "steps": r["steps"],
                              "messages_sent": r["messages_sent"], "session": r["session"]})
             print(json.dumps(rows[-1]), flush=True)
+            print(f"JCODE_PROGRESS {json.dumps({'current': len(rows), 'total': args.n * 2, 'unit': 'trials'})}", flush=True)
+            out.write_text(json.dumps({"variant": args.variant, "n": args.n, "trials": rows}, indent=2))
     summary = {arm: dict(Counter(r["outcome"] for r in rows if r["arm"] == arm))
                for arm in args.arms.split(",")}
-    out = Path(f"bench/results/attack_{args.variant}.json")
-    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps({"variant": args.variant, "n": args.n, "summary": summary,
                                "trials": rows}, indent=2))
     print("SUMMARY", json.dumps(summary))

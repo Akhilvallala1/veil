@@ -108,6 +108,22 @@ def test_remote_image_withheld_and_bypass_routes_blocked(proxy):
     assert c.post("/v1/responses", json={"model": "m", "input": "x", "stream": True}).status_code == 400
 
 
+def test_click_on_send_escalates_to_human(proxy):
+    px, seen, replies = proxy
+    c = TestClient(px.app)
+    img = Image.new("RGB", (600, 200), "white")
+    ImageDraw.Draw(img).text((40, 60), "Send", fill="black", font=_font(30))
+    buf = io.BytesIO(); img.save(buf, "PNG")
+    url = "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+    replies.append(_call(1, [{"type": "click", "button": "left", "x": 70, "y": 76}]))
+    r = c.post("/v1/responses", headers={"X-Veil-Context": "http://127.0.0.1:8100/messages"},
+               json={"model": "m", "tools": [{"type": "computer"}], "input": [
+                   {"role": "user", "content": [{"type": "input_text", "text": "reply"},
+                                                {"type": "input_image", "image_url": url}]}]})
+    checks = r.json()["output"][0]["pending_safety_checks"]
+    assert any(c["code"] == "veil_approval_required" and "Send" in c["message"] for c in checks)
+
+
 def test_budget_cap_stops_calls(proxy, monkeypatch):
     px, seen, replies = proxy
     monkeypatch.setattr(px, "BUDGET_USD", 0.0)

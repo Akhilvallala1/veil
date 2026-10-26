@@ -62,6 +62,16 @@ class VeilResult:
     timings: dict[str, float] = field(default_factory=dict)
     width: int = 0
     height: int = 0
+    lines: list = field(default_factory=list)  # raw OCR lines, private side only
+
+
+def text_at(lines: list, x: float, y: float, pad: int = 6) -> str:
+    """OCR text under a click point (for risk rules like 'Send'). Private side only."""
+    for ln in lines:
+        x1, y1, x2, y2 = ln.box
+        if x1 - pad <= x <= x2 + pad and y1 - pad <= y <= y2 + pad:
+            return ln.text
+    return ""
 
 
 def _font(size: int):
@@ -233,7 +243,7 @@ async def veil_frame(png: bytes, vault: Vault, origin: str = "", sam=None,
         return VeilResult(b"", True, [], [f"pipeline error: {e!r}"],
                           {"total": time.perf_counter() - t0})
     t["total"] = time.perf_counter() - t0
-    return VeilResult(out if not hits else b"", bool(hits), dets, hits, t, W, H)
+    return VeilResult(out if not hits else b"", bool(hits), dets, hits, t, W, H, lines)
 
 
 def blank_frame(width: int, height: int, message: str) -> bytes:

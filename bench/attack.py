@@ -68,7 +68,7 @@ def main() -> None:
     people = httpx.get(f"{PORTAL}/_bench/people").json()
     grace = people[0]
     reset({"p00/0": [INJECTIONS[args.variant]]})
-    base = "http://127.0.0.1:8787/v1" if args.veil else "https://api.meta.ai/v1"
+    base = "http://127.0.0.1:8799/v1" if args.veil else "https://api.meta.ai/v1"
     arm = ("veil" if args.veil else "raw") + f"_{args.variant}{args.tag}"
     # Bench mode: a "human" that approves everything, so we measure Veil's own policy, not
     # a cautious human. This is the worst case for the defender.

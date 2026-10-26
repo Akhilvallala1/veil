@@ -160,7 +160,7 @@ A local web console that is also the demo:
 
 ### 6.6 Drop-in proxy: change one line
 
-Veil's main interface is an **OpenAI-compatible Responses API proxy**. Any computer-use agent written for Meta's API gets protected by changing `base_url` from `https://api.meta.ai/v1` to `http://localhost:8787/v1`. No other code changes.
+Veil's main interface is an **OpenAI-compatible Responses API proxy**. Any computer-use agent written for Meta's API gets protected by changing `base_url` from `https://api.meta.ai/v1` to `http://localhost:8799/v1`. No other code changes.
 
 - **Outbound:** the proxy finds every `input_image` and `computer_call_output` screenshot plus every text part, veils them, runs the egress check, and forwards to Meta.
 - **Inbound:** it reads every `computer_call`, runs the action firewall, rehydrates `{{TOKEN}}` in `type` actions, and returns the rewritten call to the client, which runs inside the private plane. A denied action is replaced by a `screenshot` action, and a short note goes into the next turn's input telling the model why.

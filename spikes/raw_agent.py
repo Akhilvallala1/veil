@@ -5,7 +5,7 @@ goes to the cloud model. The loop follows Meta's documented Responses API
 computer-use pattern. Logs steps, latency, token usage, and saves each frame.
 
 Run with the portal up:
-  uv run python spikes/raw_agent.py [--model muse-spark-1.3] [--base-url http://127.0.0.1:8787/v1]
+  uv run python spikes/raw_agent.py [--model muse-spark-1.3] [--base-url http://127.0.0.1:8799/v1]
 """
 
 from __future__ import annotations
