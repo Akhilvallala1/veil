@@ -1,0 +1,33 @@
+[project]
+name = "veil"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Akhil V", email = "akhilvallala0115@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.162.0",
+    "httpx>=0.28.1",
+    "meta-sam-parser>=0.1.0",
+    "numpy>=2.5.4",
+    "ocrmac>=1.0.1",
+    "openai>=3.38.0",
+    "pillow>=13.0.0",
+    "playwright>=1.64.1",
+    "python-dotenv>=1.2.4",
+    "python-multipart>=0.0.32",
+    "pyyaml>=6.0.3",
+    "uvicorn>=0.54.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.28,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.1",
+    "ruff>=0.17.2",
+]
