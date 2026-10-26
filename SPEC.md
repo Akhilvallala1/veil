@@ -253,9 +253,9 @@ The building period starts Oct 27, so tonight is accounts and access only:
 
 - [ ] Meta credits claimed ($150 showing). Still to do: add a card, set a $150 spend alert, create `MODEL_API_KEY`.
 - [ ] Modal: workspace `akhilvallala1` created ($30 starter credit, $100 hackathon credit pending). Still to do: run `modal setup`.
-- [ ] Baseten form (Heavy volume, same use case). Fireworks only if it takes under 2 minutes.
+- [x] Baseten form submitted (Heavy volume). Credits go to selected teams only, so the Muse Spark Open ablation is optional. Fireworks skipped.
 - [x] Request access to `facebook/sam3.1` (accepted Oct 26). Muse Glimmer is not gated. HF token created and logged in (`akhilfau`).
-- [ ] Create the public GitHub repo `veil` (empty, plus this spec), so the commit history starts at day 1.
+- [x] Public GitHub repo created: https://github.com/Akhilvallala1/veil
 - [ ] Join Discord, post in #intros, and note office hours (10 to 11 AM ET weekdays).
 
 ## 14. Nine-day plan (Oct 27 to Nov 4)
