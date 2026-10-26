@@ -59,13 +59,44 @@ class Guard:
         self.client = AsyncOpenAI(base_url=self.url, api_key=key or os.environ.get(
             "VEIL_GUARD_KEY") or os.environ.get("MODEL_API_KEY", "none"), timeout=60)
         self._cache: dict[str, list[GuardSpan]] = {}
-        self.usage = {"calls": 0, "input": 0, "output": 0}
+        # Per-line memory: (text, rounded box) -> spans found on that line last time.
+        # Screens change little between agent steps, so most lines are already known.
+        self._line_cache: dict[tuple, list[tuple[str, str]]] = {}
+        self.usage = {"calls": 0, "input": 0, "output": 0, "lines_sent": 0, "lines_cached": 0}
 
     @property
     def private(self) -> bool:
         return "api.meta.ai" not in self.url
 
+    @staticmethod
+    def _key(line: Line) -> tuple:
+        return (line.text, line.box[0] // 8, line.box[1] // 8)
+
     async def detect(self, lines: list[Line]) -> list[GuardSpan]:
+        """Classify only lines not seen before. New lines are sent together with their
+        immediate neighbors (for label context), but only new lines are cached from the reply."""
+        new_idx = [i for i, l in enumerate(lines) if self._key(l) not in self._line_cache]
+        self.usage["lines_cached"] += len(lines) - len(new_idx)
+        if new_idx:
+            ctx = sorted({j for i in new_idx for j in (i - 2, i - 1, i, i + 1)
+                          if 0 <= j < len(lines)})
+            sub = [lines[j] for j in ctx]
+            found = await self._detect_all(sub) if len(ctx) < len(lines) * 0.8 \
+                else await self._detect_all(lines)
+            index_map = ctx if len(ctx) < len(lines) * 0.8 else list(range(len(lines)))
+            per_line: dict[int, list[tuple[str, str]]] = {}
+            for g in found:
+                per_line.setdefault(index_map[g.line], []).append((g.text, g.entity))
+            for i in new_idx:
+                self._line_cache[self._key(lines[i])] = per_line.get(i, [])
+            self.usage["lines_sent"] += len(sub) if index_map is ctx else len(lines)
+        out = []
+        for i, l in enumerate(lines):
+            for text, ent in self._line_cache.get(self._key(l), []):
+                out.append(GuardSpan(i, text, ent))
+        return out
+
+    async def _detect_all(self, lines: list[Line]) -> list[GuardSpan]:
         payload = "\n".join(f"{i}\t[{l.box[0]},{l.box[1]},{l.box[2]},{l.box[3]}]\t{l.text}"
                             for i, l in enumerate(lines))
         key = hashlib.sha256(payload.encode()).hexdigest()

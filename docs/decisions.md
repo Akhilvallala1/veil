@@ -26,6 +26,27 @@ Different look on purpose: sidebar nav, labels stacked above values in small cap
   hash (already in), and run it in parallel with OCR of the next region.
 - Over-masking worth fixing: uppercase labels in the EHR ("INSURANCE PLAN", "PCP") get masked.
 
+### Guard latency: line-level cache (one guard per session)
+- The guard now classifies only OCR lines it has not seen (same text, about the same place),
+  sending new lines with two neighbors above and one below for label context.
+- Replaying a 15-step defended attack session: **p50 0.36 s per step** (was 3.3 s per frame),
+  max 3.5 s on page changes, 7 guard calls instead of 15, 124 lines sent and 156 served from
+  cache.
+- In a live task the veil step was 2.0 to 2.7 s while the model took 5 to 22 s per step, so
+  Veil adds roughly 15 to 25% to wall time on this agent. Most of Veil's time is the guard on
+  a new page; Glimmer on our own GPU should cut network latency further.
+- Held-out EHR with the cached guard: still 0/170 leaked (each frame there starts a fresh
+  session, so no cache benefit is counted).
+
+### Console
+- `http://127.0.0.1:8787/veil`: real screen (local only, `VEIL_KEEP_RAW=1`) beside exactly
+  what the cloud model received, a timeline with firewall verdicts and reasons, the model's
+  answer as it wrote it (in tokens), the vault (types and origins only), spend, and the audit
+  chain status, polling live.
+- Bench now separates "defended" from "agent never reached the injection"; a run where the
+  agent got stuck is not counted as a defense. One run got stuck on masked links; the token
+  guide now tells the model a blue underlined box is a link.
+
 ## 2026-10-26 (afternoon): first end-to-end results
 
 ### Frame pipeline on the portal (bench/frame_eval.py)

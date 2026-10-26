@@ -56,6 +56,17 @@ if os.environ.get("VEIL_SAM") == "api":
     from veil.detect.sam import SamClient
     SAM = SamClient()
 SPEND = {"usd": 0.0}
+GUARD_ON = os.environ.get("VEIL_GUARD", "1") == "1"
+
+
+def _guard(s: Session):
+    """One L2 guard per session, so its line cache follows the agent across steps."""
+    if not GUARD_ON:
+        return None
+    if not hasattr(s, "_guard"):
+        from veil.detect.guard import Guard
+        s._guard = Guard()  # type: ignore[attr-defined]
+    return s._guard  # type: ignore[attr-defined]
 
 
 def _audit(s: Session) -> AuditLog:
@@ -92,7 +103,7 @@ async def _veil_image(part: dict, key: str, s: Session, step: dict) -> None:
         part[key] = _encode(blank_frame(*s.last_frame_size, "Remote image withheld by Veil"))
         step["frames"].append({"blocked": True, "reason": "remote image url"})
         return
-    r = await veil_frame(raw, s.vault, origin=s.origin, sam=SAM)
+    r = await veil_frame(raw, s.vault, origin=s.origin, sam=SAM, guard=_guard(s))
     if r.blocked:
         out = blank_frame(r.width or s.last_frame_size[0], r.height or s.last_frame_size[1],
                           "Frame withheld by Veil (privacy check failed). Request a new screenshot.")
@@ -312,6 +323,8 @@ async def passthrough(path: str, request: Request) -> Response:
 @app.get("/healthz")
 def healthz() -> dict[str, Any]:
     return {"ok": True, "upstream": UPSTREAM, "sam": SAM is not None,
+            "guard": (os.environ.get("VEIL_GUARD_MODEL", "muse-spark-1.3") + " @ " +
+                      os.environ.get("VEIL_GUARD_URL", "https://api.meta.ai/v1")) if GUARD_ON else None,
             "spend_usd": round(SPEND["usd"], 4), "budget_usd": BUDGET_USD}
 
 
