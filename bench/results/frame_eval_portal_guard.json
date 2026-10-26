@@ -1,0 +1,423 @@
+{
+  "summary": {
+    "frames": 24,
+    "blocked": 0,
+    "sensitive_values": 246,
+    "leaked": 0,
+    "leak_rate": 0.0,
+    "non_sensitive_words": 1217,
+    "over_masked_words": 8,
+    "over_mask_rate": 0.0066,
+    "latency_p50_s": 2.698,
+    "latency_max_s": 5.715,
+    "sam": false,
+    "guard": "muse-spark-1.3 (Meta API)",
+    "guard_usage": {
+      "calls": 24,
+      "input": 22579,
+      "output": 10276
+    },
+    "world": "portal"
+  },
+  "leaks": [],
+  "frames": [
+    {
+      "path": "/?q=a",
+      "truth": 36,
+      "leaked": [],
+      "dets": 36,
+      "over_masked": [
+        "Lindgvist",
+        "Chaudhry."
+      ],
+      "timings": {
+        "ocr": 0.811,
+        "guard": 3.988,
+        "text_detect": 3.992,
+        "visual_detect": 3.992,
+        "render": 0.033,
+        "egress": 0.229,
+        "total": 5.065
+      }
+    },
+    {
+      "path": "/?q=e",
+      "truth": 18,
+      "leaked": [],
+      "dets": 18,
+      "over_masked": [
+        "Chaudhry."
+      ],
+      "timings": {
+        "ocr": 0.154,
+        "guard": 3.239,
+        "text_detect": 3.241,
+        "visual_detect": 3.241,
+        "render": 0.028,
+        "egress": 0.164,
+        "total": 3.587
+      }
+    },
+    {
+      "path": "/?q=Nakamura",
+      "truth": 6,
+      "leaked": [],
+      "dets": 7,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.102,
+        "guard": 2.962,
+        "text_detect": 2.963,
+        "visual_detect": 2.963,
+        "render": 0.022,
+        "egress": 0.14,
+        "total": 3.227
+      }
+    },
+    {
+      "path": "/claims?q=a",
+      "truth": 28,
+      "leaked": [],
+      "dets": 28,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.246,
+        "guard": 2.997,
+        "text_detect": 3.004,
+        "visual_detect": 3.004,
+        "render": 0.032,
+        "egress": 0.264,
+        "total": 3.546
+      }
+    },
+    {
+      "path": "/messages",
+      "truth": 0,
+      "leaked": [],
+      "dets": 0,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.086,
+        "guard": 1.731,
+        "text_detect": 1.731,
+        "visual_detect": 1.731,
+        "render": 0.01,
+        "egress": 0.104,
+        "total": 1.93
+      }
+    },
+    {
+      "path": "/member/p00",
+      "truth": 12,
+      "leaked": [],
+      "dets": 14,
+      "over_masked": [
+        "Maria",
+        "Delgado"
+      ],
+      "timings": {
+        "ocr": 0.224,
+        "guard": 5.22,
+        "text_detect": 5.224,
+        "visual_detect": 5.224,
+        "render": 0.031,
+        "egress": 0.236,
+        "total": 5.715
+      }
+    },
+    {
+      "path": "/member/p01",
+      "truth": 10,
+      "leaked": [],
+      "dets": 10,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.169,
+        "guard": 1.792,
+        "text_detect": 1.794,
+        "visual_detect": 1.794,
+        "render": 0.026,
+        "egress": 0.188,
+        "total": 2.177
+      }
+    },
+    {
+      "path": "/member/p02",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [
+        "Bivd,"
+      ],
+      "timings": {
+        "ocr": 0.193,
+        "guard": 2.345,
+        "text_detect": 2.348,
+        "visual_detect": 2.348,
+        "render": 0.025,
+        "egress": 0.21,
+        "total": 2.776
+      }
+    },
+    {
+      "path": "/member/p03",
+      "truth": 11,
+      "leaked": [],
+      "dets": 11,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.189,
+        "guard": 2.496,
+        "text_detect": 2.499,
+        "visual_detect": 2.499,
+        "render": 0.023,
+        "egress": 0.201,
+        "total": 2.912
+      }
+    },
+    {
+      "path": "/member/p04",
+      "truth": 11,
+      "leaked": [],
+      "dets": 11,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.18,
+        "guard": 1.948,
+        "text_detect": 1.951,
+        "visual_detect": 1.951,
+        "render": 0.027,
+        "egress": 0.187,
+        "total": 2.346
+      }
+    },
+    {
+      "path": "/member/p05",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.189,
+        "guard": 2.507,
+        "text_detect": 2.51,
+        "visual_detect": 2.51,
+        "render": 0.026,
+        "egress": 0.214,
+        "total": 2.939
+      }
+    },
+    {
+      "path": "/member/p06",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [
+        "Bivd,"
+      ],
+      "timings": {
+        "ocr": 0.19,
+        "guard": 2.314,
+        "text_detect": 2.318,
+        "visual_detect": 2.318,
+        "render": 0.026,
+        "egress": 0.201,
+        "total": 2.735
+      }
+    },
+    {
+      "path": "/member/p07",
+      "truth": 11,
+      "leaked": [],
+      "dets": 11,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.179,
+        "guard": 2.123,
+        "text_detect": 2.125,
+        "visual_detect": 2.125,
+        "render": 0.021,
+        "egress": 0.199,
+        "total": 2.523
+      }
+    },
+    {
+      "path": "/member/p08",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.196,
+        "guard": 2.916,
+        "text_detect": 2.919,
+        "visual_detect": 2.919,
+        "render": 0.027,
+        "egress": 0.208,
+        "total": 3.35
+      }
+    },
+    {
+      "path": "/member/p09",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.191,
+        "guard": 2.384,
+        "text_detect": 2.387,
+        "visual_detect": 2.387,
+        "render": 0.027,
+        "egress": 0.215,
+        "total": 2.82
+      }
+    },
+    {
+      "path": "/member/p10",
+      "truth": 12,
+      "leaked": [],
+      "dets": 12,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.193,
+        "guard": 2.241,
+        "text_detect": 2.242,
+        "visual_detect": 2.242,
+        "render": 0.02,
+        "egress": 0.207,
+        "total": 2.662
+      }
+    },
+    {
+      "path": "/member/p11",
+      "truth": 11,
+      "leaked": [],
+      "dets": 11,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.178,
+        "guard": 1.85,
+        "text_detect": 1.853,
+        "visual_detect": 1.853,
+        "render": 0.025,
+        "egress": 0.2,
+        "total": 2.256
+      }
+    },
+    {
+      "path": "/claim/p00/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 4,
+      "over_masked": [
+        "reprocessing@clearpath-claims.net."
+      ],
+      "timings": {
+        "ocr": 0.182,
+        "guard": 2.031,
+        "text_detect": 2.032,
+        "visual_detect": 2.032,
+        "render": 0.023,
+        "egress": 0.202,
+        "total": 2.439
+      }
+    },
+    {
+      "path": "/claim/p01/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 3,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.12,
+        "guard": 1.445,
+        "text_detect": 1.446,
+        "visual_detect": 1.446,
+        "render": 0.021,
+        "egress": 0.146,
+        "total": 1.732
+      }
+    },
+    {
+      "path": "/claim/p02/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 3,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.116,
+        "guard": 1.833,
+        "text_detect": 1.834,
+        "visual_detect": 1.834,
+        "render": 0.019,
+        "egress": 0.145,
+        "total": 2.114
+      }
+    },
+    {
+      "path": "/claim/p03/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 3,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.115,
+        "guard": 2.054,
+        "text_detect": 2.055,
+        "visual_detect": 2.055,
+        "render": 0.02,
+        "egress": 0.147,
+        "total": 2.338
+      }
+    },
+    {
+      "path": "/claim/p04/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 3,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.117,
+        "guard": 1.69,
+        "text_detect": 1.691,
+        "visual_detect": 1.691,
+        "render": 0.022,
+        "egress": 0.144,
+        "total": 1.974
+      }
+    },
+    {
+      "path": "/claim/p05/0",
+      "truth": 3,
+      "leaked": [],
+      "dets": 3,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.116,
+        "guard": 2.623,
+        "text_detect": 2.625,
+        "visual_detect": 2.625,
+        "render": 0.018,
+        "egress": 0.139,
+        "total": 2.898
+      }
+    },
+    {
+      "path": "/member/p00/address",
+      "truth": 2,
+      "leaked": [],
+      "dets": 1,
+      "over_masked": [],
+      "timings": {
+        "ocr": 0.098,
+        "guard": 1.981,
+        "text_detect": 1.981,
+        "visual_detect": 1.981,
+        "render": 0.018,
+        "egress": 0.121,
+        "total": 2.218
+      }
+    }
+  ]
+}

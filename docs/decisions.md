@@ -2,6 +2,30 @@
 
 Each entry: what we tested, what we measured, what we decided. Newest first.
 
+## 2026-10-26 (evening): held-out world and the semantic detector
+
+### Held-out EHR world (bench/worlds/ehr.py), built after the rules were frozen
+Different look on purpose: sidebar nav, labels stacked above values in small caps, ISO dates,
+"Last, First" names, a free-text front-desk note, new people (seed 4242).
+
+| Arm | Portal (dev, 246 values) | EHR (held-out, 170 values) | Over-masking (EHR) | p50 latency |
+|---|---|---|---|---|
+| Rules only (OCR + validators + layout) | 0 leaked | **35 leaked (20.6%)** | 5.7% | 0.35 s |
+| Rules + semantic guard (L2) | 0 leaked | **0 leaked** | 7.3% | 3.3 s |
+
+- The untuned held-out result is saved as `bench/results/heldout/ehr_v0_untuned.json` and goes
+  in the README next to the final number. Rules alone missed ISO dates of birth, free-text
+  reference numbers, and stacked-label addresses.
+- The L2 guard reads OCR text + boxes only (never pixels) and returns spans. Today it runs on
+  Muse Spark 1.3 via Meta API as a stand-in, on synthetic data only. The design target is
+  Muse Glimmer on Modal (same OpenAI-compatible call, `VEIL_GUARD_URL`/`VEIL_GUARD_MODEL`),
+  waiting on `modal setup`. Spark numbers are a ceiling reference, not the claim.
+- Cost of the stand-in: ~930 input + ~550 output tokens per frame, about $0.0035 per frame.
+- Latency of 3.3 s per frame is too slow for the target (2.5 s). Plan: run the guard only on
+  lines that changed since the last frame (screens change little between steps), cache by text
+  hash (already in), and run it in parallel with OCR of the next region.
+- Over-masking worth fixing: uppercase labels in the EHR ("INSURANCE PLAN", "PCP") get masked.
+
 ## 2026-10-26 (afternoon): first end-to-end results
 
 ### Frame pipeline on the portal (bench/frame_eval.py)

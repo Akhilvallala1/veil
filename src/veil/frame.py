@@ -76,7 +76,7 @@ def _font(size: int):
 
 def _merge(spans: list[Span]) -> list[Span]:
     """Prefer label-derived spans (they carry semantic type), drop overlaps."""
-    order = {"label": 0, "vault": 1, "validator": 2}
+    order = {"label": 0, "guard": 1, "vault": 2, "validator": 3}
     out: list[Span] = []
     for s in sorted(spans, key=lambda s: (order.get(s.source, 9), s.start)):
         if any(o.start < s.end and s.start < o.end for o in out):
@@ -106,11 +106,21 @@ def _vault_spans(line: Line, vault: Vault) -> list[Span]:
     return spans
 
 
-def detect_text(lines: list[Line], vault: Vault, origin: str) -> list[Detection]:
+def detect_text(lines: list[Line], vault: Vault, origin: str,
+                guard_spans: list | None = None) -> list[Detection]:
     labeled = label_spans(lines)
+    extra: dict[int, list[Span]] = {}
+    for g in guard_spans or []:
+        text = lines[g.line].text
+        i = text.lower().find(g.text.lower())
+        if i == -1:  # model paraphrased: fall back to the whole line
+            i, j = 0, len(text)
+        else:
+            j = i + len(g.text)
+        extra.setdefault(g.line, []).append(Span(i, j, g.entity, "guard", text[i:j]))
     dets: list[Detection] = []
     for i, line in enumerate(lines):
-        spans = list(labeled.get(i, []))
+        spans = list(labeled.get(i, [])) + extra.get(i, [])
         spans += [s for s in find_spans(line.text) if s.entity not in PASS_ENTITIES]
         spans += _vault_spans(line, vault)
         for s in _merge(spans):
@@ -198,7 +208,8 @@ def egress_check(png: bytes, vault: Vault) -> list[str]:
 
 
 async def veil_frame(png: bytes, vault: Vault, origin: str = "", sam=None,
-                     sam_concepts: tuple[str, ...] = ("face", "id card")) -> VeilResult:
+                     sam_concepts: tuple[str, ...] = ("face", "id card"),
+                     guard=None) -> VeilResult:
     t = {}
     t0 = time.perf_counter()
     try:
@@ -206,7 +217,9 @@ async def veil_frame(png: bytes, vault: Vault, origin: str = "", sam=None,
         t["ocr"] = time.perf_counter() - t0
         t1 = time.perf_counter()
         visual_task = asyncio.create_task(detect_visual(png, sam, sam_concepts))
-        dets = detect_text(lines, vault, origin)
+        guard_spans = await guard.detect(lines) if guard is not None and lines else []
+        t["guard"] = time.perf_counter() - t1
+        dets = detect_text(lines, vault, origin, guard_spans)
         t["text_detect"] = time.perf_counter() - t1
         dets += await visual_task
         t["visual_detect"] = time.perf_counter() - t1
