@@ -23,7 +23,9 @@ GENERIC_ID = re.compile(r"\b(?=[A-Za-z0-9-]*\d)(?=[A-Za-z0-9-]*[A-Za-z])[A-Za-z0
 
 TOKEN_GUIDE = (
     "PRIVACY LAYER: Sensitive values on screen and in the task are replaced by tokens such as "
-    "‹NAME_1› or ‹MEMBER_ID_2›, shown as dark boxes with yellow labels. The same token always "
+    "‹NAME_1› or ‹MEMBER_ID_2›, shown as dark boxes with yellow labels. Each box sits exactly "
+    "where the original text is and behaves like it: a box with a blue underlined label is a "
+    "link, so click the center of the box itself to open it. The same token always "
     "means the same value. To type a sensitive value, type its token in double braces, for "
     "example {{NAME_1}}; it is filled in locally. Never guess or reconstruct hidden values. "
     "In answers, refer to people and identifiers by their tokens.")

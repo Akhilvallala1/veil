@@ -265,6 +265,11 @@ async def responses(request: Request) -> Response:
     return JSONResponse(out, headers={"x-veil-session": s.id})
 
 
+@app.get("/veil")
+def console() -> FileResponse:
+    return FileResponse(Path(__file__).parent / "console" / "index.html")
+
+
 @app.get("/veil/sessions")
 def list_sessions() -> list[dict]:
     return [{"id": s.id, "steps": len(s.steps), "tokens": len(s.vault.entries())}
