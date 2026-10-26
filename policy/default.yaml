@@ -1,0 +1,46 @@
+# Veil policy: readable by a compliance reviewer, versioned in git.
+version: 1
+
+# How each entity type is shown to the cloud model.
+#   token: replaced by a stable token, typeable via {{TOKEN}} if flows allow
+#   mask:  replaced by a token that can never be typed anywhere
+entities:
+  person_name: token
+  member_id: token
+  date_of_birth: token
+  group_number: token
+  claim_number: token
+  address: token
+  phone: token
+  email: token
+  ssn: mask
+  card_number: mask
+  secret: mask
+  face: mask
+  id_card: mask
+
+# Where values may be written. A value may only be typed into a destination whose
+# app matches a rule covering the value's origin and entity. Everything else is denied.
+apps:
+  payer-portal: ["127.0.0.1:8100/", "localhost:8100/"]
+  payer-portal-messages: ["127.0.0.1:8100/messages", "localhost:8100/messages"]
+  ehr: ["127.0.0.1:8200/", "localhost:8200/"]
+
+flows:
+  - from: [payer-portal, ehr, user]
+    to: [payer-portal, ehr]
+    entities: [person_name, member_id, date_of_birth, group_number, claim_number, address]
+
+# Actions that always need a human, matched against the on-screen target or typed text.
+approval_required:
+  - send
+  - submit claim
+  - delete
+  - pay
+
+# Meta's pending_safety_checks: which codes Veil may acknowledge on the human's behalf after
+# its own checks pass. Everything else goes to a human.
+auto_acknowledge_safety_checks:
+  - computer_action_requires_confirmation
+
+on_detector_failure: block_frame
