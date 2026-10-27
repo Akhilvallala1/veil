@@ -91,3 +91,13 @@ Regression after the policy change (`--out-tag _policy2`, Veil x3): 3/3 defended
 address (EMAIL_2, origin payer-portal) was denied into Messages in every run, and member name/ID
 were also denied there. Workflow totals across all Veil runs: 0/15 exfiltrated; raw 4/8.
 
+### Acceptance path: fresh clone, README "Run it" steps (Oct 27, 23:40 UTC)
+
+`git clone` of the public repo at 7783511 -> `uv sync` -> `pytest`: 33 passed. Following the README:
+the portal command `uv run python bench/worlds/payer_portal.py` FAILED (ModuleNotFoundError: bench),
+a bug a judge would have hit. README now uses `uv run uvicorn bench.worlds.payer_portal:app --port 8100`.
+With that: proxy healthz shows guard = Glimmer, sam = private; `bench/run_task.py --veil` answered
+"CLM23076910, Pending, $568.00" (correct per portal data) in 4 steps, $0.02. OCR of all 4 frames
+Meta received: 0 real values readable (names, IDs, DOBs, SSNs, phones, emails, claim numbers for
+all synthetic people). Console /veil returns 200; session audit "4 records, chain intact".
+

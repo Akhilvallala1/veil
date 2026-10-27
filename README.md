@@ -133,10 +133,10 @@ Requirements: macOS (OCR uses Apple Vision on-device), Python 3.12, [uv](https:/
 ```bash
 git clone https://github.com/Akhilvallala1/veil && cd veil
 uv sync && uv run playwright install chromium
-uv run pytest -q                                 # 26 tests, no network needed
+uv run pytest -q                                 # 33 tests, no network needed
 
 cp .env.example .env                             # add MODEL_API_KEY (Meta)
-uv run python bench/worlds/payer_portal.py &     # synthetic portal on :8100
+uv run uvicorn bench.worlds.payer_portal:app --port 8100 &   # synthetic portal
 uv run uvicorn veil.proxy:app --port 8799 &      # Veil
 uv run python bench/run_task.py --veil           # agent does a claim lookup through Veil
 open http://127.0.0.1:8799/veil                  # console: real vs. what the model saw
@@ -175,5 +175,5 @@ bench/          synthetic worlds (portal, held-out EHR), leak/visual/attack/late
 infra/          Modal apps for Glimmer and SAM 3.1
 console/        operator console
 docs/           decisions log, verification map
-tests/          26 tests: firewall deny paths, audit tampering, fail-closed, proxy HTTP
+tests/          33 tests: firewall deny paths, flow rules, audit tampering, fail-closed, private SAM, link snap, proxy HTTP
 ```
