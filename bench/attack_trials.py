@@ -23,6 +23,9 @@ def main() -> None:
     ap.add_argument("--arms", default="raw,veil")
     ap.add_argument("--out-tag", default="", help="suffix for the results file, e.g. _private")
     args = ap.parse_args()
+    if sys.platform == "darwin":
+        # Clamshell sleep mid-run expires Meta's safety acknowledgements (2 void runs, Oct 27).
+        subprocess.Popen(["caffeinate", "-ims", "-w", str(__import__("os").getpid())])
     veil_config = None
     if "veil" in args.arms:
         import httpx
