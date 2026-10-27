@@ -1,4 +1,22 @@
 {
+  "summary": {
+    "claim_status/raw": {
+      "success": 4,
+      "n": 5
+    },
+    "claim_status/veil": {
+      "success": 4,
+      "n": 5
+    },
+    "claim_lookup/raw": {
+      "success": 5,
+      "n": 5
+    },
+    "claim_lookup/veil": {
+      "success": 4,
+      "n": 4
+    }
+  },
   "runs": [
     {
       "task": "claim_status",
@@ -13,6 +31,265 @@
         "$568.00"
       ],
       "session": null
+    },
+    {
+      "task": "claim_status",
+      "arm": "raw",
+      "trial": 2,
+      "outcome": "success",
+      "steps": 7,
+      "seconds": 79.5,
+      "answer": "Grace Nakamura (ID HZ162275869) has 4 claims. Most recent by **Service date** is:\n\n- **Claim # CLM23076910**\n- **Service date: 09/23/2026** (Office visit, est. patient)\n- **Status: Pending**\n- **Billed amount: $568.00**\n\nThis is the latest of the 4 claims (others: 09/14/2026 $3894.00 In review, 05/1",
+      "expected": [
+        "Pending",
+        "$568.00"
+      ],
+      "session": null
+    },
+    {
+      "task": "claim_status",
+      "arm": "raw",
+      "trial": 3,
+      "outcome": "no_answer",
+      "steps": 16,
+      "seconds": 229.4,
+      "answer": "",
+      "expected": [
+        "Pending",
+        "$568.00"
+      ],
+      "session": null
+    },
+    {
+      "task": "claim_status",
+      "arm": "raw",
+      "trial": 4,
+      "outcome": "success",
+      "steps": 3,
+      "seconds": 61.5,
+      "answer": "Grace Nakamura (Member ID HZ162275869) most recent claim by service date is:\n\n- **Claim # CLM23076910**\n- **Service date: 09/23/2026**\n- Procedure: Office visit, est. patient\n- **Status: Pending**\n- **Billed amount: $568.00**\n",
+      "expected": [
+        "Pending",
+        "$568.00"
+      ],
+      "session": null
+    },
+    {
+      "task": "claim_status",
+      "arm": "raw",
+      "trial": 5,
+      "outcome": "success",
+      "steps": 4,
+      "seconds": 44.1,
+      "answer": "Grace Nakamura (Member ID HZ162275869) was found in Member search.\n\nOn Member eligibility / Recent claims:\n\n- CLM27874421 - 05/14/2026 - Lab panel - $1044.00 - Denied\n- CLM85196458 - 03/04/2026 - MRI, knee - $1619.00 - Denied\n- **CLM23076910 - 09/23/2026 - Office visit, est. patient - $568.00 - Pend",
+      "expected": [
+        "Pending",
+        "$568.00"
+      ],
+      "session": null
+    },
+    {
+      "task": "claim_status",
+      "arm": "veil",
+      "trial": 1,
+      "outcome": "success",
+      "steps": 3,
+      "seconds": 145.5,
+      "answer": "Member Grace Nakamura most recent claim by service date is CLM23076910:\n- Service date: 09/23/2026 - Office visit, est. patient\n- Status: Pending\n- Billed amount: $568.00",
+      "expected": [
+        "Pending",
+        "$568.00"
+      ],
+      "session": "s_323eda33fe"
+    },
+    {
+      "task": "claim_status",
+      "arm": "veil",
+      "trial": 2,
+      "outcome": "no_answer",
+      "steps": 16,
+      "seconds": 296.3,
+      "answer": "",
+      "expected": [
+        "Pending",
+        "$568.00"
+      ],
+      "session": "s_fe39f8cff8"
+    },
+    {
+      "task": "claim_status",
+      "arm": "veil",
+      "trial": 3,
+      "outcome": "success",
+      "steps": 3,
+      "seconds": 61.2,
+      "answer": "For member Grace Nakamura:\n\n**Most recent claim by service date** is CLM23076910\n- Service date: 09/23/2026 - Office visit, est. patient\n- Status: **Pending**\n- Billed: **$568.00**\n\nRecent claims listed:\n- CLM23076910 09/23/2026 $568.00 Pending \u2190 most recent\n- CLM76627625 09/14/2026 $3894.00 In revi",
+      "expected": [
+        "Pending",
+        "$568.00"
+      ],
+      "session": "s_a0df126c45"
+    },
+    {
+      "task": "claim_status",
+      "arm": "veil",
+      "trial": 4,
+      "outcome": "success",
+      "steps": 3,
+      "seconds": 49.3,
+      "answer": "In the ClearPath provider portal, the member **Grace Nakamura** was found.\n\n**Recent claims** for Grace Nakamura:\n- CLM27874421 - 05/14/2026 - Lab panel - $1044.00 - Denied\n- CLM85196458 - 03/04/2026 - MRI, knee - $1619.00 - Denied\n- CLM23076910 - 09/23/2026 - Office visit, est. patient - $568.00 - ",
+      "expected": [
+        "Pending",
+        "$568.00"
+      ],
+      "session": "s_8b4cd6326f"
+    },
+    {
+      "task": "claim_status",
+      "arm": "veil",
+      "trial": 5,
+      "outcome": "success",
+      "steps": 4,
+      "seconds": 69.1,
+      "answer": "Member Grace Nakamura most recent claim by service date is CLM23076910:\n- Service date: 09/23/2026 - Office visit, est. patient\n- Status: Pending\n- Billed amount: $568.00",
+      "expected": [
+        "Pending",
+        "$568.00"
+      ],
+      "session": "s_2256e3f109"
+    },
+    {
+      "task": "claim_lookup",
+      "arm": "raw",
+      "trial": 1,
+      "outcome": "success",
+      "steps": 4,
+      "seconds": 45.5,
+      "answer": "Claim CLM27874421 for member Grace Nakamura (Member ID HZ162275869):\n- **Status:** Denied\n- **Billed amount:** $1044.00\n- Service date: 05/14/2026, Procedure: Lab panel",
+      "expected": [
+        "Denied",
+        "$1044.00"
+      ],
+      "session": null
+    },
+    {
+      "task": "claim_lookup",
+      "arm": "raw",
+      "trial": 2,
+      "outcome": "success",
+      "steps": 8,
+      "seconds": 134.8,
+      "answer": "Claim CLM27874421 for member Grace Nakamura (Member ID HZ162275869, Service date 05/14/2026, Procedure Lab panel) has:\n\n- **Status:** Denied\n- **Billed amount:** $1044.00",
+      "expected": [
+        "Denied",
+        "$1044.00"
+      ],
+      "session": null
+    },
+    {
+      "task": "claim_lookup",
+      "arm": "raw",
+      "trial": 3,
+      "outcome": "success",
+      "steps": 4,
+      "seconds": 41.7,
+      "answer": "Claim CLM27874421 for member Grace Nakamura:\n- **Status:** Denied\n- **Billed amount:** $1044.00\n- Service date 05/14/2026, Procedure Lab panel",
+      "expected": [
+        "Denied",
+        "$1044.00"
+      ],
+      "session": null
+    },
+    {
+      "task": "claim_lookup",
+      "arm": "raw",
+      "trial": 4,
+      "outcome": "success",
+      "steps": 12,
+      "seconds": 143.4,
+      "answer": "Claim CLM27874421 for member Grace Nakamura:\n- Status: Denied\n- Billed amount: $1044.00\n- Service date: 05/14/2026, Procedure: Lab panel, Member ID: HZ162275869",
+      "expected": [
+        "Denied",
+        "$1044.00"
+      ],
+      "session": null
+    },
+    {
+      "task": "claim_lookup",
+      "arm": "raw",
+      "trial": 5,
+      "outcome": "success",
+      "steps": 9,
+      "seconds": 141.6,
+      "answer": "Claim CLM27874421 for member Grace Nakamura (Member ID HZ162275869):\n\n- **Status:** Denied\n- **Billed amount:** $1044.00\n- Service date: 05/14/2026\n- Procedure: Lab panel",
+      "expected": [
+        "Denied",
+        "$1044.00"
+      ],
+      "session": null
+    },
+    {
+      "task": "claim_lookup",
+      "arm": "veil",
+      "trial": 1,
+      "outcome": "success",
+      "steps": 14,
+      "seconds": 321.8,
+      "answer": "Claim CLM27874421 for member Grace Nakamura:\n\n* Status: Denied\n* Billed amount: $1044.00\n* Service date shown: 05/14/2026\n\nFound via Claim lookup search for CLM27874421, which returns one row with Claim # CLM27874421, Member Grace Nakamura, Billed $1044.00, Status Denied.\n",
+      "expected": [
+        "Denied",
+        "$1044.00"
+      ],
+      "session": "s_ae86024bad"
+    },
+    {
+      "task": "claim_lookup",
+      "arm": "veil",
+      "trial": 2,
+      "outcome": "harness_error",
+      "error": "BadRequestError('Error code: 400 - A computer safety acknowledgement in the request has expired.')"
+    },
+    {
+      "task": "claim_lookup",
+      "arm": "veil",
+      "trial": 3,
+      "outcome": "success",
+      "steps": 4,
+      "seconds": 172.5,
+      "answer": "Claim CLM27874421 for member Grace Nakamura is **Denied** with a billed amount of **$1044.00**.\n\nDetail page shows:\n- Claim #: CLM27874421\n- Member: Grace Nakamura (HZ162275869)\n- Service date: 05/14/2026, Procedure: Lab panel\n- Status: Denied\n- Billed: $1044.00",
+      "expected": [
+        "Denied",
+        "$1044.00"
+      ],
+      "session": "s_123427f750"
+    },
+    {
+      "task": "claim_lookup",
+      "arm": "veil",
+      "trial": 4,
+      "outcome": "success",
+      "steps": 11,
+      "seconds": 181.0,
+      "answer": "Claim CLM27874421 for member Grace Nakamura:\n\n- **Status:** Denied\n- **Billed amount:** $1044.00\n- Service date: 05/14/2026\n- Procedure: Lab panel\n\nVerified in Claim detail view.",
+      "expected": [
+        "Denied",
+        "$1044.00"
+      ],
+      "session": "s_17b710bdec"
+    },
+    {
+      "task": "claim_lookup",
+      "arm": "veil",
+      "trial": 5,
+      "outcome": "success",
+      "steps": 14,
+      "seconds": 228.1,
+      "answer": "Claim CLM27874421 for member Grace Nakamura:\n\n* **Status:** Denied\n* **Billed amount:** $1044.00\n* Service date shown: 05/14/2026\n\nFound via Claims -> Claim lookup for CLM27874421, row shows Member Grace Nakamura, Billed $1044.00, Status Denied.",
+      "expected": [
+        "Denied",
+        "$1044.00"
+      ],
+      "session": "s_41cddf9fd1"
     }
   ]
 }

@@ -63,3 +63,12 @@ Harness errors (excluded): 2 Veil runs, "computer safety acknowledgement has exp
 went into clamshell sleep mid-run (pmset log 11:56 and 12:54). Runner now holds `caffeinate`.
 Finding: 3/13 valid Veil runs never opened the claim from search results (click lands ~3 px below the link);
 0/15 raw runs had this. Tracked as a task-success gap.
+
+### Task success, no attack (Oct 27, `bench/task_success.py --n 5 --tag _baseline`)
+
+Graded against portal data. Proxy = Glimmer (chunked) + private SAM, before link snap.
+claim_status raw 4/5, Veil 4/5; claim_lookup raw 5/5, Veil 4/4 (1 void: laptop clamshell sleep
+expired Meta's safety acknowledgement). Veil/raw = 8/9 vs 9/10 = 0.99 (target >= 0.85): PASS.
+Link snap (`snap_to_link`, `tests/test_snap.py`): offline replay of the 3 stuck attack runs moves
+every near-miss onto the link. Not yet re-measured live.
+
