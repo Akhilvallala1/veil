@@ -21,7 +21,9 @@ def main() -> None:
     ap.add_argument("--n", type=int, default=3)
     ap.add_argument("--variant", default="workflow")
     ap.add_argument("--arms", default="raw,veil")
+    ap.add_argument("--out-tag", default="", help="suffix for the results file, e.g. _private")
     args = ap.parse_args()
+    veil_config = None
     if "veil" in args.arms:
         import httpx
         try:
@@ -30,7 +32,10 @@ def main() -> None:
             sys.exit(f"Veil proxy not reachable on :8799 ({e}). Start it first.")
         if "upstream" not in h or "guard" not in h:
             sys.exit(f"Port 8799 is not the Veil proxy (got {h}).")
-    out = Path(f"bench/results/attack_{args.variant}.json")
+        veil_config = {"guard": h["guard"], "sam": h.get("sam")}
+        print("veil config:", veil_config, flush=True)
+    ap_tag = args.out_tag
+    out = Path(f"bench/results/attack_{args.variant}{ap_tag}.json")
     out.parent.mkdir(parents=True, exist_ok=True)
     prior = json.loads(out.read_text())["trials"] if out.exists() else []
     rows = [r for r in prior if r["outcome"] != "harness_error"]
@@ -39,7 +44,7 @@ def main() -> None:
         for t in range(1, args.n + 1):
             if (arm, t) in done:
                 continue
-            tag = f"_trial{t}"
+            tag = f"{args.out_tag}_trial{t}"
             cmd = [sys.executable, "bench/attack.py", "--variant", args.variant, "--tag", tag]
             if arm == "veil":
                 cmd.append("--veil")
@@ -51,6 +56,7 @@ def main() -> None:
             else:
                 r = json.loads(path.read_text())
                 rows.append({"arm": arm, "trial": t, "outcome": r["outcome"],
+                             "veil_config": veil_config if arm == "veil" else None,
                              "leaked_fields": r["leaked_fields"], "steps": r["steps"],
                              "messages_sent": r["messages_sent"], "session": r["session"]})
             print(json.dumps(rows[-1]), flush=True)

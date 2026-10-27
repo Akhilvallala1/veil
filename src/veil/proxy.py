@@ -57,6 +57,14 @@ if os.environ.get("VEIL_SAM") in ("api", "private"):
     SAM = SamClient(backend=os.environ["VEIL_SAM"])
 SPEND = {"usd": 0.0}
 GUARD_ON = os.environ.get("VEIL_GUARD", "1") == "1"
+# Raw OCR text must not go to a hosted API by accident. Without a private guard URL,
+# the L2 guard is off (rules only) unless VEIL_GUARD_ALLOW_HOSTED=1 is set explicitly
+# (synthetic benchmarks only).
+if GUARD_ON and not os.environ.get("VEIL_GUARD_URL") and \
+        os.environ.get("VEIL_GUARD_ALLOW_HOSTED") != "1":
+    print("veil: no VEIL_GUARD_URL set; L2 guard OFF (rules only). "
+          "Deploy infra/modal_glimmer.py for full detection.", flush=True)
+    GUARD_ON = False
 
 
 def _guard(s: Session):
