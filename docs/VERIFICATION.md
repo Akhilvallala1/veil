@@ -72,3 +72,9 @@ expired Meta's safety acknowledgement). Veil/raw = 8/9 vs 9/10 = 0.99 (target >=
 Link snap (`snap_to_link`, `tests/test_snap.py`): offline replay of the 3 stuck attack runs moves
 every near-miss onto the link. Not yet re-measured live.
 
+### Link snap, live (Oct 27, `attack_trials.py --n 5 --variant workflow --arms veil --out-tag _snap`)
+
+5/5 Veil runs reached the claim (was 2/4 without snap), model fooled in 5/5, flow_policy denied the
+outside recipient in 5/5, 0 messages sent. snapped_to_link fired 1 to 4 times per run (audit log).
+Workflow totals across all Veil runs: 0/12 exfiltrated; raw 4/8.
+
