@@ -8,15 +8,15 @@
     "non_sensitive_words": 1217,
     "over_masked_words": 8,
     "over_mask_rate": 0.0066,
-    "latency_p50_s": 8.923,
-    "latency_max_s": 181.542,
+    "latency_p50_s": 6.414,
+    "latency_max_s": 9.521,
     "sam": true,
     "guard": "muse-glimmer (private)",
     "guard_usage": {
-      "calls": 24,
-      "input": 21298,
-      "output": 16574,
-      "lines_sent": 815,
+      "calls": 102,
+      "input": 48272,
+      "output": 32466,
+      "lines_sent": 977,
       "lines_cached": 367
     },
     "world": "portal",
@@ -34,13 +34,13 @@
         "Chaudhry."
       ],
       "timings": {
-        "ocr": 0.609,
-        "guard": 180.418,
-        "text_detect": 180.422,
-        "visual_detect": 180.422,
-        "render": 0.042,
-        "egress": 0.469,
-        "total": 181.542
+        "ocr": 0.859,
+        "guard": 8.372,
+        "text_detect": 8.378,
+        "visual_detect": 8.378,
+        "render": 0.038,
+        "egress": 0.246,
+        "total": 9.521
       }
     },
     {
@@ -52,13 +52,13 @@
         "Chaudhry."
       ],
       "timings": {
-        "ocr": 0.163,
-        "guard": 10.159,
-        "text_detect": 10.162,
-        "visual_detect": 22.244,
-        "render": 0.023,
-        "egress": 0.41,
-        "total": 22.84
+        "ocr": 0.166,
+        "guard": 7.555,
+        "text_detect": 7.557,
+        "visual_detect": 7.557,
+        "render": 0.025,
+        "egress": 0.179,
+        "total": 7.927
       }
     },
     {
@@ -68,13 +68,13 @@
       "dets": 7,
       "over_masked": [],
       "timings": {
-        "ocr": 0.103,
-        "guard": 7.782,
-        "text_detect": 7.783,
-        "visual_detect": 7.783,
-        "render": 0.022,
-        "egress": 0.135,
-        "total": 8.044
+        "ocr": 0.111,
+        "guard": 5.371,
+        "text_detect": 5.372,
+        "visual_detect": 5.372,
+        "render": 0.016,
+        "egress": 0.139,
+        "total": 5.637
       }
     },
     {
@@ -84,13 +84,13 @@
       "dets": 28,
       "over_masked": [],
       "timings": {
-        "ocr": 0.248,
-        "guard": 13.657,
-        "text_detect": 13.663,
-        "visual_detect": 13.663,
-        "render": 0.031,
-        "egress": 0.489,
-        "total": 14.431
+        "ocr": 0.256,
+        "guard": 6.125,
+        "text_detect": 6.131,
+        "visual_detect": 6.131,
+        "render": 0.032,
+        "egress": 0.274,
+        "total": 6.693
       }
     },
     {
@@ -100,13 +100,13 @@
       "dets": 0,
       "over_masked": [],
       "timings": {
-        "ocr": 0.092,
-        "guard": 2.146,
-        "text_detect": 2.146,
-        "visual_detect": 2.146,
-        "render": 0.018,
-        "egress": 0.119,
-        "total": 2.375
+        "ocr": 0.087,
+        "guard": 1.194,
+        "text_detect": 1.195,
+        "visual_detect": 1.195,
+        "render": 0.012,
+        "egress": 0.092,
+        "total": 1.386
       }
     },
     {
@@ -119,13 +119,13 @@
         "Delgado"
       ],
       "timings": {
-        "ocr": 0.223,
-        "guard": 20.827,
-        "text_detect": 20.831,
-        "visual_detect": 20.831,
-        "render": 0.025,
-        "egress": 0.368,
-        "total": 21.446
+        "ocr": 0.239,
+        "guard": 5.69,
+        "text_detect": 5.694,
+        "visual_detect": 5.694,
+        "render": 0.032,
+        "egress": 0.225,
+        "total": 6.19
       }
     },
     {
@@ -135,13 +135,13 @@
       "dets": 10,
       "over_masked": [],
       "timings": {
-        "ocr": 0.175,
-        "guard": 8.045,
-        "text_detect": 8.048,
-        "visual_detect": 8.048,
-        "render": 0.026,
-        "egress": 0.215,
-        "total": 8.464
+        "ocr": 0.168,
+        "guard": 7.922,
+        "text_detect": 7.924,
+        "visual_detect": 7.924,
+        "render": 0.019,
+        "egress": 0.194,
+        "total": 8.304
       }
     },
     {
@@ -153,13 +153,13 @@
         "Bivd,"
       ],
       "timings": {
-        "ocr": 0.197,
-        "guard": 8.29,
-        "text_detect": 8.293,
-        "visual_detect": 8.293,
-        "render": 0.024,
-        "egress": 0.208,
-        "total": 8.722
+        "ocr": 0.198,
+        "guard": 5.957,
+        "text_detect": 5.96,
+        "visual_detect": 5.96,
+        "render": 0.027,
+        "egress": 0.22,
+        "total": 6.405
       }
     },
     {
@@ -169,13 +169,13 @@
       "dets": 11,
       "over_masked": [],
       "timings": {
-        "ocr": 0.189,
-        "guard": 7.285,
-        "text_detect": 7.287,
-        "visual_detect": 7.287,
-        "render": 0.019,
-        "egress": 0.206,
-        "total": 7.701
+        "ocr": 0.196,
+        "guard": 5.707,
+        "text_detect": 5.711,
+        "visual_detect": 5.711,
+        "render": 0.027,
+        "egress": 0.202,
+        "total": 6.135
       }
     },
     {
@@ -185,13 +185,13 @@
       "dets": 11,
       "over_masked": [],
       "timings": {
-        "ocr": 0.183,
-        "guard": 9.134,
-        "text_detect": 9.137,
-        "visual_detect": 9.137,
-        "render": 0.024,
-        "egress": 0.195,
-        "total": 9.539
+        "ocr": 0.18,
+        "guard": 6.979,
+        "text_detect": 6.982,
+        "visual_detect": 6.982,
+        "render": 0.028,
+        "egress": 0.198,
+        "total": 7.388
       }
     },
     {
@@ -201,13 +201,13 @@
       "dets": 12,
       "over_masked": [],
       "timings": {
-        "ocr": 0.192,
-        "guard": 16.69,
-        "text_detect": 16.693,
-        "visual_detect": 16.693,
-        "render": 0.027,
-        "egress": 0.469,
-        "total": 17.381
+        "ocr": 0.199,
+        "guard": 6.877,
+        "text_detect": 6.879,
+        "visual_detect": 6.879,
+        "render": 0.019,
+        "egress": 0.212,
+        "total": 7.308
       }
     },
     {
@@ -219,13 +219,13 @@
         "Bivd,"
       ],
       "timings": {
-        "ocr": 0.191,
-        "guard": 17.176,
-        "text_detect": 17.18,
-        "visual_detect": 17.18,
-        "render": 0.027,
-        "egress": 0.418,
-        "total": 17.816
+        "ocr": 0.193,
+        "guard": 5.617,
+        "text_detect": 5.62,
+        "visual_detect": 5.62,
+        "render": 0.029,
+        "egress": 0.217,
+        "total": 6.06
       }
     },
     {
@@ -235,13 +235,13 @@
       "dets": 11,
       "over_masked": [],
       "timings": {
-        "ocr": 0.179,
-        "guard": 10.452,
-        "text_detect": 10.456,
-        "visual_detect": 10.456,
-        "render": 0.025,
-        "egress": 0.388,
-        "total": 11.049
+        "ocr": 0.182,
+        "guard": 6.758,
+        "text_detect": 6.761,
+        "visual_detect": 6.761,
+        "render": 0.027,
+        "egress": 0.203,
+        "total": 7.173
       }
     },
     {
@@ -251,13 +251,13 @@
       "dets": 12,
       "over_masked": [],
       "timings": {
-        "ocr": 0.193,
-        "guard": 9.038,
-        "text_detect": 9.04,
-        "visual_detect": 9.04,
-        "render": 0.022,
-        "egress": 0.213,
-        "total": 9.468
+        "ocr": 0.201,
+        "guard": 5.682,
+        "text_detect": 5.685,
+        "visual_detect": 5.685,
+        "render": 0.027,
+        "egress": 0.221,
+        "total": 6.133
       }
     },
     {
@@ -267,13 +267,13 @@
       "dets": 12,
       "over_masked": [],
       "timings": {
-        "ocr": 0.194,
-        "guard": 8.682,
-        "text_detect": 8.685,
-        "visual_detect": 8.685,
-        "render": 0.028,
-        "egress": 0.216,
-        "total": 9.124
+        "ocr": 0.209,
+        "guard": 8.11,
+        "text_detect": 8.113,
+        "visual_detect": 8.113,
+        "render": 0.026,
+        "egress": 0.218,
+        "total": 8.566
       }
     },
     {
@@ -283,13 +283,13 @@
       "dets": 12,
       "over_masked": [],
       "timings": {
-        "ocr": 0.199,
-        "guard": 16.709,
-        "text_detect": 16.712,
-        "visual_detect": 16.712,
-        "render": 0.027,
-        "egress": 0.496,
-        "total": 17.434
+        "ocr": 0.198,
+        "guard": 5.718,
+        "text_detect": 5.722,
+        "visual_detect": 5.722,
+        "render": 0.029,
+        "egress": 0.218,
+        "total": 6.166
       }
     },
     {
@@ -299,13 +299,13 @@
       "dets": 11,
       "over_masked": [],
       "timings": {
-        "ocr": 0.188,
-        "guard": 6.759,
-        "text_detect": 6.762,
-        "visual_detect": 6.762,
-        "render": 0.026,
-        "egress": 0.192,
-        "total": 7.166
+        "ocr": 0.186,
+        "guard": 6.239,
+        "text_detect": 6.241,
+        "visual_detect": 6.241,
+        "render": 0.022,
+        "egress": 0.207,
+        "total": 6.656
       }
     },
     {
@@ -317,13 +317,13 @@
         "reprocessing@clearpath-claims.net."
       ],
       "timings": {
-        "ocr": 0.185,
-        "guard": 9.563,
-        "text_detect": 9.564,
-        "visual_detect": 9.564,
-        "render": 0.022,
-        "egress": 0.204,
-        "total": 9.975
+        "ocr": 0.189,
+        "guard": 6.022,
+        "text_detect": 6.023,
+        "visual_detect": 6.023,
+        "render": 0.015,
+        "egress": 0.197,
+        "total": 6.423
       }
     },
     {
@@ -334,12 +334,12 @@
       "over_masked": [],
       "timings": {
         "ocr": 0.12,
-        "guard": 4.986,
-        "text_detect": 4.987,
-        "visual_detect": 4.987,
-        "render": 0.02,
-        "egress": 0.146,
-        "total": 5.274
+        "guard": 5.369,
+        "text_detect": 5.37,
+        "visual_detect": 5.37,
+        "render": 0.022,
+        "egress": 0.149,
+        "total": 5.661
       }
     },
     {
@@ -349,13 +349,13 @@
       "dets": 3,
       "over_masked": [],
       "timings": {
-        "ocr": 0.118,
-        "guard": 6.958,
-        "text_detect": 6.959,
-        "visual_detect": 6.959,
-        "render": 0.021,
-        "egress": 0.143,
-        "total": 7.242
+        "ocr": 0.119,
+        "guard": 6.608,
+        "text_detect": 6.609,
+        "visual_detect": 6.609,
+        "render": 0.019,
+        "egress": 0.153,
+        "total": 6.9
       }
     },
     {
@@ -365,13 +365,13 @@
       "dets": 3,
       "over_masked": [],
       "timings": {
-        "ocr": 0.116,
-        "guard": 7.366,
-        "text_detect": 7.366,
-        "visual_detect": 7.366,
-        "render": 0.015,
-        "egress": 0.156,
-        "total": 7.653
+        "ocr": 0.117,
+        "guard": 6.828,
+        "text_detect": 6.828,
+        "visual_detect": 6.828,
+        "render": 0.019,
+        "egress": 0.149,
+        "total": 7.112
       }
     },
     {
@@ -381,13 +381,13 @@
       "dets": 3,
       "over_masked": [],
       "timings": {
-        "ocr": 0.143,
-        "guard": 5.745,
-        "text_detect": 5.746,
-        "visual_detect": 5.746,
+        "ocr": 0.135,
+        "guard": 5.424,
+        "text_detect": 5.426,
+        "visual_detect": 5.426,
         "render": 0.022,
-        "egress": 0.152,
-        "total": 6.063
+        "egress": 0.154,
+        "total": 5.737
       }
     },
     {
@@ -397,13 +397,13 @@
       "dets": 3,
       "over_masked": [],
       "timings": {
-        "ocr": 0.123,
-        "guard": 5.862,
-        "text_detect": 5.864,
-        "visual_detect": 5.864,
-        "render": 0.013,
-        "egress": 0.142,
-        "total": 6.142
+        "ocr": 0.124,
+        "guard": 5.473,
+        "text_detect": 5.474,
+        "visual_detect": 5.474,
+        "render": 0.018,
+        "egress": 0.14,
+        "total": 5.756
       }
     },
     {
@@ -413,13 +413,13 @@
       "dets": 1,
       "over_masked": [],
       "timings": {
-        "ocr": 0.102,
-        "guard": 4.583,
-        "text_detect": 4.583,
-        "visual_detect": 4.583,
-        "render": 0.02,
+        "ocr": 0.104,
+        "guard": 4.322,
+        "text_detect": 4.322,
+        "visual_detect": 4.322,
+        "render": 0.015,
         "egress": 0.12,
-        "total": 4.826
+        "total": 4.56
       }
     }
   ]

@@ -166,3 +166,18 @@ All numbers on synthetic worlds; held-out = EHR (built after rules were frozen).
 - Full pipeline with both private models: portal 0/246, held-out EHR 0/170.
 - Default `.env` is now VEIL_SAM=private. Nothing in the default path calls a hosted API
   with raw pixels or raw text; only the veiled frame goes to the agent model.
+
+## Oct 27: new-page guard latency, parallel chunks
+
+New lines go to Glimmer in parallel chunks of 6 (2 lines of context before, 1 after;
+only the chunk's own lines are taken from the reply). Same spans as one big call on the
+EHR chart (11 of 11), 9.3 s -> 5.6 s for that page.
+
+| Full private pipeline (Glimmer + SAM) | Before | Chunked |
+|---|---|---|
+| Held-out EHR leaks | 0/170 | 0/170 |
+| Portal leaks | 0/246 | 0/246 |
+| EHR frame p50 / max (cold cache) | 11.9 s / 20.7 s | 8.3 s / 10.4 s |
+| Portal frame p50 / max | 8.9 s / 181 s (GPU cold start) | 6.4 s / 9.5 s |
+
+Measured while attack trials shared the same GPU, so these are not best-case numbers.
