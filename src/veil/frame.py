@@ -151,10 +151,10 @@ def detect_text(lines: list[Line], vault: Vault, origin: str,
 async def detect_visual(png: bytes, sam, concepts: tuple[str, ...]) -> list[Detection]:
     if sam is None:
         return []
-    results = await asyncio.gather(*(sam.segment(png, c) for c in concepts))
+    by_concept = await sam.segment_many(png, concepts)
     dets = []
-    for concept, regions in zip(concepts, results):
-        for r in regions:
+    for concept in concepts:
+        for r in by_concept.get(concept, []):
             ent = {"face": "face", "id card": "id_card"}.get(concept, concept.replace(" ", "_"))
             dets.append(Detection(ent, r.box, "sam"))
     return dets

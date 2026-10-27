@@ -15,7 +15,7 @@ Optional headers from the client:
   X-Veil-Context: the URL/app the agent is acting in (for flow policy)
 
 Run: uv run uvicorn veil.proxy:app --port 8799
-Env: VEIL_SAM=api to enable SAM 3.1 via Meta API (synthetic data only).
+Env: VEIL_SAM=private (open-weight SAM 3.1 on our Modal) or api (Meta API, synthetic only).
 """
 
 from __future__ import annotations
@@ -52,9 +52,9 @@ _client = httpx.AsyncClient(timeout=httpx.Timeout(300, connect=20))
 SESSIONS = Sessions()
 POLICY = Policy(os.environ.get("VEIL_POLICY", Path(__file__).resolve().parents[2] / "policy" / "default.yaml"))
 SAM = None
-if os.environ.get("VEIL_SAM") == "api":
+if os.environ.get("VEIL_SAM") in ("api", "private"):
     from veil.detect.sam import SamClient
-    SAM = SamClient()
+    SAM = SamClient(backend=os.environ["VEIL_SAM"])
 SPEND = {"usd": 0.0}
 GUARD_ON = os.environ.get("VEIL_GUARD", "1") == "1"
 
@@ -330,7 +330,7 @@ async def passthrough(path: str, request: Request) -> Response:
 
 @app.get("/healthz")
 def healthz() -> dict[str, Any]:
-    return {"ok": True, "upstream": UPSTREAM, "sam": SAM is not None,
+    return {"ok": True, "upstream": UPSTREAM, "sam": SAM.backend if SAM else None,
             "guard": (os.environ.get("VEIL_GUARD_MODEL", "muse-spark-1.3") + " @ " +
                       os.environ.get("VEIL_GUARD_URL", "https://api.meta.ai/v1")) if GUARD_ON else None,
             "spend_usd": round(SPEND["usd"], 4), "budget_usd": BUDGET_USD}

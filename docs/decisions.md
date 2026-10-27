@@ -151,3 +151,18 @@ All numbers on synthetic worlds; held-out = EHR (built after rules were frozen).
   in its startup log, so the key was rotated and is now passed via env only.
 - Not yet private: SAM (visual masks) still only has the Meta API backend and is
   off by default.
+
+## Oct 27: SAM 3.1 moved to our Modal (private plane complete)
+
+- `infra/modal_sam.py`: facebook/sam3.1 checkpoint via Meta's `sam3` package on an A10G,
+  FastAPI `/segment` (one image, many concepts, image encoded once), bearer key (401 without).
+- sam3 imports einops, setuptools(pkg_resources), pycocotools, psutil without declaring
+  them; found by an import probe on a CPU container before paying for GPU retries.
+- `bench/visual_eval.py` scores privacy outcomes with checks independent of SAM:
+  Apple Vision face detector finds 2 faces raw, 0 veiled; card text (name, member ID,
+  group) OCR-readable 3/3 raw, 0/3 veiled; logo and chart untouched. Element-box coverage
+  (65% card, 30% photo) is reported but not a pass criterion: SAM masks the card and the
+  face, not the blank margins of the <img>.
+- Full pipeline with both private models: portal 0/246, held-out EHR 0/170.
+- Default `.env` is now VEIL_SAM=private. Nothing in the default path calls a hosted API
+  with raw pixels or raw text; only the veiled frame goes to the agent model.

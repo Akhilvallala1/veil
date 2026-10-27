@@ -58,7 +58,7 @@ async def run(use_sam: bool, frames: list[dict], use_guard: bool = False) -> dic
     sam = None
     if use_sam:
         from veil.detect.sam import SamClient
-        sam = SamClient()
+        sam = SamClient(backend=os.environ.get("VEIL_SAM", "api"))
     guard = None
     if use_guard:
         from veil.detect.guard import Guard

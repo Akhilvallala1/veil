@@ -2,8 +2,9 @@
 
 Two backends share one interface:
 - "api": Meta Model API (sam-3.1). Used only on synthetic data.
-- "private": open-weight facebook/sam3.1 served on the private plane (Modal),
-  added once that endpoint exists. Real screens must use this backend.
+- "private": open-weight facebook/sam3.1 on the private plane
+  (infra/modal_sam.py). Raw screenshots never leave infrastructure we run.
+  Set VEIL_SAM_URL and VEIL_SAM_KEY. Boxes only (masks are filled as boxes).
 """
 
 from __future__ import annotations
@@ -32,11 +33,33 @@ def png_data_url(png: bytes) -> str:
 class SamClient:
     def __init__(self, backend: str = "api", api_key: str | None = None,
                  base_url: str = "https://api.meta.ai/v1") -> None:
+        self.backend = backend
+        if backend == "private":
+            import httpx
+            self.url = os.environ["VEIL_SAM_URL"].rstrip("/")
+            self.http = httpx.AsyncClient(timeout=600, headers={
+                "Authorization": f"Bearer {api_key or os.environ['VEIL_SAM_KEY']}"})
+            return
         if backend != "api":
-            raise NotImplementedError("private SAM backend lands with the Modal endpoint")
+            raise ValueError(f"unknown SAM backend {backend!r}")
         self.client = AsyncOpenAI(base_url=base_url, api_key=api_key or os.environ["MODEL_API_KEY"])
 
+    async def segment_many(self, png: bytes, concepts: tuple[str, ...]) -> dict[str, list[Region]]:
+        """All concepts for one image. Private backend: one request, image encoded once."""
+        if self.backend != "private":
+            import asyncio
+            res = await asyncio.gather(*(self.segment(png, c) for c in concepts))
+            return dict(zip(concepts, res))
+        r = await self.http.post(f"{self.url}/segment", json={
+            "image_b64": base64.b64encode(png).decode(), "concepts": list(concepts)})
+        r.raise_for_status()
+        out = r.json()["regions"]
+        return {c: [Region(c, tuple(x["box"]), None, x["score"]) for x in out.get(c, [])]
+                for c in concepts}
+
     async def segment(self, png: bytes, concept: str) -> list[Region]:
+        if self.backend == "private":
+            return (await self.segment_many(png, (concept,)))[concept]
         stream = await self.client.responses.create(
             model="sam-3.1",
             input=[{"type": "message", "role": "user", "content": [
