@@ -1,0 +1,25 @@
+{
+  "pass": true,
+  "runs": [
+    {
+      "arm": "decline",
+      "veil_checks": [
+        "Veil: click on 'Send'. Approve?"
+      ],
+      "messages_in_portal": 0,
+      "stopped": "safety check declined: veil_approval_required",
+      "steps": 3,
+      "session": "s_46f3cde7f7"
+    },
+    {
+      "arm": "approve",
+      "veil_checks": [
+        "Veil: click on 'Send'. Approve?"
+      ],
+      "messages_in_portal": 1,
+      "stopped": "",
+      "steps": 2,
+      "session": "s_e2ff298a54"
+    }
+  ]
+}

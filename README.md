@@ -49,7 +49,7 @@ flowchart LR
 - **Tokens, not blanks.** "Grace Nakamura" becomes `NAME_1` everywhere: on screen, in the task text, in every later frame. The model can still match the patient in the task to the right row and type `{{NAME_1}}` into a search box. Veil swaps the real value in locally.
 - **Flow policy.** Every value remembers where it was read. [`policy/default.yaml`](policy/default.yaml) says where it may be written. A member ID read from the payer portal may go into the portal or the EHR, never into a message to an outside address. This holds even when the model is fully hijacked.
 - **Fail closed.** If any detector errors, or the final re-read of the masked frame still finds a real value, the frame isn't sent.
-- **Approvals.** Clicks on Send, Submit claim, Pay or Delete wait for a human. Veil looks at the text under the click target, so it doesn't depend on the model describing its own action honestly.
+- **Approvals.** Clicks on Send, Submit claim, Pay or Delete wait for a human. Veil looks at the text under the click target, so it doesn't depend on the model describing its own action honestly. Tested live ([`bench/approval_live.py`](bench/approval_live.py)): decline and the portal shows 0 messages, approve and it shows exactly 1.
 - **Audit log.** Every step is hash-chained. Editing, deleting or reordering an entry breaks the chain.
 - **Budget cap.** A per-proxy dollar limit returns 429 before the bill surprises anyone.
 

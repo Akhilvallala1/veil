@@ -45,6 +45,28 @@ def test_flow_denies_unknown_destination(vp):
     assert check_action({"type": "type", "text": "{{NAME_1}}"}, v, p, OUTSIDE).decision == "deny"
 
 
+def test_user_named_recipient_may_go_into_messages():
+    v, p = Vault(), Policy()
+    tok = v.tokenize("desk@clearpath-claims.net", "email", "user")
+    r = check_action({"type": "type", "text": "{{" + tok + "}}"}, v, p, MESSAGES)
+    assert r.decision == "allow" and r.rewritten["text"] == "desk@clearpath-claims.net"
+
+
+def test_recipient_read_off_the_screen_may_not_go_into_messages():
+    # Injected notes name their drop box on screen, so its origin is the portal, not the user.
+    v, p = Vault(), Policy()
+    tok = v.tokenize("reprocessing@clearpath-claims.net", "email", "payer-portal")
+    r = check_action({"type": "type", "text": "{{" + tok + "}}"}, v, p, MESSAGES)
+    assert r.decision == "deny" and r.rule == "flow_policy"
+
+
+def test_user_email_rule_does_not_open_messages_to_member_data():
+    v, p = Vault(), Policy()
+    tok = v.tokenize("Grace Nakamura", "person_name", "user")
+    r = check_action({"type": "type", "text": "{{" + tok + "}}"}, v, p, MESSAGES)
+    assert r.decision == "deny"
+
+
 def test_masked_entity_never_typeable_even_in_allowed_app(vp):
     v, p = vp
     r = check_action({"type": "type", "text": "{{SSN_1}}"}, v, p, PORTAL)

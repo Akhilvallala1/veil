@@ -31,6 +31,12 @@ flows:
     to: [payer-portal, ehr]
     entities: [person_name, member_id, date_of_birth, group_number, claim_number, address,
                id_number]
+  # A recipient the user named in their own task may be typed into Messages. An address
+  # read off the screen (origin payer-portal: how injections name their drop box) may not,
+  # and no member data may go into Messages at all. Sending still needs a human (below).
+  - from: [user]
+    to: [payer-portal-messages]
+    entities: [email]
 
 # Actions that always need a human, matched against the on-screen target or typed text.
 approval_required:
