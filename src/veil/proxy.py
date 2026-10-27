@@ -35,7 +35,7 @@ from fastapi.responses import FileResponse, JSONResponse, Response
 
 from veil.audit import AuditLog, sha256, verify
 from veil.firewall import Policy, check_action, check_safety_checks
-from veil.frame import blank_frame, text_at, veil_frame
+from veil.frame import blank_frame, snap_to_link, text_at, veil_frame
 from veil.session import Session, Sessions
 from veil.textveil import TOKEN_GUIDE, tokenize_text
 
@@ -119,6 +119,7 @@ async def _veil_image(part: dict, key: str, s: Session, step: dict) -> None:
         out = r.png
         s.last_frame_size = (r.width, r.height)
         s.last_lines = r.lines  # type: ignore[attr-defined]
+        s.last_dets = r.detections  # type: ignore[attr-defined]
     part[key] = _encode(out)
     frame_dir = RUN_DIR / s.id / "frames"
     frame_dir.mkdir(parents=True, exist_ok=True)
@@ -194,6 +195,12 @@ def inbound(data: dict, s: Session, step: dict, dest_url: str) -> dict:
         if item.get("type") == "computer_call":
             kept, blocked = [], None
             for a in item.get("actions") or []:
+                snapped = None
+                if a.get("type") in ("click", "double_click") and a.get("x") is not None \
+                        and os.environ.get("VEIL_SNAP_LINKS", "1") == "1":
+                    snapped = snap_to_link(getattr(s, "last_dets", []), a["x"], a["y"])
+                    if snapped:
+                        a = {**a, "x": snapped[0], "y": snapped[1]}
                 hint = ""
                 if a.get("type") in ("click", "double_click") and a.get("x") is not None:
                     hint = text_at(getattr(s, "last_lines", []), a["x"], a["y"])
@@ -204,7 +211,8 @@ def inbound(data: dict, s: Session, step: dict, dest_url: str) -> dict:
                     s.last_click_text = hint  # type: ignore[attr-defined]
                 verdicts.append({"action": {k: a.get(k) for k in ("type", "x", "y", "keys")},
                                  "typed_tokens": v.tokens, "decision": v.decision,
-                                 "rule": v.rule, "reason": v.reason})
+                                 "rule": v.rule, "reason": v.reason,
+                                 **({"snapped_to_link": True} if snapped else {})})
                 if v.decision == "deny":
                     blocked = v
                     break  # later actions in the batch depended on this one

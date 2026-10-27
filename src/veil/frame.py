@@ -51,6 +51,7 @@ class Detection:
     source: str
     token: str | None = None
     label: str = ""
+    link: bool = False  # original text was a link; set by render()
 
 
 @dataclass
@@ -72,6 +73,32 @@ def text_at(lines: list, x: float, y: float, pad: int = 6) -> str:
         if x1 - pad <= x <= x2 + pad and y1 - pad <= y <= y2 + pad:
             return ln.text
     return ""
+
+
+def snap_to_link(dets: list, x: float, y: float, max_dy: int = 14,
+                 max_dx: int = 4) -> tuple[int, int] | None:
+    """If a click lands just outside a link that Veil masked, move it onto the link.
+
+    Masking a link replaces its glyphs with a token label in a dark box. The agent
+    aims at the label, and on the claim result row its clicks landed a few pixels
+    below the original link (3/13 Veil runs never opened the claim; 0/15 raw). This
+    only touches masked *links* Veil drew, never plain text or buttons, and only
+    when the click is outside every such box but within a few pixels of one.
+    """
+    links = [d for d in dets if getattr(d, "link", False) and d.source != "sam"]
+    for d in links:
+        x1, y1, x2, y2 = d.box
+        if x1 - PAD <= x <= x2 + PAD and y1 - PAD <= y <= y2 + PAD:
+            return None  # already on a link
+    best = None
+    for d in links:
+        x1, y1, x2, y2 = d.box
+        if not (x1 - max_dx <= x <= x2 + max_dx):
+            continue
+        dy = (y1 - PAD - y) if y < y1 - PAD else (y - y2 - PAD)
+        if 0 < dy <= max_dy and (best is None or dy < best[0]):
+            best = (dy, (int(min(max(x, x1 + 2), x2 - 2)), (y1 + y2) // 2))
+    return best[1] if best else None
 
 
 def _font(size: int):
@@ -189,6 +216,7 @@ def render(png: bytes, dets: list[Detection]) -> bytes:
             continue
         size = max(9, min(int(h * 0.7), 18))
         link = _is_link(src, d.box)
+        d.link = link
         font = _font(size)
         tw = draw.textlength(label, font=font)
         while tw > (x2 - x1) - 4 and size > 8:
