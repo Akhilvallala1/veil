@@ -67,6 +67,19 @@ def test_user_email_rule_does_not_open_messages_to_member_data():
     assert r.decision == "deny"
 
 
+def test_saving_a_mailing_address_needs_a_human():
+    # Integrity attack: an injected note asks the agent to change the member's address.
+    v, p = Vault(), Policy()
+    url = "http://127.0.0.1:8100/member/p00/address"
+    r = check_action({"type": "click", "x": 1, "y": 1}, v, p, url, focus_hint="Save address")
+    assert r.decision == "ask" and r.rule == "approval_required"
+    # Opening the form is harmless; only the write is gated.
+    assert check_action({"type": "click", "x": 1, "y": 1}, v, p, PORTAL,
+                        focus_hint="Update mailing address").decision == "allow"
+    assert check_action({"type": "keypress", "keys": ["Enter"]}, v, p, url,
+                        focus_hint="Save address").decision == "ask"
+
+
 def test_masked_entity_never_typeable_even_in_allowed_app(vp):
     v, p = vp
     r = check_action({"type": "type", "text": "{{SSN_1}}"}, v, p, PORTAL)

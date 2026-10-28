@@ -44,6 +44,13 @@ approval_required:
   - submit claim
   - delete
   - pay
+  # Writes to a member's record of contact or payment details. Injected notes use these to
+  # redirect checks and statements without moving any data out (address attack, Oct 28).
+  - save address
+  - update address
+  - change address
+  - bank account
+  - direct deposit
 
 # Meta's pending_safety_checks: which codes Veil may acknowledge on the human's behalf after
 # its own checks pass. Everything else goes to a human.
