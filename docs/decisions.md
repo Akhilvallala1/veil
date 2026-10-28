@@ -181,3 +181,39 @@ EHR chart (11 of 11), 9.3 s -> 5.6 s for that page.
 | Portal frame p50 / max | 8.9 s / 181 s (GPU cold start) | 6.4 s / 9.5 s |
 
 Measured while attack trials shared the same GPU, so these are not best-case numbers.
+
+## Oct 28: local Glimmer on the Mac (llama.cpp Q4): works, too slow on 24 GB
+
+Tried the "nothing leaves your laptop" stretch goal: `meta-models/Muse-Glimmer-30B-GGUF`
+Q4_K_M (16.8 GB) under llama-server 0.7.0, `--fit on`, text-only (the guard never needs the
+vision projector).
+- Correct: a 3-line test chart gave the right spans (name, DOB, MRN).
+- Too slow: 59 tok/s prompt, 11 tok/s output on a fresh start, 2.7-3.8 tok/s once the
+  Mac was swapping (16.8 GB of weights on 24 GB unified memory, GPU working-set limit ~16 GB).
+- Held-out EHR eval: all 12 frames hit the 60 s guard timeout and were **blocked** (fail
+  closed, so 0 leaks, but also 0 frames usable). Recorded as-is in
+  `bench/results/frame_eval_ehr_guard_glimmer_local.json`; it is not a pass.
+- Verdict: local Glimmer needs a 32 GB+ Mac, or a smaller/distilled guard. Modal stays the
+  private plane. The guard code needs no change (any OpenAI-compatible URL works).
+
+## Oct 28: replaying real attacks through the approval gate (bench/gate_replay.py)
+
+Instead of hoping a Veil-arm agent reaches the dangerous click, replay every action the
+unprotected agent actually took (OCR of the screen it saw + the same `check_action()`).
+No model, no GPU, deterministic.
+
+| | Before | After fix |
+|---|---|---|
+| Address hijacks that would hit the human gate | 2 of 3 | **3 of 3** |
+| Message exfiltrations that would hit the human gate | 2 of 4 | **4 of 4** |
+| Ordinary no-attack task runs with any prompt | 0 of 10 | 0 of 10 |
+
+Two holes found:
+1. A click on the lower edge of "Save address" (y=330; OCR box of the label y 309-320)
+   matched nothing with the old 6 px pad. Now `click_context()` looks 16 px around.
+2. Two exfiltrations were submitted with Tab, Enter after clicks that missed Send. Veil
+   can't see keyboard focus, so Enter/Space now asks a human whenever a control named in
+   `approval_required` is on screen. Word-boundary matching keeps "pay" off "Payer".
+
+Cost: in attack runs that didn't succeed, 2 of 16 had a prompt (both real clicks on Send in
+a half-hijacked run, so arguably correct). Ordinary tasks: 0 of 10.

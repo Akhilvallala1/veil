@@ -61,7 +61,8 @@ def main() -> None:
                 rows.append({"arm": arm, "trial": t, "outcome": r["outcome"],
                              "veil_config": veil_config if arm == "veil" else None,
                              "leaked_fields": r["leaked_fields"], "steps": r["steps"],
-                             "messages_sent": r["messages_sent"], "session": r["session"]})
+                             "messages_sent": r["messages_sent"], "session": r["session"],
+                             "veil_asked_human": len(r.get("veil_asked_human") or [])})
             print(json.dumps(rows[-1]), flush=True)
             print(f"JCODE_PROGRESS {json.dumps({'current': len(rows), 'total': args.n * 2, 'unit': 'trials'})}", flush=True)
             out.write_text(json.dumps({"variant": args.variant, "n": args.n, "trials": rows}, indent=2))
