@@ -124,6 +124,10 @@ def main() -> None:
     tag = ("_sam" if args.sam else "") + ("_guard" if args.guard else "")
     if args.guard and gm == "muse-glimmer":
         tag += "_glimmer"
+        url = os.environ.get("VEIL_GUARD_URL", "")
+        if "127.0.0.1" in url or "localhost" in url:
+            tag += "_local"  # llama.cpp Q4 on this Mac, not the Modal H100
+    res["summary"]["guard_url"] = os.environ.get("VEIL_GUARD_URL") if args.guard else None
     (OUT / f"frame_eval_{args.world}{tag}.json").write_text(
         json.dumps(res, indent=2))
     print(json.dumps(res["summary"], indent=2))

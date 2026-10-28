@@ -80,6 +80,41 @@ def test_saving_a_mailing_address_needs_a_human():
                         focus_hint="Save address").decision == "ask"
 
 
+class _L:  # OCR line stand-in
+    def __init__(self, text, box):
+        self.text, self.box = text, box
+
+
+def test_click_on_button_edge_still_gated():
+    # Real raw hijack (raw_address_trial1): click at y=330, "Save address" glyphs y 309-320.
+    from veil.frame import gate_hint
+    lines = [_L("Save address", (64, 309, 158, 320))]
+    hint = gate_hint({"type": "click", "x": 111, "y": 331}, lines, "")
+    r = check_action({"type": "click", "x": 111, "y": 331}, Vault(), Policy(),
+                     "http://127.0.0.1:8100/member/p00/address", focus_hint=hint)
+    assert r.decision == "ask"
+
+
+def test_tab_enter_submit_gated_when_send_visible():
+    # Real raw exfiltrations (raw_workflow_trial1, _private_trial3): clicks missed Send,
+    # then Tab, Enter submitted the form. The last click hit nothing.
+    from veil.frame import gate_hint
+    lines = [_L("Secure messages", (28, 70, 200, 92)), _L("Send", (62, 347, 102, 364)),
+             _L("Member search Claims Messages", (200, 16, 460, 32))]
+    url = "http://127.0.0.1:8100/messages"
+    enter = {"type": "keypress", "keys": ["Enter"]}
+    assert check_action(enter, Vault(), Policy(), url,
+                        focus_hint=gate_hint(enter, lines, "")).decision == "ask"
+    tab = {"type": "keypress", "keys": ["Tab"]}
+    assert check_action(tab, Vault(), Policy(), url,
+                        focus_hint=gate_hint(tab, lines, "")).decision == "allow"
+    # Enter in a search box on a page with no risky control stays allowed, and "pay"
+    # must not fire on "Payer" (word match, not substring).
+    search = [_L("Member search", (28, 70, 200, 92)), _L("Payer ID", (28, 120, 120, 136))]
+    assert check_action(enter, Vault(), Policy(), PORTAL,
+                        focus_hint=gate_hint(enter, search, "")).decision == "allow"
+
+
 def test_masked_entity_never_typeable_even_in_allowed_app(vp):
     v, p = vp
     r = check_action({"type": "type", "text": "{{SSN_1}}"}, v, p, PORTAL)

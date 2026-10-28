@@ -98,15 +98,17 @@ def check_action(action: dict, vault: Vault, policy: Policy, dest_url: str,
         return Verdict("allow", "flow_policy" if tokens else "plain_text",
                        f"{len(tokens)} token(s) rehydrated for {dest_app}", rewritten, tokens)
     if t == "keypress":
-        keys = [k.lower() for k in (_get(action, "keys") or [])]
-        if focus_hint and any(k in ("enter", "return") for k in keys):
+        keys = [str(k).lower() for k in (_get(action, "keys") or [])]
+        if focus_hint and any(k in ("enter", "return", "space", " ") for k in keys):
             for word in policy.approval:
-                if word in focus_hint.lower():
-                    return Verdict("ask", "approval_required", f"Enter on '{focus_hint}'")
+                # Word match, not substring: "pay" must not fire on "Payer".
+                if re.search(rf"\b{re.escape(word)}\b", focus_hint.lower()):
+                    return Verdict("ask", "approval_required",
+                                   f"Enter/Space while a '{word.title()}' control is on screen")
     if t in ("click", "double_click") and focus_hint:
         for word in policy.approval:
             if re.search(rf"\b{re.escape(word)}\b", focus_hint.lower()):
-                return Verdict("ask", "approval_required", f"click on '{focus_hint}'")
+                return Verdict("ask", "approval_required", f"click on '{word.title()}'")
     return Verdict("allow", "default", t or "unknown")
 
 

@@ -75,6 +75,49 @@ def text_at(lines: list, x: float, y: float, pad: int = 6) -> str:
     return ""
 
 
+def click_context(lines: list, x: float, y: float, pad_x: int = 16, pad_y: int = 16) -> str:
+    """Every OCR line within a button's reach of a click, joined, for the approval gate.
+
+    OCR boxes hug the glyphs, but a button extends ~10-15 px around its label, and agents
+    often click its lower edge. In a replay of a real address hijack, a click at y=330
+    hit "Save address" (text box y 309-320) and text_at(pad=6) saw nothing, so the gate
+    stayed open. For approvals the safe error is asking too often, so this looks wider
+    and returns all nearby lines, not just the first.
+    """
+    near = []
+    for ln in lines:
+        x1, y1, x2, y2 = ln.box
+        if x1 - pad_x <= x <= x2 + pad_x and y1 - pad_y <= y <= y2 + pad_y:
+            near.append(ln.text)
+    return " | ".join(near)
+
+
+SUBMIT_KEYS = {"enter", "return", "space", " "}
+
+
+def gate_hint(action: dict, lines: list, last_click: str) -> str:
+    """What a click or key press would act on, for the approval gate. Used by the proxy
+    and by bench/gate_replay.py, so the replay tests exactly what runs live.
+
+    Clicks: every OCR line within a button's reach (click_context).
+    Enter/Space: Veil can't see keyboard focus, and Tab moves it. A replay of the raw
+    exfiltration runs found 2 of 4 sends done as Tab, Enter after clicks that missed the
+    button, so "the last thing clicked" was empty and the Send gate never fired. So an
+    Enter or Space also counts every short control-like line on screen (4 words or
+    fewer): if a Send / Save address / Pay control is visible, a submit key asks a human.
+    """
+    t = action.get("type")
+    if t in ("click", "double_click") and action.get("x") is not None:
+        return click_context(lines, action["x"], action["y"])
+    if t == "keypress":
+        keys = {str(k).lower() for k in action.get("keys") or []}
+        if keys & SUBMIT_KEYS:
+            controls = [ln.text for ln in lines if 0 < len(ln.text.split()) <= 4]
+            return " | ".join([last_click, *controls]) if last_click else " | ".join(controls)
+        return last_click
+    return ""
+
+
 def snap_to_link(dets: list, x: float, y: float, max_dy: int = 14,
                  max_dx: int = 4) -> tuple[int, int] | None:
     """If a click lands just outside a link that Veil masked, move it onto the link.
