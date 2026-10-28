@@ -159,7 +159,7 @@ Requirements: macOS (OCR uses Apple Vision on-device), Python 3.12, [uv](https:/
 ```bash
 git clone https://github.com/Akhilvallala1/veil && cd veil
 uv sync && uv run playwright install chromium
-uv run pytest -q                                 # 39 tests, no network needed
+uv run pytest -q                                 # 44 tests, no network needed
 
 cp .env.example .env                             # add MODEL_API_KEY (Meta)
 uv run uvicorn bench.worlds.payer_portal:app --port 8100 &   # synthetic portal
@@ -176,6 +176,20 @@ modal deploy infra/modal_sam.py       # SAM 3.1 on an A10G, bearer-key protected
 ```
 
 Then set `VEIL_GUARD_URL`, `VEIL_GUARD_KEY`, `VEIL_GUARD_MODEL=muse-glimmer`, `VEIL_SAM=private`, `VEIL_SAM_URL` and `VEIL_SAM_KEY` (see `.env.example`). Both scale to zero when idle. The first request after a while waits for the GPUs to start, which takes about 3 minutes.
+
+## Use it from any MCP agent
+
+Veil also runs as an MCP server, so Claude Desktop, Cursor or any MCP framework can drive a browser through it without the Responses API. Same pipeline, same policy, same audit log. The agent gets veiled screenshots and tokens, and approvals go to the user through MCP elicitation. A client that can't ask its user gets a refusal, not a silent yes.
+
+```json
+{"mcpServers": {"veil": {"command": "uv", "args": ["--directory", "/path/to/veil", "run", "veil-mcp"]}}}
+```
+
+Tools: `open_url`, `screenshot`, `act` (click / type `{{TOKEN}}` / keypress / scroll), `audit`. Checked end to end with a real MCP client over stdio ([`bench/mcp_e2e.py`](bench/mcp_e2e.py)):
+- 0 of 3 real values readable in the screenshot the agent receives.
+- Typing `{{MEMBER_ID_1}}` into Messages is denied by the flow policy.
+- Clicking Send asks the user. On decline, the portal shows 0 messages.
+- The audit chain is intact, and the vault shows tokens only.
 
 ## The console
 

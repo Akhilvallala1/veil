@@ -217,3 +217,14 @@ Two holes found:
 
 Cost: in attack runs that didn't succeed, 2 of 16 had a prompt (both real clicks on Send in
 a half-hijacked run, so arguably correct). Ordinary tasks: 0 of 10.
+
+## Oct 28: Veil as an MCP server (SPEC stretch 5)
+
+`src/veil/mcp_server.py`, entry point `veil-mcp` (stdio). Wraps the same frame pipeline,
+firewall (`check_action` + `gate_hint` + link snap) and audit chain as the proxy, around a
+private Playwright browser. Approvals use MCP elicitation; if the client can't elicit or the
+user declines, the action is refused (fail closed). mcp SDK 2.3 (`MCPServer`, formerly
+FastMCP). Playwright's sync API runs on one dedicated thread.
+Checks: 5 offline unit tests (fake driver, real OCR/veil/firewall) and `bench/mcp_e2e.py`
+with a real stdio MCP client against the portal: 0/3 values visible, member ID into
+Messages denied, Send asked + declined -> 0 messages, chain intact. PASS.

@@ -9,6 +9,7 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.162.0",
     "httpx>=0.28.1",
+    "mcp>=1.0",
     "meta-sam-parser>=0.1.0",
     "numpy>=2.5.4",
     "ocrmac>=1.0.1",
@@ -20,6 +21,9 @@ dependencies = [
     "pyyaml>=6.0.3",
     "uvicorn>=0.54.0",
 ]
+
+[project.scripts]
+veil-mcp = "veil.mcp_server:main"
 
 [build-system]
 requires = ["uv_build>=0.9.28,<0.10.0"]
