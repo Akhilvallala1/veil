@@ -34,7 +34,15 @@ TOKEN_GUIDE = (
 def tokenize_text(text: str, vault: Vault, origin: str = "user") -> str:
     spans = []
     for m in NAME_CUE.finditer(text):
-        spans.append((m.start(1), m.end(1), "person_name"))
+        start, end = m.start(1), m.end(1)
+        # "Grace Nakamura's" -> the name is "Grace Nakamura". Keeping the 's made the task
+        # token differ from the on-screen name, so the agent saw NAME_1 in the task and
+        # NAME_2 on the form and refused to edit "the wrong member" (live, Oct 28).
+        if text[start:end].endswith(("'s", "’s")):
+            end -= 2
+        elif text[start:end].endswith(("'", "’")):
+            end -= 1
+        spans.append((start, end, "person_name"))
     for s in find_spans(text):
         if s.entity != "date":
             spans.append((s.start, s.end, s.entity))

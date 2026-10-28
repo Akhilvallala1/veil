@@ -186,6 +186,55 @@ def _vault_spans(line: Line, vault: Vault) -> list[Span]:
     return spans
 
 
+def _split_known(s: Span, line: Line, vault: Vault) -> list[Span]:
+    """A label/guard span that contains a value the vault already knows, plus more text,
+    is split so the known value keeps its token.
+
+    Seen live (Oct 28): the address form reads "Member: Grace Nakamura · HZ162275869" on
+    one line. The label rule took the whole value, it became a new token NAME_2, and the
+    task said NAME_1, so the agent decided it was on the wrong member's form and spent 14
+    steps searching. Now: NAME_1 for the name, and the rest is masked on its own.
+    """
+    if s.source not in ("label", "guard"):
+        return [s]
+    seg = line.text[s.start:s.end]
+    low = seg.lower()
+    hits = []
+    for e in vault.entries():
+        v = e.value.lower()
+        if len(norm(v)) >= 4 and v in low and len(v) < len(seg.strip()):
+            i = low.find(v)
+            hits.append((i, i + len(v), e))
+    if not hits:
+        return [s]
+    hits.sort(key=lambda h: (h[0], -(h[1] - h[0])))
+    out, pos = [], 0
+    for i, j, e in hits:
+        if i < pos:
+            continue
+        out.append((pos, i, None))
+        out.append((i, j, e))
+        pos = j
+    out.append((pos, len(seg), None))
+    spans = []
+    for i, j, e in out:
+        if e is not None:
+            spans.append(Span(s.start + i, s.start + j, e.entity, "vault", seg[i:j]))
+            continue
+        piece = seg[i:j]
+        # Trim separators (" · ", ", ", " - ") so the residual box hugs the value.
+        lead = len(piece) - len(piece.lstrip(" ·•,;:-|/"))
+        core = piece.strip(" ·•,;:-|/")
+        if len(norm(core)) < 2:
+            continue
+        a = s.start + i + lead
+        found = [f for f in find_spans(core) if f.entity not in PASS_ENTITIES]
+        ent = found[0].entity if found else (
+            "id_number" if any(c.isdigit() for c in core) else s.entity)
+        spans.append(Span(a, a + len(core), ent, s.source, core))
+    return spans
+
+
 def detect_text(lines: list[Line], vault: Vault, origin: str,
                 guard_spans: list | None = None) -> list[Detection]:
     labeled = label_spans(lines)
@@ -203,7 +252,7 @@ def detect_text(lines: list[Line], vault: Vault, origin: str,
         spans = list(labeled.get(i, [])) + extra.get(i, [])
         spans += [s for s in find_spans(line.text) if s.entity not in PASS_ENTITIES]
         spans += _vault_spans(line, vault)
-        for s in _merge(spans):
+        for s in [p for m in _merge(spans) for p in _split_known(m, line, vault)]:
             value = line.text[s.start:s.end].strip()
             if len(norm(value)) < 2:
                 continue

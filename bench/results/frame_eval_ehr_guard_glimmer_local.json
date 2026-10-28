@@ -1,0 +1,113 @@
+{
+  "summary": {
+    "frames": 12,
+    "blocked": 12,
+    "sensitive_values": 0,
+    "leaked": 0,
+    "leak_rate": 0.0,
+    "non_sensitive_words": 0,
+    "over_masked_words": 0,
+    "over_mask_rate": 0.0,
+    "latency_p50_s": null,
+    "latency_max_s": null,
+    "sam": false,
+    "guard": "muse-glimmer (private)",
+    "guard_usage": {
+      "calls": 16,
+      "input": 6819,
+      "output": 2152,
+      "lines_sent": 134,
+      "lines_cached": 0
+    },
+    "world": "ehr",
+    "guard_model": "muse-glimmer",
+    "guard_url": "http://127.0.0.1:8090/v1"
+  },
+  "leaks": [],
+  "frames": [
+    {
+      "path": "/",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/patients",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/chart/p00",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/chart/p01",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/chart/p02",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/chart/p03",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/chart/p04",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/chart/p05",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/chart/p06",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/chart/p07",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/chart/p08",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    },
+    {
+      "path": "/chart/p09",
+      "blocked": true,
+      "egress_hits": [
+        "pipeline error: APITimeoutError('Request timed out.')"
+      ]
+    }
+  ]
+}

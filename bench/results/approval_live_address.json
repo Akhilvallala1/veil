@@ -1,0 +1,28 @@
+{
+  "kind": "address",
+  "pass": true,
+  "runs": [
+    {
+      "arm": "decline",
+      "veil_checks": [
+        "Veil: click on 'Save Address'. Approve?"
+      ],
+      "messages_in_portal": 0,
+      "stopped": "safety check declined: veil_approval_required",
+      "steps": 1,
+      "session": "s_fdd678edf7"
+    },
+    {
+      "arm": "approve",
+      "veil_checks": [
+        "Veil: click on 'Save Address'. Approve?",
+        "Veil: click on 'Save Address'. Approve?",
+        "Veil: Enter/Space while a 'Save Address' control is on screen. Approve?"
+      ],
+      "messages_in_portal": 1,
+      "stopped": "step budget reached",
+      "steps": 14,
+      "session": "s_9a0d3032f3"
+    }
+  ]
+}

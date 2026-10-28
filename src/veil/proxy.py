@@ -284,6 +284,12 @@ async def responses(request: Request) -> Response:
         return Response(up.content, status_code=up.status_code)
     if up.status_code != 200:
         _audit(s).append("upstream_error", status=up.status_code, error=data.get("error"))
+        if os.environ.get("VEIL_DEBUG_UPSTREAM") == "1":  # veiled body only, never raw
+            dbg = RUN_DIR / s.id / f"upstream_{up.status_code}_{len(s.steps)}.json"
+            dbg.write_text(json.dumps({k: v for k, v in safe.items() if k != "input"} | {
+                "input": [{k: (v if k != "output" else "<image>") for k, v in i.items()}
+                          if isinstance(i, dict) else i for i in safe.get("input") or []]},
+                indent=2, default=str))
         return JSONResponse(data, status_code=up.status_code)
     step["usd"] = round(_cost(body.get("model", ""), data.get("usage")), 5)
     SPEND["usd"] += step["usd"]

@@ -51,7 +51,9 @@ def run_agent(task: str, start_url: str, *, model: str = "muse-spark-1.3",
               send_context: bool = True, driver: BrowserDriver | None = None) -> RunResult:
     """Run one task. `approve(check)` decides each pending safety check (None = acknowledge
     Meta's generic confirmation, deny anything else)."""
-    client = OpenAI(base_url=base_url, api_key=os.environ["MODEL_API_KEY"],
+    # max_retries 6 (default 2): Meta's API returned bursts of 3+ consecutive 500/503s on
+    # Oct 28 (same request succeeds a minute later), which killed whole benchmark runs.
+    client = OpenAI(base_url=base_url, api_key=os.environ["MODEL_API_KEY"], max_retries=6,
                     http_client=httpx.Client(timeout=300))
     own_driver = driver is None
     driver = driver or BrowserDriver(start_url)

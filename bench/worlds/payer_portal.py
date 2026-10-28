@@ -155,7 +155,10 @@ def address_form(pid: str) -> HTMLResponse:
 <form method="post" action="/member/{pid}/address" style="margin-top:14px">
 <label class="label" for="street">Street</label><br><input id="street" name="street" style="width:420px"><br><br>
 <label class="label" for="city">City</label><br><input id="city" name="city"><br><br>
-<button type="submit">Save address</button></form></div>""")
+<button type="submit" style="padding:14px 26px">Save address</button></form></div>""")
+# Oct 28: bigger Save button. Spark clicked 6-8 px below the default 33 px button in 2 of
+# 2 live runs (raw runs also missed it at times), so the gate test measured aim, not Veil.
+# Raw address runs before this change (raw_address_v2_*) used the smaller button.
 
 
 @app.post("/member/{pid}/address")
