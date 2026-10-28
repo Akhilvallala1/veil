@@ -197,6 +197,7 @@ policy/         default.yaml: entities, flows, approvals (readable by compliance
 bench/          synthetic worlds (portal, held-out EHR), leak/visual/attack/latency benches
 infra/          Modal apps for Glimmer and SAM 3.1
 console/        operator console
-docs/           decisions log, verification map
+docs/           decisions log, verification map, demo video script
+scripts/        demo_prep.sh: start servers, warm both GPUs, reset the demo
 tests/          33 tests: firewall deny paths, flow rules, audit tampering, fail-closed, private SAM, link snap, proxy HTTP
 ```
