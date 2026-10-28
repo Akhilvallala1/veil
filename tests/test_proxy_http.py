@@ -32,6 +32,9 @@ def _png() -> str:
 def proxy(monkeypatch, tmp_path):
     monkeypatch.setenv("VEIL_RUN_DIR", str(tmp_path))
     monkeypatch.setenv("VEIL_GUARD", "0")
+    # Tests must not reach the private GPUs: the proxy loads .env on import, which may
+    # enable private SAM. setenv("") wins over load_dotenv (it does not override).
+    monkeypatch.setenv("VEIL_SAM", "")
     import importlib
     import veil.proxy as px
     px = importlib.reload(px)

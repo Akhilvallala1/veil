@@ -84,7 +84,7 @@ These targets were fixed in [`SPEC.md`](SPEC.md) on kickoff day, before any meas
 
 **Cost, honestly.** Veil adds no Meta API cost: the agent's own cost was $0.0061 per step at the median both with and without Veil, because masked frames are the same size. The extra cost is GPU time for the two private models.
 - *Marginal* (what one more step costs on a warm GPU): mean 4.6 s of Glimmer per step on an H100 plus about 0.5 s of SAM on an A10G, at Modal's per-second prices, is about **$0.005 per step**. Under target.
-- *All-in* (the whole Modal bill divided by real agent steps): $19.40 of GPU time over 393 Veil agent steps is **$0.049 per step**. Over target. That bill also paid for the leak benchmarks (12 runs, some overwritten, so a few hundred frames), seven GPU cold starts while tuning, and GPUs idling warm for 5 minutes after each run.
+- *All-in* (the whole Modal bill divided by real agent steps): $19.40 of GPU time over 393 Veil agent steps is **$0.049 per step**. Over target. That bill also paid for the leak benchmarks (12 runs, a few hundred frames), several GPU cold starts while tuning, and GPUs idling warm for 5 minutes after each run.
 
 So the target is met at volume and missed at hackathon scale. The levers are a smaller GPU or a quantized local Glimmer, and keeping one warm GPU shared across many agents.
 
