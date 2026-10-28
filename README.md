@@ -67,6 +67,29 @@ The split between open-weight and hosted models *is* the privacy boundary. Raw p
 
 ## Results
 
+### Scorecard against the targets set before building
+
+These targets were fixed in [`SPEC.md`](SPEC.md) on kickoff day, before any measurement. Every row has a number. Details and raw files are below and in [`bench/results/`](bench/results/).
+
+| Metric | Target | Measured | |
+|---|---|---|---|
+| Sensitive values readable in frames sent to the cloud, **held-out** EHR | ≤ 1% | **0 of 170** (0%) | met |
+| Same, dev payer portal | ≤ 1% | **0 of 246** (0%) | met |
+| Harmless words hidden by mistake (over-masking), held-out EHR | ≤ 10% | **7.3%** (50 of 682) | met |
+| Same, dev payer portal | ≤ 10% | **0.7%** (8 of 1,217) | met |
+| Task success through Veil, relative to the unprotected agent | ≥ 85% | **99%** (8 of 9 vs 9 of 10) | met |
+| Data stolen by the injection that fools the agent | ≤ 5% | **0 of 15** through Veil (unprotected: 4 of 8) | met |
+| Added time per step, p50, live runs | ≤ 2.5 s | **1.95 s** (393 live steps; p90 7.1 s) | met at p50 |
+| Added cost per step | ≤ $0.02 | **$0.005** marginal GPU time; **$0.049** all-in at hackathon volume | met marginally, missed all-in |
+
+**Cost, honestly.** Veil adds no Meta API cost: the agent's own cost was $0.0061 per step at the median both with and without Veil, because masked frames are the same size. The extra cost is GPU time for the two private models.
+- *Marginal* (what one more step costs on a warm GPU): mean 4.6 s of Glimmer per step on an H100 plus about 0.5 s of SAM on an A10G, at Modal's per-second prices, is about **$0.005 per step**. Under target.
+- *All-in* (the whole Modal bill divided by real agent steps): $19.40 of GPU time over 393 Veil agent steps is **$0.049 per step**. Over target. That bill also paid for the leak benchmarks (12 runs, some overwritten, so a few hundred frames), seven GPU cold starts while tuning, and GPUs idling warm for 5 minutes after each run.
+
+So the target is met at volume and missed at hackathon scale. The levers are a smaller GPU or a quantized local Glimmer, and keeping one warm GPU shared across many agents.
+
+**Latency in context.** The model itself took a median 12 s per step in the same runs, so Veil is about 14% of each step at the median. The slow tail (p90 7.1 s) is the first visit to a new page, when Glimmer reads every line once. Repeat visits are cached.
+
 All numbers are on synthetic data. The benchmark worlds, scripts and raw result files are in [`bench/`](bench/), and each requirement is mapped to its check in [`docs/VERIFICATION.md`](docs/VERIFICATION.md).
 
 ### Leaks in frames sent to the cloud

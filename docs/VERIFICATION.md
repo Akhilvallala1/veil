@@ -101,3 +101,13 @@ With that: proxy healthz shows guard = Glimmer, sam = private; `bench/run_task.p
 Meta received: 0 real values readable (names, IDs, DOBs, SSNs, phones, emails, claim numbers for
 all synthetic people). Console /veil returns 200; session audit "4 records, chain intact".
 
+### Scorecard vs SPEC targets, cost and live latency (Oct 28)
+
+Sources: `modal billing report --start 2026-10-26 --show-resources` (GPU: H100 $18.74, A10G $4.33;
+from Oct 27 13:00 UTC, private-model period: $19.40) and every Veil step in runs/proxy since then (393).
+- Live added latency: p50 1.95 s, p90 7.12 s; model p50 12.0 s -> Veil ~14% of a step. PASS at p50.
+- Meta cost per step: median $0.0061 with and without Veil (31 raw runs vs 393 Veil steps). No added API cost.
+- GPU cost per step: marginal = mean guard 4.58 s x H100 $0.001097/s + ~0.5 s SAM x A10G $0.000306/s
+  = $0.0052 (PASS vs $0.02); all-in = $19.40 / 393 = $0.049 (MISS at hackathon volume; bill includes
+  benchmarks, cold starts and idle warm time). Both reported in README.
+
