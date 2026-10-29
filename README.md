@@ -63,7 +63,7 @@ The split between open-weight and hosted models *is* the privacy boundary. Raw p
 | **Muse Glimmer 30B** (open weights) | Your Modal H100, vLLM, FP8 | Reads the OCR text with its layout and finds personal data the rules miss (names in lists, IDs next to unusual labels). |
 | **SAM 3.1** (open weights) | Your Modal A10G | Finds faces, ID cards and photos so they're masked as regions. |
 | **Muse Image** | Meta Model API | Generated the synthetic faces and insurance card used in the benchmark. |
-| **Muse Wonder** | Meta Model API | Planned as the agent. On this account it currently rejects the `computer` tool (`400 Unsupported tool type`), which is reported to Meta. `bench/check_wonder.py` re-tests it in one command. |
+| **Muse Wonder** | Meta Model API | Planned as the agent. The Model API rejects the `computer` tool for Wonder (`400 Unsupported tool type`). The organizers replied (Oct 28) that Wonder computer use isn't confirmed on the API yet and advised running the loop on Spark 1.3. Filed with Meta support. `bench/check_wonder.py` re-tests it in one command; Veil needs no code change to switch. |
 
 ## Results
 
