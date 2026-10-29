@@ -32,7 +32,7 @@ How to re-run: start the worlds (`uvicorn bench.worlds.payer_portal:app --port 8
 | R18 | Raw pixels and raw text only touch open weights we run | `infra/modal_glimmer.py`, `infra/modal_sam.py` deployed; `frame_eval --guard --sam` with VEIL_SAM=private; `tests/test_sam_private.py`; wrong key -> 401 on both | Guard = Glimmer 30B FP8, visuals = SAM 3.1, both on our Modal behind bearer keys. Portal 0/246, held-out EHR 0/170 leaks with both private. OCR on-device. SAM endpoint failure fails the frame closed (test) | PASS |
 | R19 | Fresh clone installs and passes tests | `git clone` from GitHub, `uv sync`, `uv run pytest` | 23 passed from a clean clone | PASS |
 | R20 | Console shows real vs veiled, verdicts, audit status | `http://127.0.0.1:8799/veil`, screenshot via Playwright | Rendered both panes, 2 deny reasons, chain intact | PASS |
-| R21 | Muse Wonder as the agent | raw computer-use call | HTTP 400 `Unsupported tool type: 'computer'`; organizers (Discord, Oct 28): not confirmed on the Model API, use Spark 1.3. Still 400 on Oct 29 11:34 UTC (Wonder a3809609-2137-4636-ae66-84b8871b3b92, Spark 200 c80aea75-871e-4f3c-bf45-1e5eabf3d80a) | BLOCKED by Meta; Spark 1.3 used per organizer guidance; support ticket filed |
+| R21 | Muse Wonder as the agent | raw computer-use call | HTTP 400 `Unsupported tool type: 'computer'`; organizers (Discord, Oct 28): not confirmed on the Model API, use Spark 1.3. Still 400 on Oct 29 11:34 UTC (Wonder a3809609-2137-4636-ae66-84b8871b3b92, Spark 200 c80aea75-871e-4f3c-bf45-1e5eabf3d80a) | BLOCKED by Meta; Spark 1.3 used per organizer guidance; support ticket pending |
 
 ## R9-live: injection attack, repeated trials
 
