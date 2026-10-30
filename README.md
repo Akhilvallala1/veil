@@ -76,7 +76,7 @@ These targets were fixed in [`SPEC.md`](SPEC.md) on kickoff day, before any meas
 | Sensitive values readable in frames sent to the cloud, **held-out** EHR | ≤ 1% | **0 of 170** (0%) | met |
 | Same, dev payer portal | ≤ 1% | **0 of 246** (0%) | met |
 | Harmless words hidden by mistake (over-masking), held-out EHR | ≤ 10% | **7.3%** (50 of 682) | met |
-| Same, dev payer portal | ≤ 10% | **0.7%** (8 of 1,217) | met |
+| Same, dev payer portal | ≤ 10% | **0.6%** (7 of 1,182; re-run Oct 30) | met |
 | Task success through Veil, relative to the unprotected agent | ≥ 85% | **99%** (8 of 9 vs 9 of 10) | met |
 | Data stolen by the injection that fools the agent | ≤ 5% | **0 of 15** through Veil (unprotected: 4 of 8) | met |
 | Added time per step, p50, live runs | ≤ 2.5 s | **1.95 s** (393 live steps; p90 7.1 s) | met at p50 |
