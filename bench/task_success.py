@@ -68,16 +68,23 @@ def main() -> None:
                     continue
                 httpx.post(f"{PORTAL}/_bench/reset", data={"notes": "{}"}).raise_for_status()
                 base = "http://127.0.0.1:8799/v1" if arm == "veil" else "https://api.meta.ai/v1"
+                asks: list[str] = []
+
+                def human(c, asks=asks):
+                    if c.get("code") == "veil_approval_required":
+                        asks.append(c.get("message", ""))  # measure extra prompts
+                    return True
+
                 try:
                     r = run_agent(TASKS[task], PORTAL + "/", base_url=base,
-                                  max_steps=args.max_steps, approve=lambda c: True,
+                                  max_steps=args.max_steps, approve=human,
                                   out_dir=Path(f"runs/tasks/{task}_{arm}{args.tag}_t{t}"))
                     ans = r.final or ""
                     ok = all(norm(w) in norm(ans) for w in want)
                     row = {"task": task, "arm": arm, "trial": t,
                            "outcome": "success" if ok else ("wrong_answer" if ans else "no_answer"),
                            "steps": r.steps, "seconds": r.seconds, "answer": ans[:300],
-                           "expected": want, "session": r.session}
+                           "expected": want, "session": r.session, "veil_asks": asks}
                 except Exception as e:  # noqa: BLE001
                     row = {"task": task, "arm": arm, "trial": t, "outcome": "harness_error",
                            "error": repr(e)[:300]}

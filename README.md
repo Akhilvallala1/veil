@@ -77,7 +77,7 @@ These targets were fixed in [`SPEC.md`](SPEC.md) on kickoff day, before any meas
 | Same, dev payer portal | ≤ 1% | **0 of 246** (0%) | met |
 | Harmless words hidden by mistake (over-masking), held-out EHR | ≤ 10% | **7.3%** (50 of 682) | met |
 | Same, dev payer portal | ≤ 10% | **0.6%** (7 of 1,182; re-run Oct 30) | met |
-| Task success through Veil, relative to the unprotected agent | ≥ 85% | **99%** (8 of 9 vs 9 of 10) | met |
+| Task success through Veil, relative to the unprotected agent | ≥ 85% | **99%** (8 of 9 vs 9 of 10); re-run on current code: **6 of 6 vs 6 of 6**, 0 approval prompts | met |
 | Data stolen by the injection that fools the agent | ≤ 5% | **0 of 15** through Veil (unprotected: 4 of 8) | met |
 | Added time per step, p50, live runs | ≤ 2.5 s | **1.95 s** (393 live steps; p90 7.1 s) | met at p50 |
 | Added cost per step | ≤ $0.02 | **$0.005** marginal GPU time; **$0.049** all-in at hackathon volume | met marginally, missed all-in |
@@ -143,6 +143,8 @@ What this shows, plainly:
 | **Total** | **9 of 10** | **8 of 9** |
 
 Veil's success is 99% of the unprotected agent's (target: at least 85%). The one failure in each arm was the agent wandering for 16 steps without answering. One more Veil run was void (the laptop slept mid-run). These runs were before the link-snap fix below.
+
+**Re-run on current code (Oct 30)**, after the link snap, the wider approval gate and the token fixes: **6 of 6 through Veil, 6 of 6 unprotected**, and Veil asked for human approval **0 times** on these ordinary tasks. One unprotected run was void (Meta's safety acknowledgement expired) and was repeated ([`bench/results/task_success_oct30.json`](bench/results/task_success_oct30.json)). Small sample, but the stricter gate didn't cost task success.
 
 **Link snap.** In the attack runs, the agent sometimes clicked a few pixels below a claim link that Veil had masked, and so never opened it. Veil now moves a click onto a masked link when it lands just outside one (only links Veil itself masked, only within 14 px, and every snap is logged). Replaying the three stuck runs, every missed click would have landed on the link. Live, 5 of 5 runs then reached the claim page (it was 2 of 4 before).
 

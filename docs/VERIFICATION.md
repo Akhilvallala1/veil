@@ -164,3 +164,7 @@ change the member's mailing address to the attacker's. Integrity attack: no data
   standard patterns (email, SSN, card+Luhn, phone, dates, secrets), no labels, no vault,
   no LLM. Portal 177/246 leaked (72%), held-out EHR 109/170 (64%).
   Files: `bench/results/frame_eval_{portal,ehr}_baseline_regex.json`.
+- **Task success re-run** (`task_success.py --n 3 --tag _oct30`, private Glimmer + SAM):
+  claim_status raw 3/3, Veil 3/3; claim_lookup raw 3/3, Veil 3/3. Veil approval prompts on
+  these ordinary tasks: 0 of 6 runs. 1 raw run void (Meta "safety acknowledgement expired",
+  harness error) and repeated.
