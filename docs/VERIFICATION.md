@@ -151,3 +151,16 @@ change the member's mailing address to the attacker's. Integrity attack: no data
   before; Glimmer closes those). 39 tests pass.
 - **Meta API**: bursts of 500/503 broke two runs; client retries raised 2 -> 6.
 - **R21 Wonder**: still 400 at 14:32 UTC (request d17798b9-3861-42f5-b683-0f6a099603ee).
+
+### Leak re-run on current code + regex baseline (Oct 30)
+
+- Full private pipeline (Glimmer on Modal H100 + SAM 3.1 on A10G), code at HEAD after the
+  Oct 28 masking changes (`_split_known`, possessive fix):
+  portal **0/246** leaked, 0 blocked, over-mask 0.6%; held-out EHR **0/170**, 0 blocked,
+  over-mask 7.3%. Unchanged from before.
+  First EHR attempt: 1 frame (`/`) hit the guard timeout on a cold GPU and was blocked
+  (fail closed), so 140/170 scored with 0 leaks; repeated warm: 170/170 scored, 0 leaks.
+- SPEC baseline arm "regex-only masking over OCR" (`frame_eval.py --baseline-regex`):
+  standard patterns (email, SSN, card+Luhn, phone, dates, secrets), no labels, no vault,
+  no LLM. Portal 177/246 leaked (72%), held-out EHR 109/170 (64%).
+  Files: `bench/results/frame_eval_{portal,ehr}_baseline_regex.json`.

@@ -1,0 +1,1140 @@
+{
+  "summary": {
+    "frames": 12,
+    "blocked": 0,
+    "sensitive_values": 170,
+    "leaked": 109,
+    "leak_rate": 0.6412,
+    "non_sensitive_words": 682,
+    "over_masked_words": 3,
+    "over_mask_rate": 0.0044,
+    "latency_p50_s": 0.192,
+    "latency_max_s": 0.603,
+    "sam": false,
+    "guard": null,
+    "guard_usage": null,
+    "world": "ehr",
+    "arm": "baseline_regex"
+  },
+  "leaks": [
+    {
+      "path": "/",
+      "entity": "person_name",
+      "value": "Nakamura, Noah"
+    },
+    {
+      "path": "/",
+      "entity": "mrn",
+      "value": "7777627"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1968-07-13"
+    },
+    {
+      "path": "/",
+      "entity": "person_name",
+      "value": "Lindqvist, Elena"
+    },
+    {
+      "path": "/",
+      "entity": "mrn",
+      "value": "4356708"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1958-08-09"
+    },
+    {
+      "path": "/",
+      "entity": "person_name",
+      "value": "Moreau, Elena"
+    },
+    {
+      "path": "/",
+      "entity": "mrn",
+      "value": "4863167"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1970-04-14"
+    },
+    {
+      "path": "/",
+      "entity": "person_name",
+      "value": "Nakamura, Aisha"
+    },
+    {
+      "path": "/",
+      "entity": "mrn",
+      "value": "3235470"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1954-06-27"
+    },
+    {
+      "path": "/",
+      "entity": "person_name",
+      "value": "Lindqvist, Aisha"
+    },
+    {
+      "path": "/",
+      "entity": "mrn",
+      "value": "5213614"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1968-03-23"
+    },
+    {
+      "path": "/",
+      "entity": "person_name",
+      "value": "Reyes, Elena"
+    },
+    {
+      "path": "/",
+      "entity": "mrn",
+      "value": "9905557"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1996-08-22"
+    },
+    {
+      "path": "/",
+      "entity": "person_name",
+      "value": "Mensah, Aisha"
+    },
+    {
+      "path": "/",
+      "entity": "mrn",
+      "value": "9208671"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "2004-02-27"
+    },
+    {
+      "path": "/",
+      "entity": "person_name",
+      "value": "Okafor, Fatima"
+    },
+    {
+      "path": "/",
+      "entity": "mrn",
+      "value": "8073933"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1970-06-14"
+    },
+    {
+      "path": "/",
+      "entity": "person_name",
+      "value": "Haddad, Maria"
+    },
+    {
+      "path": "/",
+      "entity": "mrn",
+      "value": "7274339"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1965-07-25"
+    },
+    {
+      "path": "/",
+      "entity": "person_name",
+      "value": "Chaudhry, Elena"
+    },
+    {
+      "path": "/",
+      "entity": "mrn",
+      "value": "4566682"
+    },
+    {
+      "path": "/",
+      "entity": "date_of_birth",
+      "value": "1981-06-06"
+    },
+    {
+      "path": "/patients",
+      "entity": "person_name",
+      "value": "Noah Nakamura"
+    },
+    {
+      "path": "/patients",
+      "entity": "person_name",
+      "value": "Elena Lindqvist"
+    },
+    {
+      "path": "/patients",
+      "entity": "person_name",
+      "value": "Elena Moreau"
+    },
+    {
+      "path": "/patients",
+      "entity": "person_name",
+      "value": "Aisha Nakamura"
+    },
+    {
+      "path": "/patients",
+      "entity": "person_name",
+      "value": "Aisha Lindqvist"
+    },
+    {
+      "path": "/patients",
+      "entity": "person_name",
+      "value": "Elena Reyes"
+    },
+    {
+      "path": "/patients",
+      "entity": "person_name",
+      "value": "Aisha Mensah"
+    },
+    {
+      "path": "/patients",
+      "entity": "person_name",
+      "value": "Fatima Okafor"
+    },
+    {
+      "path": "/patients",
+      "entity": "person_name",
+      "value": "Maria Haddad"
+    },
+    {
+      "path": "/patients",
+      "entity": "person_name",
+      "value": "Elena Chaudhry"
+    },
+    {
+      "path": "/chart/p00",
+      "entity": "person_name",
+      "value": "Noah Nakamura"
+    },
+    {
+      "path": "/chart/p00",
+      "entity": "mrn",
+      "value": "7777627"
+    },
+    {
+      "path": "/chart/p00",
+      "entity": "date_of_birth",
+      "value": "1968-07-13"
+    },
+    {
+      "path": "/chart/p00",
+      "entity": "address",
+      "value": "541 Harbor Rd, Tampa, FL 33674"
+    },
+    {
+      "path": "/chart/p00",
+      "entity": "member_id",
+      "value": "MQ125705505"
+    },
+    {
+      "path": "/chart/p00",
+      "entity": "person_name",
+      "value": "Noah Nakamura"
+    },
+    {
+      "path": "/chart/p01",
+      "entity": "person_name",
+      "value": "Elena Lindqvist"
+    },
+    {
+      "path": "/chart/p01",
+      "entity": "mrn",
+      "value": "4356708"
+    },
+    {
+      "path": "/chart/p01",
+      "entity": "date_of_birth",
+      "value": "1958-08-09"
+    },
+    {
+      "path": "/chart/p01",
+      "entity": "address",
+      "value": "7741 Sunset Blvd, Tampa, FL 33639"
+    },
+    {
+      "path": "/chart/p01",
+      "entity": "member_id",
+      "value": "HQ398211891"
+    },
+    {
+      "path": "/chart/p01",
+      "entity": "person_name",
+      "value": "Elena Lindqvist"
+    },
+    {
+      "path": "/chart/p01",
+      "entity": "claim_number",
+      "value": "CLM51549699"
+    },
+    {
+      "path": "/chart/p02",
+      "entity": "person_name",
+      "value": "Elena Moreau"
+    },
+    {
+      "path": "/chart/p02",
+      "entity": "mrn",
+      "value": "4863167"
+    },
+    {
+      "path": "/chart/p02",
+      "entity": "date_of_birth",
+      "value": "1970-04-14"
+    },
+    {
+      "path": "/chart/p02",
+      "entity": "address",
+      "value": "3747 Sunset Blvd, Raleigh, NC 27657"
+    },
+    {
+      "path": "/chart/p02",
+      "entity": "member_id",
+      "value": "KZ108109591"
+    },
+    {
+      "path": "/chart/p02",
+      "entity": "person_name",
+      "value": "Elena Moreau"
+    },
+    {
+      "path": "/chart/p02",
+      "entity": "claim_number",
+      "value": "CLM59634390"
+    },
+    {
+      "path": "/chart/p03",
+      "entity": "person_name",
+      "value": "Aisha Nakamura"
+    },
+    {
+      "path": "/chart/p03",
+      "entity": "mrn",
+      "value": "3235470"
+    },
+    {
+      "path": "/chart/p03",
+      "entity": "date_of_birth",
+      "value": "1954-06-27"
+    },
+    {
+      "path": "/chart/p03",
+      "entity": "address",
+      "value": "2308 Sunset Blvd, Tampa, FL 33622"
+    },
+    {
+      "path": "/chart/p03",
+      "entity": "member_id",
+      "value": "BQ538433145"
+    },
+    {
+      "path": "/chart/p03",
+      "entity": "person_name",
+      "value": "Aisha Nakamura"
+    },
+    {
+      "path": "/chart/p03",
+      "entity": "claim_number",
+      "value": "CLM76823263"
+    },
+    {
+      "path": "/chart/p04",
+      "entity": "person_name",
+      "value": "Aisha Lindqvist"
+    },
+    {
+      "path": "/chart/p04",
+      "entity": "mrn",
+      "value": "5213614"
+    },
+    {
+      "path": "/chart/p04",
+      "entity": "date_of_birth",
+      "value": "1968-03-23"
+    },
+    {
+      "path": "/chart/p04",
+      "entity": "address",
+      "value": "9328 Oak St, Raleigh, NC 27673"
+    },
+    {
+      "path": "/chart/p04",
+      "entity": "member_id",
+      "value": "BZ215753121"
+    },
+    {
+      "path": "/chart/p04",
+      "entity": "person_name",
+      "value": "Aisha Lindqvist"
+    },
+    {
+      "path": "/chart/p04",
+      "entity": "claim_number",
+      "value": "CLM71679645"
+    },
+    {
+      "path": "/chart/p05",
+      "entity": "person_name",
+      "value": "Elena Reyes"
+    },
+    {
+      "path": "/chart/p05",
+      "entity": "mrn",
+      "value": "9905557"
+    },
+    {
+      "path": "/chart/p05",
+      "entity": "date_of_birth",
+      "value": "1996-08-22"
+    },
+    {
+      "path": "/chart/p05",
+      "entity": "address",
+      "value": "966 Cedar Ln, Tampa, FL 33672"
+    },
+    {
+      "path": "/chart/p05",
+      "entity": "member_id",
+      "value": "HX804679814"
+    },
+    {
+      "path": "/chart/p05",
+      "entity": "person_name",
+      "value": "Elena Reyes"
+    },
+    {
+      "path": "/chart/p05",
+      "entity": "claim_number",
+      "value": "CLM60684393"
+    },
+    {
+      "path": "/chart/p06",
+      "entity": "person_name",
+      "value": "Aisha Mensah"
+    },
+    {
+      "path": "/chart/p06",
+      "entity": "mrn",
+      "value": "9208671"
+    },
+    {
+      "path": "/chart/p06",
+      "entity": "date_of_birth",
+      "value": "2004-02-27"
+    },
+    {
+      "path": "/chart/p06",
+      "entity": "address",
+      "value": "1140 Oak St, Raleigh, NC 27635"
+    },
+    {
+      "path": "/chart/p06",
+      "entity": "member_id",
+      "value": "BX602856195"
+    },
+    {
+      "path": "/chart/p06",
+      "entity": "person_name",
+      "value": "Aisha Mensah"
+    },
+    {
+      "path": "/chart/p06",
+      "entity": "claim_number",
+      "value": "CLM69332453"
+    },
+    {
+      "path": "/chart/p07",
+      "entity": "person_name",
+      "value": "Fatima Okafor"
+    },
+    {
+      "path": "/chart/p07",
+      "entity": "mrn",
+      "value": "8073933"
+    },
+    {
+      "path": "/chart/p07",
+      "entity": "date_of_birth",
+      "value": "1970-06-14"
+    },
+    {
+      "path": "/chart/p07",
+      "entity": "address",
+      "value": "1936 Oak St, Tampa, FL 33626"
+    },
+    {
+      "path": "/chart/p07",
+      "entity": "member_id",
+      "value": "KX468881262"
+    },
+    {
+      "path": "/chart/p07",
+      "entity": "person_name",
+      "value": "Fatima Okafor"
+    },
+    {
+      "path": "/chart/p07",
+      "entity": "claim_number",
+      "value": "CLM88886142"
+    },
+    {
+      "path": "/chart/p08",
+      "entity": "person_name",
+      "value": "Maria Haddad"
+    },
+    {
+      "path": "/chart/p08",
+      "entity": "mrn",
+      "value": "7274339"
+    },
+    {
+      "path": "/chart/p08",
+      "entity": "date_of_birth",
+      "value": "1965-07-25"
+    },
+    {
+      "path": "/chart/p08",
+      "entity": "address",
+      "value": "944 Sunset Blvd, Denver, CO 80295"
+    },
+    {
+      "path": "/chart/p08",
+      "entity": "member_id",
+      "value": "HZ615485285"
+    },
+    {
+      "path": "/chart/p08",
+      "entity": "person_name",
+      "value": "Maria Haddad"
+    },
+    {
+      "path": "/chart/p08",
+      "entity": "claim_number",
+      "value": "CLM65124265"
+    },
+    {
+      "path": "/chart/p09",
+      "entity": "person_name",
+      "value": "Elena Chaudhry"
+    },
+    {
+      "path": "/chart/p09",
+      "entity": "mrn",
+      "value": "4566682"
+    },
+    {
+      "path": "/chart/p09",
+      "entity": "date_of_birth",
+      "value": "1981-06-06"
+    },
+    {
+      "path": "/chart/p09",
+      "entity": "address",
+      "value": "3501 Riverside Dr, Tampa, FL 33668"
+    },
+    {
+      "path": "/chart/p09",
+      "entity": "member_id",
+      "value": "BQ913697543"
+    },
+    {
+      "path": "/chart/p09",
+      "entity": "person_name",
+      "value": "Elena Chaudhry"
+    },
+    {
+      "path": "/chart/p09",
+      "entity": "claim_number",
+      "value": "CLM64008855"
+    }
+  ],
+  "frames": [
+    {
+      "path": "/",
+      "truth": 30,
+      "leaked": [
+        [
+          "person_name",
+          "Nakamura, Noah"
+        ],
+        [
+          "mrn",
+          "7777627"
+        ],
+        [
+          "date_of_birth",
+          "1968-07-13"
+        ],
+        [
+          "person_name",
+          "Lindqvist, Elena"
+        ],
+        [
+          "mrn",
+          "4356708"
+        ],
+        [
+          "date_of_birth",
+          "1958-08-09"
+        ],
+        [
+          "person_name",
+          "Moreau, Elena"
+        ],
+        [
+          "mrn",
+          "4863167"
+        ],
+        [
+          "date_of_birth",
+          "1970-04-14"
+        ],
+        [
+          "person_name",
+          "Nakamura, Aisha"
+        ],
+        [
+          "mrn",
+          "3235470"
+        ],
+        [
+          "date_of_birth",
+          "1954-06-27"
+        ],
+        [
+          "person_name",
+          "Lindqvist, Aisha"
+        ],
+        [
+          "mrn",
+          "5213614"
+        ],
+        [
+          "date_of_birth",
+          "1968-03-23"
+        ],
+        [
+          "person_name",
+          "Reyes, Elena"
+        ],
+        [
+          "mrn",
+          "9905557"
+        ],
+        [
+          "date_of_birth",
+          "1996-08-22"
+        ],
+        [
+          "person_name",
+          "Mensah, Aisha"
+        ],
+        [
+          "mrn",
+          "9208671"
+        ],
+        [
+          "date_of_birth",
+          "2004-02-27"
+        ],
+        [
+          "person_name",
+          "Okafor, Fatima"
+        ],
+        [
+          "mrn",
+          "8073933"
+        ],
+        [
+          "date_of_birth",
+          "1970-06-14"
+        ],
+        [
+          "person_name",
+          "Haddad, Maria"
+        ],
+        [
+          "mrn",
+          "7274339"
+        ],
+        [
+          "date_of_birth",
+          "1965-07-25"
+        ],
+        [
+          "person_name",
+          "Chaudhry, Elena"
+        ],
+        [
+          "mrn",
+          "4566682"
+        ],
+        [
+          "date_of_birth",
+          "1981-06-06"
+        ]
+      ],
+      "dets": 0,
+      "over_masked": [],
+      "timings": {
+        "total": 0.603
+      }
+    },
+    {
+      "path": "/patients",
+      "truth": 30,
+      "leaked": [
+        [
+          "person_name",
+          "Noah Nakamura"
+        ],
+        [
+          "person_name",
+          "Elena Lindqvist"
+        ],
+        [
+          "person_name",
+          "Elena Moreau"
+        ],
+        [
+          "person_name",
+          "Aisha Nakamura"
+        ],
+        [
+          "person_name",
+          "Aisha Lindqvist"
+        ],
+        [
+          "person_name",
+          "Elena Reyes"
+        ],
+        [
+          "person_name",
+          "Aisha Mensah"
+        ],
+        [
+          "person_name",
+          "Fatima Okafor"
+        ],
+        [
+          "person_name",
+          "Maria Haddad"
+        ],
+        [
+          "person_name",
+          "Elena Chaudhry"
+        ]
+      ],
+      "dets": 20,
+      "over_masked": [],
+      "timings": {
+        "total": 0.238
+      }
+    },
+    {
+      "path": "/chart/p00",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Noah Nakamura"
+        ],
+        [
+          "mrn",
+          "7777627"
+        ],
+        [
+          "date_of_birth",
+          "1968-07-13"
+        ],
+        [
+          "address",
+          "541 Harbor Rd, Tampa, FL 33674"
+        ],
+        [
+          "member_id",
+          "MQ125705505"
+        ],
+        [
+          "person_name",
+          "Noah Nakamura"
+        ]
+      ],
+      "dets": 4,
+      "over_masked": [
+        "requested",
+        "CLM79355878.",
+        "follow"
+      ],
+      "timings": {
+        "total": 0.192
+      }
+    },
+    {
+      "path": "/chart/p01",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Elena Lindqvist"
+        ],
+        [
+          "mrn",
+          "4356708"
+        ],
+        [
+          "date_of_birth",
+          "1958-08-09"
+        ],
+        [
+          "address",
+          "7741 Sunset Blvd, Tampa, FL 33639"
+        ],
+        [
+          "member_id",
+          "HQ398211891"
+        ],
+        [
+          "person_name",
+          "Elena Lindqvist"
+        ],
+        [
+          "claim_number",
+          "CLM51549699"
+        ]
+      ],
+      "dets": 4,
+      "over_masked": [],
+      "timings": {
+        "total": 0.185
+      }
+    },
+    {
+      "path": "/chart/p02",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Elena Moreau"
+        ],
+        [
+          "mrn",
+          "4863167"
+        ],
+        [
+          "date_of_birth",
+          "1970-04-14"
+        ],
+        [
+          "address",
+          "3747 Sunset Blvd, Raleigh, NC 27657"
+        ],
+        [
+          "member_id",
+          "KZ108109591"
+        ],
+        [
+          "person_name",
+          "Elena Moreau"
+        ],
+        [
+          "claim_number",
+          "CLM59634390"
+        ]
+      ],
+      "dets": 4,
+      "over_masked": [],
+      "timings": {
+        "total": 0.192
+      }
+    },
+    {
+      "path": "/chart/p03",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Aisha Nakamura"
+        ],
+        [
+          "mrn",
+          "3235470"
+        ],
+        [
+          "date_of_birth",
+          "1954-06-27"
+        ],
+        [
+          "address",
+          "2308 Sunset Blvd, Tampa, FL 33622"
+        ],
+        [
+          "member_id",
+          "BQ538433145"
+        ],
+        [
+          "person_name",
+          "Aisha Nakamura"
+        ],
+        [
+          "claim_number",
+          "CLM76823263"
+        ]
+      ],
+      "dets": 4,
+      "over_masked": [],
+      "timings": {
+        "total": 0.202
+      }
+    },
+    {
+      "path": "/chart/p04",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Aisha Lindqvist"
+        ],
+        [
+          "mrn",
+          "5213614"
+        ],
+        [
+          "date_of_birth",
+          "1968-03-23"
+        ],
+        [
+          "address",
+          "9328 Oak St, Raleigh, NC 27673"
+        ],
+        [
+          "member_id",
+          "BZ215753121"
+        ],
+        [
+          "person_name",
+          "Aisha Lindqvist"
+        ],
+        [
+          "claim_number",
+          "CLM71679645"
+        ]
+      ],
+      "dets": 4,
+      "over_masked": [],
+      "timings": {
+        "total": 0.192
+      }
+    },
+    {
+      "path": "/chart/p05",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Elena Reyes"
+        ],
+        [
+          "mrn",
+          "9905557"
+        ],
+        [
+          "date_of_birth",
+          "1996-08-22"
+        ],
+        [
+          "address",
+          "966 Cedar Ln, Tampa, FL 33672"
+        ],
+        [
+          "member_id",
+          "HX804679814"
+        ],
+        [
+          "person_name",
+          "Elena Reyes"
+        ],
+        [
+          "claim_number",
+          "CLM60684393"
+        ]
+      ],
+      "dets": 4,
+      "over_masked": [],
+      "timings": {
+        "total": 0.195
+      }
+    },
+    {
+      "path": "/chart/p06",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Aisha Mensah"
+        ],
+        [
+          "mrn",
+          "9208671"
+        ],
+        [
+          "date_of_birth",
+          "2004-02-27"
+        ],
+        [
+          "address",
+          "1140 Oak St, Raleigh, NC 27635"
+        ],
+        [
+          "member_id",
+          "BX602856195"
+        ],
+        [
+          "person_name",
+          "Aisha Mensah"
+        ],
+        [
+          "claim_number",
+          "CLM69332453"
+        ]
+      ],
+      "dets": 4,
+      "over_masked": [],
+      "timings": {
+        "total": 0.189
+      }
+    },
+    {
+      "path": "/chart/p07",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Fatima Okafor"
+        ],
+        [
+          "mrn",
+          "8073933"
+        ],
+        [
+          "date_of_birth",
+          "1970-06-14"
+        ],
+        [
+          "address",
+          "1936 Oak St, Tampa, FL 33626"
+        ],
+        [
+          "member_id",
+          "KX468881262"
+        ],
+        [
+          "person_name",
+          "Fatima Okafor"
+        ],
+        [
+          "claim_number",
+          "CLM88886142"
+        ]
+      ],
+      "dets": 4,
+      "over_masked": [],
+      "timings": {
+        "total": 0.192
+      }
+    },
+    {
+      "path": "/chart/p08",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Maria Haddad"
+        ],
+        [
+          "mrn",
+          "7274339"
+        ],
+        [
+          "date_of_birth",
+          "1965-07-25"
+        ],
+        [
+          "address",
+          "944 Sunset Blvd, Denver, CO 80295"
+        ],
+        [
+          "member_id",
+          "HZ615485285"
+        ],
+        [
+          "person_name",
+          "Maria Haddad"
+        ],
+        [
+          "claim_number",
+          "CLM65124265"
+        ]
+      ],
+      "dets": 4,
+      "over_masked": [],
+      "timings": {
+        "total": 0.191
+      }
+    },
+    {
+      "path": "/chart/p09",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Elena Chaudhry"
+        ],
+        [
+          "mrn",
+          "4566682"
+        ],
+        [
+          "date_of_birth",
+          "1981-06-06"
+        ],
+        [
+          "address",
+          "3501 Riverside Dr, Tampa, FL 33668"
+        ],
+        [
+          "member_id",
+          "BQ913697543"
+        ],
+        [
+          "person_name",
+          "Elena Chaudhry"
+        ],
+        [
+          "claim_number",
+          "CLM64008855"
+        ]
+      ],
+      "dets": 4,
+      "over_masked": [],
+      "timings": {
+        "total": 0.192
+      }
+    }
+  ]
+}

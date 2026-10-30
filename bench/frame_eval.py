@@ -19,7 +19,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
 
-from veil.frame import veil_frame
+from veil.frame import Detection, render, veil_frame
+from veil.detect.validators import find_spans
 from veil.perceive import ocr
 from veil.vault import Vault, norm
 
@@ -54,7 +55,23 @@ def capture(base: str, paths: list[str]) -> list[dict]:
     return frames
 
 
-async def run(use_sam: bool, frames: list[dict], use_guard: bool = False) -> dict:
+async def baseline_regex(png: bytes) -> object:
+    """SPEC arm 'regex-only masking over OCR': what a typical redaction tool does.
+    Same on-device OCR, standard patterns only (email, SSN, card+Luhn, phone, every date,
+    API secrets), solid boxes, no labels/layout, no vault, no LLM, no egress re-check."""
+    import time
+    from types import SimpleNamespace
+    t0 = time.perf_counter()
+    lines, _ = ocr(png)
+    dets = [Detection(s.entity, ln.sub_box(s.start, s.end), "regex", s.entity.upper())
+            for ln in lines for s in find_spans(ln.text)]
+    out = render(png, dets)
+    return SimpleNamespace(png=out, blocked=False, egress_hits=[], detections=dets,
+                           timings={"total": time.perf_counter() - t0})
+
+
+async def run(use_sam: bool, frames: list[dict], use_guard: bool = False,
+              baseline: bool = False) -> dict:
     sam = None
     if use_sam:
         from veil.detect.sam import SamClient
@@ -67,7 +84,8 @@ async def run(use_sam: bool, frames: list[dict], use_guard: bool = False) -> dic
     tot_truth = tot_leak = tot_words = tot_lost = 0
     for f in frames:
         vault = Vault()  # fresh session per frame: worst case, no help from earlier frames
-        r = await veil_frame(f["png"], vault, origin="payer-portal", sam=sam, guard=guard)
+        r = (await baseline_regex(f["png"]) if baseline else
+             await veil_frame(f["png"], vault, origin="payer-portal", sam=sam, guard=guard))
         if r.blocked:
             rows.append({"path": f["path"], "blocked": True, "egress_hits": r.egress_hits})
             continue
@@ -113,9 +131,18 @@ def main() -> None:
     ap.add_argument("--sam", action="store_true")
     ap.add_argument("--world", default="portal", choices=list(WORLDS))
     ap.add_argument("--guard", action="store_true", help="add the L2 semantic detector")
+    ap.add_argument("--baseline-regex", action="store_true",
+                    help="typical redaction tool: standard regexes over OCR, nothing else")
     args = ap.parse_args()
     WORLD = args.world
     base, paths = WORLDS[args.world]
+    if args.baseline_regex:
+        res = asyncio.run(run(False, capture(base, paths()), False, baseline=True))
+        res["summary"].update(world=args.world, arm="baseline_regex")
+        OUT.mkdir(parents=True, exist_ok=True)
+        (OUT / f"frame_eval_{args.world}_baseline_regex.json").write_text(json.dumps(res, indent=2))
+        print(json.dumps(res["summary"], indent=2))
+        return
     res = asyncio.run(run(args.sam, capture(base, paths()), args.guard))
     res["summary"]["world"] = args.world
     OUT.mkdir(parents=True, exist_ok=True)

@@ -98,11 +98,13 @@ A "leak" means a ground-truth sensitive value (read from the page's DOM, which V
 
 | World | Detectors | Sensitive values | Leaked | Harmless words hidden |
 |---|---|---|---|---|
-| ClearPath payer portal (dev) | rules + Glimmer + SAM, all private | 246 | **0** | 0.7% |
-| EHR, **held out** (built after the rules were frozen) | rules only | 170 | 35 | 5.7% |
-| EHR, held out | rules + Glimmer + SAM, all private | 170 | **0** | 7.3% |
+| ClearPath payer portal (dev) | typical redactor: standard regexes over OCR (baseline) | 246 | 177 (72%) | 6.5% |
+| ClearPath payer portal (dev) | Veil: rules + Glimmer + SAM, all private | 246 | **0** | 0.6% |
+| EHR, **held out** (built after the rules were frozen) | typical redactor (baseline) | 170 | 109 (64%) | 0.4% |
+| EHR, held out | Veil rules only | 170 | 35 (21%) | 5.7% |
+| EHR, held out | Veil: rules + Glimmer + SAM, all private | 170 | **0** | 7.3% |
 
-The held-out row is the honest one. The rules alone missed 1 in 5 values on a layout they'd never seen, and Glimmer closed the gap.
+The held-out rows are the honest ones. A typical redaction tool (emails, SSNs, card and phone numbers, dates) misses most of the data on these screens, because names, member IDs and record numbers have no fixed pattern. Veil's rules alone still missed 1 in 5 values on a layout they'd never seen, and Glimmer closed the gap. Re-run on Oct 30 against the current code, with the same result. One frame first timed out while the GPU was cold and was blocked, as designed, so the run was repeated on a warm GPU: 0 blocked.
 
 ### Faces and ID cards
 

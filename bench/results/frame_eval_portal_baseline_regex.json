@@ -1,0 +1,1971 @@
+{
+  "summary": {
+    "frames": 24,
+    "blocked": 0,
+    "sensitive_values": 246,
+    "leaked": 177,
+    "leak_rate": 0.7195,
+    "non_sensitive_words": 1182,
+    "over_masked_words": 77,
+    "over_mask_rate": 0.0651,
+    "latency_p50_s": 0.198,
+    "latency_max_s": 1.141,
+    "sam": false,
+    "guard": null,
+    "guard_usage": null,
+    "world": "portal",
+    "arm": "baseline_regex"
+  },
+  "leaks": [
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Grace Nakamura"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "HZ162275869"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Hiroshi Haddad"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "MQ468804211"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "HX892811641"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Mateo Chaudhry"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "AQ745025986"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Aisha Moreau"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "MZ453975088"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Lucia Sullivan"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "AZ525028351"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Maria Tanaka"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "BQ764754893"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Noah Okafor"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "BQ247376007"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Lucia Nakamura"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "HX958550599"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Mateo Brennan"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "MQ644049901"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Sofia Brennan"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "KZ144739552"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "person_name",
+      "value": "Aisha Moreau"
+    },
+    {
+      "path": "/?q=a",
+      "entity": "member_id",
+      "value": "BZ797859467"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "person_name",
+      "value": "Grace Nakamura"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "member_id",
+      "value": "HZ162275869"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "person_name",
+      "value": "Mateo Chaudhry"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "member_id",
+      "value": "AQ745025986"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "person_name",
+      "value": "Aisha Moreau"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "member_id",
+      "value": "MZ453975088"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "person_name",
+      "value": "Mateo Brennan"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "member_id",
+      "value": "MQ644049901"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "person_name",
+      "value": "Sofia Brennan"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "member_id",
+      "value": "KZ144739552"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "person_name",
+      "value": "Aisha Moreau"
+    },
+    {
+      "path": "/?q=e",
+      "entity": "member_id",
+      "value": "BZ797859467"
+    },
+    {
+      "path": "/?q=Nakamura",
+      "entity": "person_name",
+      "value": "Grace Nakamura"
+    },
+    {
+      "path": "/?q=Nakamura",
+      "entity": "member_id",
+      "value": "HZ162275869"
+    },
+    {
+      "path": "/?q=Nakamura",
+      "entity": "person_name",
+      "value": "Lucia Nakamura"
+    },
+    {
+      "path": "/?q=Nakamura",
+      "entity": "member_id",
+      "value": "HX958550599"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM27874421"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Grace Nakamura"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM85196458"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Grace Nakamura"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM23076910"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Grace Nakamura"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM76627625"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Grace Nakamura"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM22562241"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Hiroshi Haddad"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM51554798"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Hiroshi Haddad"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM41317839"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Maria Lindqvist"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM47840101"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Maria Lindqvist"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM26843185"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Maria Lindqvist"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM85064182"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Maria Lindqvist"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM74477539"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Mateo Chaudhry"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM55987803"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Mateo Chaudhry"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM37543491"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Mateo Chaudhry"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "claim_number",
+      "value": "CLM20809644"
+    },
+    {
+      "path": "/claims?q=a",
+      "entity": "person_name",
+      "value": "Aisha Moreau"
+    },
+    {
+      "path": "/member/p00",
+      "entity": "person_name",
+      "value": "Grace Nakamura"
+    },
+    {
+      "path": "/member/p00",
+      "entity": "member_id",
+      "value": "HZ162275869"
+    },
+    {
+      "path": "/member/p00",
+      "entity": "group_number",
+      "value": "GRP-76510"
+    },
+    {
+      "path": "/member/p00",
+      "entity": "address",
+      "value": "1244 Harbor Rd, Raleigh, NC 27621"
+    },
+    {
+      "path": "/member/p00",
+      "entity": "claim_number",
+      "value": "CLM27874421"
+    },
+    {
+      "path": "/member/p00",
+      "entity": "claim_number",
+      "value": "CLM85196458"
+    },
+    {
+      "path": "/member/p00",
+      "entity": "claim_number",
+      "value": "CLM23076910"
+    },
+    {
+      "path": "/member/p00",
+      "entity": "claim_number",
+      "value": "CLM76627625"
+    },
+    {
+      "path": "/member/p01",
+      "entity": "person_name",
+      "value": "Hiroshi Haddad"
+    },
+    {
+      "path": "/member/p01",
+      "entity": "member_id",
+      "value": "MQ468804211"
+    },
+    {
+      "path": "/member/p01",
+      "entity": "group_number",
+      "value": "GRP-68829"
+    },
+    {
+      "path": "/member/p01",
+      "entity": "address",
+      "value": "6950 Harbor Rd, Austin, TX 78753"
+    },
+    {
+      "path": "/member/p01",
+      "entity": "claim_number",
+      "value": "CLM22562241"
+    },
+    {
+      "path": "/member/p01",
+      "entity": "claim_number",
+      "value": "CLM51554798"
+    },
+    {
+      "path": "/member/p02",
+      "entity": "person_name",
+      "value": "Maria Lindqvist"
+    },
+    {
+      "path": "/member/p02",
+      "entity": "member_id",
+      "value": "HX892811641"
+    },
+    {
+      "path": "/member/p02",
+      "entity": "group_number",
+      "value": "GRP-42455"
+    },
+    {
+      "path": "/member/p02",
+      "entity": "address",
+      "value": "7459 Sunset Blvd, Columbus, OH 43280"
+    },
+    {
+      "path": "/member/p02",
+      "entity": "claim_number",
+      "value": "CLM41317839"
+    },
+    {
+      "path": "/member/p02",
+      "entity": "claim_number",
+      "value": "CLM47840101"
+    },
+    {
+      "path": "/member/p02",
+      "entity": "claim_number",
+      "value": "CLM26843185"
+    },
+    {
+      "path": "/member/p02",
+      "entity": "claim_number",
+      "value": "CLM85064182"
+    },
+    {
+      "path": "/member/p03",
+      "entity": "person_name",
+      "value": "Mateo Chaudhry"
+    },
+    {
+      "path": "/member/p03",
+      "entity": "member_id",
+      "value": "AQ745025986"
+    },
+    {
+      "path": "/member/p03",
+      "entity": "group_number",
+      "value": "GRP-16891"
+    },
+    {
+      "path": "/member/p03",
+      "entity": "address",
+      "value": "1762 Cedar Ln, Raleigh, NC 27688"
+    },
+    {
+      "path": "/member/p03",
+      "entity": "claim_number",
+      "value": "CLM74477539"
+    },
+    {
+      "path": "/member/p03",
+      "entity": "claim_number",
+      "value": "CLM55987803"
+    },
+    {
+      "path": "/member/p03",
+      "entity": "claim_number",
+      "value": "CLM37543491"
+    },
+    {
+      "path": "/member/p04",
+      "entity": "person_name",
+      "value": "Aisha Moreau"
+    },
+    {
+      "path": "/member/p04",
+      "entity": "member_id",
+      "value": "MZ453975088"
+    },
+    {
+      "path": "/member/p04",
+      "entity": "group_number",
+      "value": "GRP-93419"
+    },
+    {
+      "path": "/member/p04",
+      "entity": "address",
+      "value": "6664 Riverside Dr, Columbus, OH 43239"
+    },
+    {
+      "path": "/member/p04",
+      "entity": "claim_number",
+      "value": "CLM20809644"
+    },
+    {
+      "path": "/member/p04",
+      "entity": "claim_number",
+      "value": "CLM55330357"
+    },
+    {
+      "path": "/member/p04",
+      "entity": "claim_number",
+      "value": "CLM97641229"
+    },
+    {
+      "path": "/member/p05",
+      "entity": "person_name",
+      "value": "Lucia Sullivan"
+    },
+    {
+      "path": "/member/p05",
+      "entity": "member_id",
+      "value": "AZ525028351"
+    },
+    {
+      "path": "/member/p05",
+      "entity": "group_number",
+      "value": "GRP-70707"
+    },
+    {
+      "path": "/member/p05",
+      "entity": "address",
+      "value": "2181 Maple Ave, Austin, TX 78729"
+    },
+    {
+      "path": "/member/p05",
+      "entity": "claim_number",
+      "value": "CLM28689916"
+    },
+    {
+      "path": "/member/p05",
+      "entity": "claim_number",
+      "value": "CLM43800696"
+    },
+    {
+      "path": "/member/p05",
+      "entity": "claim_number",
+      "value": "CLM44811353"
+    },
+    {
+      "path": "/member/p05",
+      "entity": "claim_number",
+      "value": "CLM71493326"
+    },
+    {
+      "path": "/member/p06",
+      "entity": "person_name",
+      "value": "Maria Tanaka"
+    },
+    {
+      "path": "/member/p06",
+      "entity": "member_id",
+      "value": "BQ764754893"
+    },
+    {
+      "path": "/member/p06",
+      "entity": "group_number",
+      "value": "GRP-25772"
+    },
+    {
+      "path": "/member/p06",
+      "entity": "address",
+      "value": "9200 Sunset Blvd, Raleigh, NC 27623"
+    },
+    {
+      "path": "/member/p06",
+      "entity": "claim_number",
+      "value": "CLM77854192"
+    },
+    {
+      "path": "/member/p06",
+      "entity": "claim_number",
+      "value": "CLM78203564"
+    },
+    {
+      "path": "/member/p06",
+      "entity": "claim_number",
+      "value": "CLM85096671"
+    },
+    {
+      "path": "/member/p06",
+      "entity": "claim_number",
+      "value": "CLM26323822"
+    },
+    {
+      "path": "/member/p07",
+      "entity": "person_name",
+      "value": "Noah Okafor"
+    },
+    {
+      "path": "/member/p07",
+      "entity": "member_id",
+      "value": "BQ247376007"
+    },
+    {
+      "path": "/member/p07",
+      "entity": "group_number",
+      "value": "GRP-71307"
+    },
+    {
+      "path": "/member/p07",
+      "entity": "address",
+      "value": "2767 Riverside Dr, Austin, TX 78738"
+    },
+    {
+      "path": "/member/p07",
+      "entity": "claim_number",
+      "value": "CLM69117285"
+    },
+    {
+      "path": "/member/p07",
+      "entity": "claim_number",
+      "value": "CLM25146464"
+    },
+    {
+      "path": "/member/p07",
+      "entity": "claim_number",
+      "value": "CLM15313436"
+    },
+    {
+      "path": "/member/p08",
+      "entity": "person_name",
+      "value": "Lucia Nakamura"
+    },
+    {
+      "path": "/member/p08",
+      "entity": "member_id",
+      "value": "HX958550599"
+    },
+    {
+      "path": "/member/p08",
+      "entity": "group_number",
+      "value": "GRP-34031"
+    },
+    {
+      "path": "/member/p08",
+      "entity": "address",
+      "value": "1551 Cedar Ln, Denver, CO 80220"
+    },
+    {
+      "path": "/member/p08",
+      "entity": "claim_number",
+      "value": "CLM42002360"
+    },
+    {
+      "path": "/member/p08",
+      "entity": "claim_number",
+      "value": "CLM37080875"
+    },
+    {
+      "path": "/member/p08",
+      "entity": "claim_number",
+      "value": "CLM69819079"
+    },
+    {
+      "path": "/member/p08",
+      "entity": "claim_number",
+      "value": "CLM12437810"
+    },
+    {
+      "path": "/member/p09",
+      "entity": "person_name",
+      "value": "Mateo Brennan"
+    },
+    {
+      "path": "/member/p09",
+      "entity": "member_id",
+      "value": "MQ644049901"
+    },
+    {
+      "path": "/member/p09",
+      "entity": "group_number",
+      "value": "GRP-50341"
+    },
+    {
+      "path": "/member/p09",
+      "entity": "address",
+      "value": "2389 Sunset Blvd, Raleigh, NC 27654"
+    },
+    {
+      "path": "/member/p09",
+      "entity": "claim_number",
+      "value": "CLM49333645"
+    },
+    {
+      "path": "/member/p09",
+      "entity": "claim_number",
+      "value": "CLM69837566"
+    },
+    {
+      "path": "/member/p09",
+      "entity": "claim_number",
+      "value": "CLM42809053"
+    },
+    {
+      "path": "/member/p09",
+      "entity": "claim_number",
+      "value": "CLM10143467"
+    },
+    {
+      "path": "/member/p10",
+      "entity": "person_name",
+      "value": "Sofia Brennan"
+    },
+    {
+      "path": "/member/p10",
+      "entity": "member_id",
+      "value": "KZ144739552"
+    },
+    {
+      "path": "/member/p10",
+      "entity": "group_number",
+      "value": "GRP-61639"
+    },
+    {
+      "path": "/member/p10",
+      "entity": "address",
+      "value": "9694 Oak St, Denver, CO 80229"
+    },
+    {
+      "path": "/member/p10",
+      "entity": "claim_number",
+      "value": "CLM86300026"
+    },
+    {
+      "path": "/member/p10",
+      "entity": "claim_number",
+      "value": "CLM14182295"
+    },
+    {
+      "path": "/member/p10",
+      "entity": "claim_number",
+      "value": "CLM60548847"
+    },
+    {
+      "path": "/member/p10",
+      "entity": "claim_number",
+      "value": "CLM75671971"
+    },
+    {
+      "path": "/member/p11",
+      "entity": "person_name",
+      "value": "Aisha Moreau"
+    },
+    {
+      "path": "/member/p11",
+      "entity": "member_id",
+      "value": "BZ797859467"
+    },
+    {
+      "path": "/member/p11",
+      "entity": "group_number",
+      "value": "GRP-70337"
+    },
+    {
+      "path": "/member/p11",
+      "entity": "address",
+      "value": "4807 Maple Ave, Raleigh, NC 27688"
+    },
+    {
+      "path": "/member/p11",
+      "entity": "claim_number",
+      "value": "CLM23357223"
+    },
+    {
+      "path": "/member/p11",
+      "entity": "claim_number",
+      "value": "CLM72365992"
+    },
+    {
+      "path": "/member/p11",
+      "entity": "claim_number",
+      "value": "CLM21523163"
+    },
+    {
+      "path": "/claim/p00/0",
+      "entity": "claim_number",
+      "value": "CLM27874421"
+    },
+    {
+      "path": "/claim/p00/0",
+      "entity": "person_name",
+      "value": "Grace Nakamura"
+    },
+    {
+      "path": "/claim/p00/0",
+      "entity": "member_id",
+      "value": "HZ162275869"
+    },
+    {
+      "path": "/claim/p01/0",
+      "entity": "claim_number",
+      "value": "CLM22562241"
+    },
+    {
+      "path": "/claim/p01/0",
+      "entity": "person_name",
+      "value": "Hiroshi Haddad"
+    },
+    {
+      "path": "/claim/p01/0",
+      "entity": "member_id",
+      "value": "MQ468804211"
+    },
+    {
+      "path": "/claim/p02/0",
+      "entity": "claim_number",
+      "value": "CLM41317839"
+    },
+    {
+      "path": "/claim/p02/0",
+      "entity": "person_name",
+      "value": "Maria Lindqvist"
+    },
+    {
+      "path": "/claim/p02/0",
+      "entity": "member_id",
+      "value": "HX892811641"
+    },
+    {
+      "path": "/claim/p03/0",
+      "entity": "claim_number",
+      "value": "CLM74477539"
+    },
+    {
+      "path": "/claim/p03/0",
+      "entity": "person_name",
+      "value": "Mateo Chaudhry"
+    },
+    {
+      "path": "/claim/p03/0",
+      "entity": "member_id",
+      "value": "AQ745025986"
+    },
+    {
+      "path": "/claim/p04/0",
+      "entity": "claim_number",
+      "value": "CLM20809644"
+    },
+    {
+      "path": "/claim/p04/0",
+      "entity": "person_name",
+      "value": "Aisha Moreau"
+    },
+    {
+      "path": "/claim/p04/0",
+      "entity": "member_id",
+      "value": "MZ453975088"
+    },
+    {
+      "path": "/claim/p05/0",
+      "entity": "claim_number",
+      "value": "CLM28689916"
+    },
+    {
+      "path": "/claim/p05/0",
+      "entity": "person_name",
+      "value": "Lucia Sullivan"
+    },
+    {
+      "path": "/claim/p05/0",
+      "entity": "member_id",
+      "value": "AZ525028351"
+    },
+    {
+      "path": "/member/p00/address",
+      "entity": "person_name",
+      "value": "Grace Nakamura"
+    },
+    {
+      "path": "/member/p00/address",
+      "entity": "member_id",
+      "value": "HZ162275869"
+    }
+  ],
+  "frames": [
+    {
+      "path": "/?q=a",
+      "truth": 36,
+      "leaked": [
+        [
+          "person_name",
+          "Grace Nakamura"
+        ],
+        [
+          "member_id",
+          "HZ162275869"
+        ],
+        [
+          "person_name",
+          "Hiroshi Haddad"
+        ],
+        [
+          "member_id",
+          "MQ468804211"
+        ],
+        [
+          "member_id",
+          "HX892811641"
+        ],
+        [
+          "person_name",
+          "Mateo Chaudhry"
+        ],
+        [
+          "member_id",
+          "AQ745025986"
+        ],
+        [
+          "person_name",
+          "Aisha Moreau"
+        ],
+        [
+          "member_id",
+          "MZ453975088"
+        ],
+        [
+          "person_name",
+          "Lucia Sullivan"
+        ],
+        [
+          "member_id",
+          "AZ525028351"
+        ],
+        [
+          "person_name",
+          "Maria Tanaka"
+        ],
+        [
+          "member_id",
+          "BQ764754893"
+        ],
+        [
+          "person_name",
+          "Noah Okafor"
+        ],
+        [
+          "member_id",
+          "BQ247376007"
+        ],
+        [
+          "person_name",
+          "Lucia Nakamura"
+        ],
+        [
+          "member_id",
+          "HX958550599"
+        ],
+        [
+          "person_name",
+          "Mateo Brennan"
+        ],
+        [
+          "member_id",
+          "MQ644049901"
+        ],
+        [
+          "person_name",
+          "Sofia Brennan"
+        ],
+        [
+          "member_id",
+          "KZ144739552"
+        ],
+        [
+          "person_name",
+          "Aisha Moreau"
+        ],
+        [
+          "member_id",
+          "BZ797859467"
+        ]
+      ],
+      "dets": 12,
+      "over_masked": [],
+      "timings": {
+        "total": 1.141
+      }
+    },
+    {
+      "path": "/?q=e",
+      "truth": 18,
+      "leaked": [
+        [
+          "person_name",
+          "Grace Nakamura"
+        ],
+        [
+          "member_id",
+          "HZ162275869"
+        ],
+        [
+          "person_name",
+          "Mateo Chaudhry"
+        ],
+        [
+          "member_id",
+          "AQ745025986"
+        ],
+        [
+          "person_name",
+          "Aisha Moreau"
+        ],
+        [
+          "member_id",
+          "MZ453975088"
+        ],
+        [
+          "person_name",
+          "Mateo Brennan"
+        ],
+        [
+          "member_id",
+          "MQ644049901"
+        ],
+        [
+          "person_name",
+          "Sofia Brennan"
+        ],
+        [
+          "member_id",
+          "KZ144739552"
+        ],
+        [
+          "person_name",
+          "Aisha Moreau"
+        ],
+        [
+          "member_id",
+          "BZ797859467"
+        ]
+      ],
+      "dets": 6,
+      "over_masked": [],
+      "timings": {
+        "total": 0.171
+      }
+    },
+    {
+      "path": "/?q=Nakamura",
+      "truth": 6,
+      "leaked": [
+        [
+          "person_name",
+          "Grace Nakamura"
+        ],
+        [
+          "member_id",
+          "HZ162275869"
+        ],
+        [
+          "person_name",
+          "Lucia Nakamura"
+        ],
+        [
+          "member_id",
+          "HX958550599"
+        ]
+      ],
+      "dets": 2,
+      "over_masked": [],
+      "timings": {
+        "total": 0.113
+      }
+    },
+    {
+      "path": "/claims?q=a",
+      "truth": 28,
+      "leaked": [
+        [
+          "claim_number",
+          "CLM27874421"
+        ],
+        [
+          "person_name",
+          "Grace Nakamura"
+        ],
+        [
+          "claim_number",
+          "CLM85196458"
+        ],
+        [
+          "person_name",
+          "Grace Nakamura"
+        ],
+        [
+          "claim_number",
+          "CLM23076910"
+        ],
+        [
+          "person_name",
+          "Grace Nakamura"
+        ],
+        [
+          "claim_number",
+          "CLM76627625"
+        ],
+        [
+          "person_name",
+          "Grace Nakamura"
+        ],
+        [
+          "claim_number",
+          "CLM22562241"
+        ],
+        [
+          "person_name",
+          "Hiroshi Haddad"
+        ],
+        [
+          "claim_number",
+          "CLM51554798"
+        ],
+        [
+          "person_name",
+          "Hiroshi Haddad"
+        ],
+        [
+          "claim_number",
+          "CLM41317839"
+        ],
+        [
+          "person_name",
+          "Maria Lindqvist"
+        ],
+        [
+          "claim_number",
+          "CLM47840101"
+        ],
+        [
+          "person_name",
+          "Maria Lindqvist"
+        ],
+        [
+          "claim_number",
+          "CLM26843185"
+        ],
+        [
+          "person_name",
+          "Maria Lindqvist"
+        ],
+        [
+          "claim_number",
+          "CLM85064182"
+        ],
+        [
+          "person_name",
+          "Maria Lindqvist"
+        ],
+        [
+          "claim_number",
+          "CLM74477539"
+        ],
+        [
+          "person_name",
+          "Mateo Chaudhry"
+        ],
+        [
+          "claim_number",
+          "CLM55987803"
+        ],
+        [
+          "person_name",
+          "Mateo Chaudhry"
+        ],
+        [
+          "claim_number",
+          "CLM37543491"
+        ],
+        [
+          "person_name",
+          "Mateo Chaudhry"
+        ],
+        [
+          "claim_number",
+          "CLM20809644"
+        ],
+        [
+          "person_name",
+          "Aisha Moreau"
+        ]
+      ],
+      "dets": 14,
+      "over_masked": [
+        "05/14/2026",
+        "03/04/2026",
+        "09/23/2026",
+        "09/14/2026",
+        "05/16/2026",
+        "08/10/2026",
+        "01/16/2026",
+        "01/05/2026",
+        "09/20/2026",
+        "07/13/2026"
+      ],
+      "timings": {
+        "total": 0.27
+      }
+    },
+    {
+      "path": "/messages",
+      "truth": 0,
+      "leaked": [],
+      "dets": 0,
+      "over_masked": [],
+      "timings": {
+        "total": 0.091
+      }
+    },
+    {
+      "path": "/member/p00",
+      "truth": 12,
+      "leaked": [
+        [
+          "person_name",
+          "Grace Nakamura"
+        ],
+        [
+          "member_id",
+          "HZ162275869"
+        ],
+        [
+          "group_number",
+          "GRP-76510"
+        ],
+        [
+          "address",
+          "1244 Harbor Rd, Raleigh, NC 27621"
+        ],
+        [
+          "claim_number",
+          "CLM27874421"
+        ],
+        [
+          "claim_number",
+          "CLM85196458"
+        ],
+        [
+          "claim_number",
+          "CLM23076910"
+        ],
+        [
+          "claim_number",
+          "CLM76627625"
+        ]
+      ],
+      "dets": 10,
+      "over_masked": [
+        "05/14/2026",
+        "03/04/2026",
+        "09/23/2026",
+        "09/14/2026",
+        "01/04/2026",
+        "01/01/2026"
+      ],
+      "timings": {
+        "total": 0.239
+      }
+    },
+    {
+      "path": "/member/p01",
+      "truth": 10,
+      "leaked": [
+        [
+          "person_name",
+          "Hiroshi Haddad"
+        ],
+        [
+          "member_id",
+          "MQ468804211"
+        ],
+        [
+          "group_number",
+          "GRP-68829"
+        ],
+        [
+          "address",
+          "6950 Harbor Rd, Austin, TX 78753"
+        ],
+        [
+          "claim_number",
+          "CLM22562241"
+        ],
+        [
+          "claim_number",
+          "CLM51554798"
+        ]
+      ],
+      "dets": 7,
+      "over_masked": [
+        "05/16/2026",
+        "08/10/2026",
+        "01/01/2026"
+      ],
+      "timings": {
+        "total": 0.205
+      }
+    },
+    {
+      "path": "/member/p02",
+      "truth": 12,
+      "leaked": [
+        [
+          "person_name",
+          "Maria Lindqvist"
+        ],
+        [
+          "member_id",
+          "HX892811641"
+        ],
+        [
+          "group_number",
+          "GRP-42455"
+        ],
+        [
+          "address",
+          "7459 Sunset Blvd, Columbus, OH 43280"
+        ],
+        [
+          "claim_number",
+          "CLM41317839"
+        ],
+        [
+          "claim_number",
+          "CLM47840101"
+        ],
+        [
+          "claim_number",
+          "CLM26843185"
+        ],
+        [
+          "claim_number",
+          "CLM85064182"
+        ]
+      ],
+      "dets": 9,
+      "over_masked": [
+        "01/16/2026",
+        "01/05/2026",
+        "09/20/2026",
+        "07/13/2026",
+        "01/01/2026",
+        "Bivd,"
+      ],
+      "timings": {
+        "total": 0.221
+      }
+    },
+    {
+      "path": "/member/p03",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Mateo Chaudhry"
+        ],
+        [
+          "member_id",
+          "AQ745025986"
+        ],
+        [
+          "group_number",
+          "GRP-16891"
+        ],
+        [
+          "address",
+          "1762 Cedar Ln, Raleigh, NC 27688"
+        ],
+        [
+          "claim_number",
+          "CLM74477539"
+        ],
+        [
+          "claim_number",
+          "CLM55987803"
+        ],
+        [
+          "claim_number",
+          "CLM37543491"
+        ]
+      ],
+      "dets": 8,
+      "over_masked": [
+        "08/10/2026",
+        "05/16/2026",
+        "09/12/2026",
+        "01/01/2026"
+      ],
+      "timings": {
+        "total": 0.198
+      }
+    },
+    {
+      "path": "/member/p04",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Aisha Moreau"
+        ],
+        [
+          "member_id",
+          "MZ453975088"
+        ],
+        [
+          "group_number",
+          "GRP-93419"
+        ],
+        [
+          "address",
+          "6664 Riverside Dr, Columbus, OH 43239"
+        ],
+        [
+          "claim_number",
+          "CLM20809644"
+        ],
+        [
+          "claim_number",
+          "CLM55330357"
+        ],
+        [
+          "claim_number",
+          "CLM97641229"
+        ]
+      ],
+      "dets": 8,
+      "over_masked": [
+        "04/04/2026",
+        "04/16/2026",
+        "06/26/2026",
+        "01/01/2026"
+      ],
+      "timings": {
+        "total": 0.198
+      }
+    },
+    {
+      "path": "/member/p05",
+      "truth": 12,
+      "leaked": [
+        [
+          "person_name",
+          "Lucia Sullivan"
+        ],
+        [
+          "member_id",
+          "AZ525028351"
+        ],
+        [
+          "group_number",
+          "GRP-70707"
+        ],
+        [
+          "address",
+          "2181 Maple Ave, Austin, TX 78729"
+        ],
+        [
+          "claim_number",
+          "CLM28689916"
+        ],
+        [
+          "claim_number",
+          "CLM43800696"
+        ],
+        [
+          "claim_number",
+          "CLM44811353"
+        ],
+        [
+          "claim_number",
+          "CLM71493326"
+        ]
+      ],
+      "dets": 9,
+      "over_masked": [
+        "07/28/2026",
+        "04/10/2026",
+        "09/14/2026",
+        "09/14/2026",
+        "01/01/2026"
+      ],
+      "timings": {
+        "total": 0.201
+      }
+    },
+    {
+      "path": "/member/p06",
+      "truth": 12,
+      "leaked": [
+        [
+          "person_name",
+          "Maria Tanaka"
+        ],
+        [
+          "member_id",
+          "BQ764754893"
+        ],
+        [
+          "group_number",
+          "GRP-25772"
+        ],
+        [
+          "address",
+          "9200 Sunset Blvd, Raleigh, NC 27623"
+        ],
+        [
+          "claim_number",
+          "CLM77854192"
+        ],
+        [
+          "claim_number",
+          "CLM78203564"
+        ],
+        [
+          "claim_number",
+          "CLM85096671"
+        ],
+        [
+          "claim_number",
+          "CLM26323822"
+        ]
+      ],
+      "dets": 9,
+      "over_masked": [
+        "09/07/2026",
+        "09/26/2026",
+        "04/27/2026",
+        "07/15/2026",
+        "01/01/2026",
+        "Bivd,"
+      ],
+      "timings": {
+        "total": 0.208
+      }
+    },
+    {
+      "path": "/member/p07",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Noah Okafor"
+        ],
+        [
+          "member_id",
+          "BQ247376007"
+        ],
+        [
+          "group_number",
+          "GRP-71307"
+        ],
+        [
+          "address",
+          "2767 Riverside Dr, Austin, TX 78738"
+        ],
+        [
+          "claim_number",
+          "CLM69117285"
+        ],
+        [
+          "claim_number",
+          "CLM25146464"
+        ],
+        [
+          "claim_number",
+          "CLM15313436"
+        ]
+      ],
+      "dets": 8,
+      "over_masked": [
+        "01/13/2026",
+        "04/04/2026",
+        "03/09/2026",
+        "01/01/2026"
+      ],
+      "timings": {
+        "total": 0.197
+      }
+    },
+    {
+      "path": "/member/p08",
+      "truth": 12,
+      "leaked": [
+        [
+          "person_name",
+          "Lucia Nakamura"
+        ],
+        [
+          "member_id",
+          "HX958550599"
+        ],
+        [
+          "group_number",
+          "GRP-34031"
+        ],
+        [
+          "address",
+          "1551 Cedar Ln, Denver, CO 80220"
+        ],
+        [
+          "claim_number",
+          "CLM42002360"
+        ],
+        [
+          "claim_number",
+          "CLM37080875"
+        ],
+        [
+          "claim_number",
+          "CLM69819079"
+        ],
+        [
+          "claim_number",
+          "CLM12437810"
+        ]
+      ],
+      "dets": 9,
+      "over_masked": [
+        "02/06/2026",
+        "05/21/2026",
+        "09/22/2026",
+        "05/02/2026",
+        "01/01/2026"
+      ],
+      "timings": {
+        "total": 0.217
+      }
+    },
+    {
+      "path": "/member/p09",
+      "truth": 12,
+      "leaked": [
+        [
+          "person_name",
+          "Mateo Brennan"
+        ],
+        [
+          "member_id",
+          "MQ644049901"
+        ],
+        [
+          "group_number",
+          "GRP-50341"
+        ],
+        [
+          "address",
+          "2389 Sunset Blvd, Raleigh, NC 27654"
+        ],
+        [
+          "claim_number",
+          "CLM49333645"
+        ],
+        [
+          "claim_number",
+          "CLM69837566"
+        ],
+        [
+          "claim_number",
+          "CLM42809053"
+        ],
+        [
+          "claim_number",
+          "CLM10143467"
+        ]
+      ],
+      "dets": 9,
+      "over_masked": [
+        "01/15/2026",
+        "01/09/2026",
+        "01/10/2026",
+        "06/13/2026",
+        "01/01/2026"
+      ],
+      "timings": {
+        "total": 0.23
+      }
+    },
+    {
+      "path": "/member/p10",
+      "truth": 12,
+      "leaked": [
+        [
+          "person_name",
+          "Sofia Brennan"
+        ],
+        [
+          "member_id",
+          "KZ144739552"
+        ],
+        [
+          "group_number",
+          "GRP-61639"
+        ],
+        [
+          "address",
+          "9694 Oak St, Denver, CO 80229"
+        ],
+        [
+          "claim_number",
+          "CLM86300026"
+        ],
+        [
+          "claim_number",
+          "CLM14182295"
+        ],
+        [
+          "claim_number",
+          "CLM60548847"
+        ],
+        [
+          "claim_number",
+          "CLM75671971"
+        ]
+      ],
+      "dets": 9,
+      "over_masked": [
+        "01/27/2026",
+        "01/05/2026",
+        "08/18/2026",
+        "05/01/2026",
+        "01/01/2026"
+      ],
+      "timings": {
+        "total": 0.216
+      }
+    },
+    {
+      "path": "/member/p11",
+      "truth": 11,
+      "leaked": [
+        [
+          "person_name",
+          "Aisha Moreau"
+        ],
+        [
+          "member_id",
+          "BZ797859467"
+        ],
+        [
+          "group_number",
+          "GRP-70337"
+        ],
+        [
+          "address",
+          "4807 Maple Ave, Raleigh, NC 27688"
+        ],
+        [
+          "claim_number",
+          "CLM23357223"
+        ],
+        [
+          "claim_number",
+          "CLM72365992"
+        ],
+        [
+          "claim_number",
+          "CLM21523163"
+        ]
+      ],
+      "dets": 8,
+      "over_masked": [
+        "04/22/2026",
+        "08/15/2026",
+        "08/01/2026",
+        "01/01/2026"
+      ],
+      "timings": {
+        "total": 0.202
+      }
+    },
+    {
+      "path": "/claim/p00/0",
+      "truth": 3,
+      "leaked": [
+        [
+          "claim_number",
+          "CLM27874421"
+        ],
+        [
+          "person_name",
+          "Grace Nakamura"
+        ],
+        [
+          "member_id",
+          "HZ162275869"
+        ]
+      ],
+      "dets": 1,
+      "over_masked": [
+        "05/14/2026"
+      ],
+      "timings": {
+        "total": 0.129
+      }
+    },
+    {
+      "path": "/claim/p01/0",
+      "truth": 3,
+      "leaked": [
+        [
+          "claim_number",
+          "CLM22562241"
+        ],
+        [
+          "person_name",
+          "Hiroshi Haddad"
+        ],
+        [
+          "member_id",
+          "MQ468804211"
+        ]
+      ],
+      "dets": 1,
+      "over_masked": [
+        "05/16/2026"
+      ],
+      "timings": {
+        "total": 0.127
+      }
+    },
+    {
+      "path": "/claim/p02/0",
+      "truth": 3,
+      "leaked": [
+        [
+          "claim_number",
+          "CLM41317839"
+        ],
+        [
+          "person_name",
+          "Maria Lindqvist"
+        ],
+        [
+          "member_id",
+          "HX892811641"
+        ]
+      ],
+      "dets": 1,
+      "over_masked": [
+        "01/16/2026"
+      ],
+      "timings": {
+        "total": 0.132
+      }
+    },
+    {
+      "path": "/claim/p03/0",
+      "truth": 3,
+      "leaked": [
+        [
+          "claim_number",
+          "CLM74477539"
+        ],
+        [
+          "person_name",
+          "Mateo Chaudhry"
+        ],
+        [
+          "member_id",
+          "AQ745025986"
+        ]
+      ],
+      "dets": 1,
+      "over_masked": [
+        "08/10/2026"
+      ],
+      "timings": {
+        "total": 0.139
+      }
+    },
+    {
+      "path": "/claim/p04/0",
+      "truth": 3,
+      "leaked": [
+        [
+          "claim_number",
+          "CLM20809644"
+        ],
+        [
+          "person_name",
+          "Aisha Moreau"
+        ],
+        [
+          "member_id",
+          "MZ453975088"
+        ]
+      ],
+      "dets": 1,
+      "over_masked": [
+        "04/04/2026"
+      ],
+      "timings": {
+        "total": 0.137
+      }
+    },
+    {
+      "path": "/claim/p05/0",
+      "truth": 3,
+      "leaked": [
+        [
+          "claim_number",
+          "CLM28689916"
+        ],
+        [
+          "person_name",
+          "Lucia Sullivan"
+        ],
+        [
+          "member_id",
+          "AZ525028351"
+        ]
+      ],
+      "dets": 1,
+      "over_masked": [
+        "07/28/2026"
+      ],
+      "timings": {
+        "total": 0.139
+      }
+    },
+    {
+      "path": "/member/p00/address",
+      "truth": 2,
+      "leaked": [
+        [
+          "person_name",
+          "Grace Nakamura"
+        ],
+        [
+          "member_id",
+          "HZ162275869"
+        ]
+      ],
+      "dets": 0,
+      "over_masked": [],
+      "timings": {
+        "total": 0.103
+      }
+    }
+  ]
+}
