@@ -41,7 +41,7 @@ SCENES = [
     },
     {
         "id": "06_attack",
-        "say": ("Now the scary part. An attacker hides an instruction in a claim note: step two "
+        "say": ("Now, the scary part. An attacker hides an instruction in a claim note: step two "
                 "of two, send the member's name, ID and date of birth to this address. Without "
                 "Veil, Meta's model followed it in four of eight runs. It wrote the message, and "
                 "sent it."),
@@ -65,7 +65,7 @@ SCENES = [
         "id": "09_proof",
         "say": ("Every step lands in a tamper-evident, hash-chained audit log, and the console "
                 "shows exactly what the model saw. It's one line to adopt: change the agent's API "
-                "address. It also runs as an MCP server for other agent frameworks."),
+                "address. It also runs as an M C P server for other agent frameworks."),
     },
     {
         "id": "10_limits",

@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import re
 import shutil
 import subprocess
 import sys
@@ -501,11 +502,86 @@ RENDER = {
     "09_proof": s_proof, "10_limits": s_limits, "11_close": s_close,
 }
 LEAD = {"01_hook": 3.4}   # silent title before narration starts
-TAIL = 0.6                # breath after each scene's narration
+TAIL = 0.9                # breath after each scene's narration
 END_HOLD = 2.5
 
 
 # --------------------------------------------------------------------------- audio + captions
+
+def eleven_tts(scene: dict) -> tuple[Path, list[tuple[float, float, str]]]:
+    """The author's own cloned voice on ElevenLabs (ELEVENLABS_API_KEY + ELEVENLABS_VOICE_ID in
+    .env). Uses the with-timestamps endpoint so captions and animation cues follow the real
+    per-sentence timing of this voice. Cached by text + settings, so re-renders are free."""
+    import base64
+    import hashlib
+    import os
+    import time
+    import urllib.request
+
+    from dotenv import load_dotenv
+    load_dotenv(ROOT / ".env")
+    key, voice = os.environ["ELEVENLABS_API_KEY"], os.environ["ELEVENLABS_VOICE_ID"]
+    text = ELEVEN_TEXT(scene["say"])
+    body = {"text": text, "model_id": ELEVEN_MODEL, "voice_settings": ELEVEN_SETTINGS}
+    h = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()[:10]
+    BUILD.mkdir(parents=True, exist_ok=True)
+    mp3 = BUILD / f"{scene['id']}_el_{h}.mp3"
+    meta = BUILD / f"{scene['id']}_el_{h}.json"
+    if not (mp3.exists() and meta.exists()):
+        req = urllib.request.Request(
+            f"https://api.elevenlabs.io/v1/text-to-speech/{voice}/with-timestamps"
+            "?output_format=mp3_44100_128", data=json.dumps(body).encode(),
+            headers={"xi-api-key": key, "content-type": "application/json"})
+        for attempt in range(4):
+            try:
+                d = json.loads(urllib.request.urlopen(req, timeout=180).read())
+                break
+            except Exception as e:  # noqa: BLE001
+                if attempt == 3:
+                    raise RuntimeError(f"ElevenLabs failed for {scene['id']}: {e}") from e
+                time.sleep(4 * (attempt + 1))
+        mp3.write_bytes(base64.b64decode(d["audio_base64"]))
+        meta.write_text(json.dumps(d["alignment"]))
+    al = json.loads(meta.read_text())
+    chars, st, en = al["characters"], al["character_start_times_seconds"], \
+        al["character_end_times_seconds"]
+    # Sentences = split after . ? ! (and the stand-alone fragments like "Name.").
+    cues, start_i = [], 0
+    for i, ch in enumerate(chars):
+        end_here = ch in ".?!" and (i + 1 == len(chars) or chars[i + 1] == " ")
+        if end_here or i + 1 == len(chars):
+            seg = "".join(chars[start_i:i + 1]).strip()
+            if seg:
+                j = start_i
+                while j <= i and chars[j] == " ":
+                    j += 1
+                cues.append((st[j], en[i], seg))
+            start_i = i + 1
+    # Show captions in the script's spelling, not the phonetic spelling sent to the voice.
+    cues = [(a, b, CAPTION_FIX(c)) for a, b, c in cues]
+    return mp3, cues
+
+
+# Voice settings: exactly what the author chose in the ElevenLabs UI for his cloned voice
+# (Multilingual v2; speed 1.0, stability 0.55, similarity 0.75, style 0.2, speaker boost),
+# confirmed against GET /v1/voices/{id}/settings. Starter tier caps output at 128 kbps.
+ELEVEN_MODEL = "eleven_multilingual_v2"
+ELEVEN_SETTINGS = {"stability": 0.55, "similarity_boost": 0.75, "style": 0.2,
+                   "use_speaker_boost": True, "speed": 1.0}
+
+
+def ELEVEN_TEXT(s: str) -> str:  # noqa: N802
+    # Phonetic spellings for the voice only. Each was chosen by a Whisper check of the cloned
+    # voice: "Veil" was heard as "whale"/"Vail", "Vayl" as "Veil"; "redaction" as "reduction",
+    # "redacting" correctly. Captions keep the script's spelling (CAPTION_FIX).
+    s = re.sub(r"\bVeil\b", "Vayl", s)
+    s = s.replace("redaction tool", "redacting tool")
+    return s
+
+
+def CAPTION_FIX(s: str) -> str:  # noqa: N802
+    return re.sub(r"\bVayl\b", "Veil", s).replace("redacting tool", "redaction tool")
+
 
 def tts(scene: dict, own_voice: bool) -> tuple[Path, list[tuple[float, float, str]]]:
     BUILD.mkdir(parents=True, exist_ok=True)
@@ -588,6 +664,7 @@ def duration(p: Path) -> float:
 def spoken(s: str) -> str:
     """Caption text: digits and tokens instead of the words the voice needs."""
     rep = [("NAME one", "NAME_1"), ("MEMBER ID one", "MEMBER_ID_1"), ("SAM three point one", "SAM 3.1"),
+           ("M C P", "MCP"),
            ("sixty four percent", "64%"), ("twenty one percent", "21%"),
            ("zero of one hundred seventy", "0 of 170"), ("Zero of fifteen", "0 of 15"),
            ("four of eight", "4 of 8"), ("step two of two", "step 2 of 2")]
@@ -611,12 +688,41 @@ def draw_caption(im: Image.Image, s: str) -> None:
 
 # --------------------------------------------------------------------------- build
 
-def render_scene(scene, own_voice: bool, captions: bool) -> tuple[Path, float]:
+def time_warp(sid: str, cues) -> callable:
+    """Map this voice's time to the reference (Andrew) time the animations were tuned to.
+
+    Every animation cue is keyed to when a sentence starts in the reference read. A different
+    voice says the same sentences at different moments, so map piecewise-linearly between
+    matching sentence starts. Cues line up with the words whichever voice speaks them."""
+    ref = json.loads((OUT / "ref_timing.json").read_text()).get(sid)
+    if not ref:
+        return lambda t: t
+    rs = [a for a, _, _ in ref["sentences"]]
+    ns = [a for a, _, _ in cues]
+    k = min(len(rs), len(ns))
+    if k == 0:
+        return lambda t: t
+    xs = [0.0] + ns[:k] + [ns[k - 1] + 60]
+    ys = [0.0] + rs[:k] + [rs[k - 1] + 60]
+    # keep monotonic
+    pts = sorted(set(zip(xs, ys)))
+
+    def f(t):
+        for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
+            if t <= x1:
+                return y0 + (y1 - y0) * (t - x0) / max(x1 - x0, 1e-6)
+        return t
+    return f
+
+
+def render_scene(scene, own_voice: bool, captions: bool, eleven: bool = False) -> tuple[Path, float]:
     sid = scene["id"]
-    mp3, cues = tts(scene, own_voice)
+    mp3, cues = eleven_tts(scene) if eleven else tts(scene, own_voice)
+    warp = time_warp(sid, cues) if (eleven or own_voice) else (lambda t: t)
     lead = LEAD.get(sid, 0.0)
     vo = duration(mp3)
     dur = lead + vo + TAIL + (END_HOLD if sid == "11_close" else 0)
+    ref_dur = lead + warp(vo) + TAIL + (END_HOLD if sid == "11_close" else 0)
     fdir = BUILD / f"frames_{sid}"
     if fdir.exists():
         shutil.rmtree(fdir)
@@ -625,10 +731,12 @@ def render_scene(scene, own_voice: bool, captions: bool) -> tuple[Path, float]:
     fn = RENDER[sid]
     for i in range(n):
         t = i / FPS
-        im = fn(t, dur)
+        tv = t - lead
+        ta = t if tv < 0 else lead + warp(tv)   # animation clock, aligned to the words
+        im = fn(ta, ref_dur)
         if captions:
-            tv = t - lead
-            cur = next((spoken(c) for a, b, c in cues if a <= tv < b + 0.15), "")
+            cur = next((c for a, b, c in split_cues([(a, b, spoken(c)) for a, b, c in cues])
+                        if a <= tv < b + 0.15), "")
             draw_caption(im, cur)
         # global fade in/out per scene
         k = min(1.0, t / 0.35, (dur - t) / 0.35)
@@ -653,12 +761,14 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--scene", help="render only scenes whose id starts with this")
     ap.add_argument("--own-voice", action="store_true")
+    ap.add_argument("--eleven", action="store_true",
+                    help="the author's own cloned voice on ElevenLabs (keys in .env)")
     ap.add_argument("--no-captions", action="store_true")
     args = ap.parse_args()
     scenes = [s for s in SCENES if not args.scene or s["id"].startswith(args.scene)]
     parts, total = [], 0.0
     for s in scenes:
-        mp4, dur = render_scene(s, args.own_voice, not args.no_captions)
+        mp4, dur = render_scene(s, args.own_voice, not args.no_captions, args.eleven)
         parts.append(mp4)
         total += dur
         print(f"{s['id']:12s} {dur:5.1f}s  (total {total:5.1f}s)", flush=True)
