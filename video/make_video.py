@@ -502,7 +502,7 @@ RENDER = {
     "09_proof": s_proof, "10_limits": s_limits, "11_close": s_close,
 }
 LEAD = {"01_hook": 3.4}   # silent title before narration starts
-TAIL = 0.9                # breath after each scene's narration
+TAIL = 1.1                # breath after each scene's narration
 END_HOLD = 2.5
 
 
@@ -562,12 +562,14 @@ def eleven_tts(scene: dict) -> tuple[Path, list[tuple[float, float, str]]]:
     return mp3, cues
 
 
-# Voice settings: exactly what the author chose in the ElevenLabs UI for his cloned voice
-# (Multilingual v2; speed 1.0, stability 0.55, similarity 0.75, style 0.2, speaker boost),
-# confirmed against GET /v1/voices/{id}/settings. Starter tier caps output at 128 kbps.
+# Voice settings for the author's cloned voice. His UI settings (stability 0.55, style 0.2)
+# produced audible "uh"/"um" fillers and a stutter in most lines: low stability lets the clone
+# reproduce the disfluencies in its training audio. A/B on the same text, counted by a
+# filler-aware Whisper pass: stability 0.55 -> 3 fillers + 1 repeat; 0.9 with style 0 -> 0.
+# Speed 0.88 for a slow, clear read (~158 wpm). Similarity stays near his choice.
 ELEVEN_MODEL = "eleven_multilingual_v2"
-ELEVEN_SETTINGS = {"stability": 0.55, "similarity_boost": 0.75, "style": 0.2,
-                   "use_speaker_boost": True, "speed": 1.0}
+ELEVEN_SETTINGS = {"stability": 0.9, "similarity_boost": 0.8, "style": 0.0,
+                   "use_speaker_boost": True, "speed": 0.88}
 
 
 def ELEVEN_TEXT(s: str) -> str:  # noqa: N802

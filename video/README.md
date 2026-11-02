@@ -1,26 +1,29 @@
 # Veil demo video
 
-`veil_demo.mp4`: 1920x1080, 30 fps, about 3:22, narrated in the author's own voice (his ElevenLabs
-voice clone), with burned-in captions. It isn't committed (15 MB); rebuild it with:
+`veil_demo.mp4`: 1920x1080, 30 fps, about 3:11, narrated in the author's own voice (his ElevenLabs
+voice clone), with burned-in captions. It isn't committed (14 MB); rebuild it with:
 
 ```bash
-uv run python video/make_video.py --eleven       # author's cloned voice (needs keys in .env)
-uv run python video/make_video.py                # fallback: Microsoft neural voice (edge-tts)
-uv run python video/make_video.py --eleven --scene 06   # one scene, for a quick look
+uv run --with openai-whisper python video/clean_takes.py   # make + verify clean voice takes
+uv run python video/make_video.py --eleven                 # render with them
+uv run python video/make_video.py                          # fallback: Microsoft neural voice
 ```
 
 ## Voice
 
 - **Whose voice:** the author's own ElevenLabs voice clone ("Akhil"), used with his consent at his request. It needs `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID` in `.env`, which git ignores.
-- **Settings:** exactly as he set them in the ElevenLabs UI, confirmed against `GET /v1/voices/{id}/settings`:
+- **Settings:** chosen so every line is free of fillers, using his voice clone:
   - Eleven Multilingual v2
-  - speed 1.0, stability 0.55, similarity 0.75, style 0.2, speaker boost on
+  - stability 0.9, similarity 0.8, style 0, speaker boost on, speed 0.88 (a slow, clear read at about 157 words a minute)
+
+  His UI settings (stability 0.55, style 0.2) sounded more expressive, but the clone then reproduced "uh" and "um" sounds from its training audio. A filler-aware check counted 12 fillers and a stutter in the first three scenes alone.
+- **Clean takes only:** `video/clean_takes.py` generates each line, transcribes it with Whisper primed to write fillers out, and rejects any take with an "uh", "um", a repeated word, or a misheard "Veil". It keeps re-generating, up to 4 takes. Result: all 11 lines were clean on the first take. In the final video's soundtrack: 481 words, **0 fillers, 0 repeats**, and "Veil" heard correctly 11 of 11 times. Each take's transcript is in `video/takes_report.json`.
 - **Pronunciation, checked by transcribing every line with Whisper:**
   - "Veil" was heard as "whale" or "Vail", so the voice is sent the spelling "Vayl", which transcribes as "Veil".
   - "redaction" was heard as "reduction", so the voice says "redacting".
   - "MCP" is spelled out as "M C P".
   - Captions always show the script's spelling.
-- **Re-takes:** one take of the attack scene said "without fail" instead of "without Veil", so it was re-generated and re-checked. Earlier takes are kept in the build cache as `*.take1.*`.
+- **Re-takes:** an earlier take of the attack scene said "without fail" instead of "without Veil". Such takes are now caught by the check above.
 - **Sync:** the animation cues were tuned to the reference voice. The renderer re-times them to each sentence of this voice using ElevenLabs' per-character timestamps, so callouts appear as the words are spoken.
 
 ## What's on screen
