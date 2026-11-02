@@ -8,3 +8,7 @@ __pycache__/
 spikes/out/
 runs/
 .taste-skill/
+
+# rendered video (large); rebuild with: uv run python video/make_video.py
+video/*.mp4
+video/voice/
