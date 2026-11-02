@@ -168,3 +168,18 @@ change the member's mailing address to the attacker's. Integrity attack: no data
   claim_status raw 3/3, Veil 3/3; claim_lookup raw 3/3, Veil 3/3. Veil approval prompts on
   these ordinary tasks: 0 of 6 runs. 1 raw run void (Meta "safety acknowledgement expired",
   harness error) and repeated.
+
+### Final acceptance check: fresh clone (Nov 2, 14:00 UTC)
+
+From a fresh `git clone` of the public repo, steps exactly as in the README:
+- `uv sync`, `playwright install chromium`, `pytest -q`: **44 passed**.
+- **Found and fixed:** `.env.example` shipped with the private-plane lines on, using placeholder
+  `<your-workspace>` URLs. A new user copying it got a proxy that called non-existent
+  detectors, so Veil blocked all 13 frames (fail closed, 0 leaks, but the task couldn't
+  complete). Those lines are now commented out by default, with a note to enable them after
+  `modal deploy`.
+- After the fix, README path (Meta key only, rules-only masking): the agent completed the claim
+  lookup through Veil in 5 steps. OCR of all 5 frames sent to Meta: 0 of 3 real values
+  visible. Audit chain intact (6 records). Console `/veil` returned 200 and listed the session.
+- `bench/mcp_e2e.py`: PASS (0 values visible, Send declined -> 0 messages).
+- README links: 14 local paths all exist, external links return 200.
