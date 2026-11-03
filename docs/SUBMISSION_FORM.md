@@ -20,7 +20,7 @@ Results on synthetic data: 0 of 170 sensitive values leaked on a held-out medica
 https://github.com/Akhilvallala1/veil
 
 ## 3-Minute Demo Video
-(your YouTube link)
+https://youtu.be/k56rUhF-R4Q
 
 ## Describe your use of Meta products to build the submitted project
 - Muse Spark 1.3 (Meta Model API, computer tool): the agent. It only ever receives masked screenshots and tokenized text.

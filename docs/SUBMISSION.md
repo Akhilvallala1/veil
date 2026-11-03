@@ -85,7 +85,7 @@ Veil already runs as an MCP server, so other agent frameworks can use it today.
 ## Links
 
 - Code: https://github.com/Akhilvallala1/veil
-- Video: <add link>
+- Video: https://youtu.be/k56rUhF-R4Q
 
 ## Built with
 
