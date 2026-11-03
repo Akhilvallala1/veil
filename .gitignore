@@ -12,3 +12,14 @@ runs/
 # rendered video (large); rebuild with: uv run python video/make_video.py
 video/*.mp4
 video/voice/
+# never commit media: rendered video, your voice recordings, generated narration
+*.mp4
+*.mov
+*.webm
+*.mp3
+*.wav
+*.m4a
+*.aac
+*.flac
+video/voice/
+video/out/

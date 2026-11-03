@@ -590,10 +590,10 @@ def tts(scene: dict, own_voice: bool) -> tuple[Path, list[tuple[float, float, st
     mp3 = BUILD / f"{scene['id']}.mp3"
     srt = BUILD / f"{scene['id']}.srt"
     if own_voice:
-        src = OUT / "voice" / f"{scene['id']}.mp3"
-        shutil.copy(src, mp3)
-        cues = [(0.0, duration(mp3), scene["say"])]
-        return mp3, split_cues(cues)
+        # Prepared by video/own_voice.py from the author's own recording.
+        wav = OUT / "voice" / f"{scene['id']}.wav"
+        meta = json.loads((OUT / "voice" / f"{scene['id']}.json").read_text())
+        return wav, [(a, b, s) for a, b, s in meta]
     ok = mp3.exists() and srt.exists() and srt.stat().st_size > 0 and mp3.stat().st_size > 1000
     if not ok:
         import time
